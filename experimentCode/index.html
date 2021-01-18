@@ -2,10 +2,11 @@
 <html>
 <head>
   <title>My experiment</title>
-  <script src="jspsych-6.1.0/jspsych.js"></script>
-  <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
-  <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
-  <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="jspsych-6.2.0/jspsych.js"></script>
+  <script src="jspsych-6.2.0/plugins/jspsych-html-keyboard-response.js"></script>
+  <script src="jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
+  <link href="jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
   <link href="style.css" rel="stylesheet" type="text/css"></link>
 </head>
 
@@ -14,6 +15,8 @@
 <script>
   /* Set up timeline */
   var timeline = [];
+
+  var images = ['img/blue.png', 'img/orange.png'];
 
   /* Define welcome */
   var welcome = {
@@ -102,12 +105,12 @@
   /* Start the experiment */
   jsPsych.init({
     timeline: timeline,
+    preload_images: images,
     on_finish: function(){
       saveData("experiment_data1", jsPsych.data.get().csv());
       jsPsych.data.displayData();
     }
 
   })
-
 </script>
 </html>
