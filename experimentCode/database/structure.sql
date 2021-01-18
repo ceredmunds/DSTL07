@@ -31,5 +31,5 @@ CREATE TABLE IF NOT EXISTS `test_table` (
   `rt` int(11) DEFAULT NULL,
   `key_press` int(11) DEFAULT NULL,
   `correct_response` text,
-  `correct` tinyint(1) DEFAULT NULL
+  `correct` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
