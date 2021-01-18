@@ -1,2 +1,3 @@
 # DSTL07
-Experiment looking at communication in change monitoring task
+Experiment looking at communication in relation to uncertainty. Somehow. 
+
