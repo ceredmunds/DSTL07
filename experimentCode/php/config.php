@@ -4,5 +4,4 @@
   $username = "root";
   $password = "root";
   $dbname = "test_db";
-  $table = "test_table";
 ?>
