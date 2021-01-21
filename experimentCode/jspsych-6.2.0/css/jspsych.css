@@ -16,7 +16,8 @@
  }
 
  .jspsych-display-element:focus {
-   outline: none;
+  outline: none;
+
  }
 
  .jspsych-content-wrapper {
@@ -24,6 +25,8 @@
    margin: auto;
    flex: 1 1 100%;
    width: 100%;
+   background-color: white; /* change background colour throughout */
+   color: black; /* change text colour throughout */
  }
 
  .jspsych-content {
@@ -100,10 +103,10 @@
 
 .jspsych-slider {
   appearance: none;
-  -webkit-appearance: none; 
+  -webkit-appearance: none;
   -moz-appearance: none;
-  width: 100%; 
-  background: transparent; 
+  width: 100%;
+  background: transparent;
 }
 .jspsych-slider:focus {
   outline: none;
