@@ -57,7 +57,7 @@ jsPsych.plugins["category-learning"] = (function() {
 
   plugin.trial = function(display_element, trial) {
 
-    var image_html = "<div style='float: left;'><img src=" + trial.imageURL + "width='500'></img></div>"
+    var image_html = "<div style='float: left;'><img src=" + trial.imageURL + " width='500'></img></div>"
     var text_html = "<div style='float: right;'>" + trial.stimulus + "</div>"
     var new_html = '<div id="jspsych-category-learning-stimulus">' + image_html + text_html + '</div>'
 
@@ -106,7 +106,7 @@ jsPsych.plugins["category-learning"] = (function() {
 
       // after a valid response, the stimulus will have the CSS class 'responded'
       // which can be used to provide visual feedback that a response was recorded
-      display_element.querySelector('#jspsych-html-keyboard-response-stimulus').className += ' responded';
+      display_element.querySelector('#jspsych-category-learning-stimulus').className += ' responded';
 
       // only record the first response
       if (response.key == null) {
