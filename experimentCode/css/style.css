@@ -1,9 +1,9 @@
-body {
-  background-color: black;
-}
-
-.container {
+#jspsych-category-learning-stimulus {
   width: 1200px;
   height: 600px;
   margin: auto;
+}
+
+th, td {
+  padding: 20px; /* Change padding in table cells */
 }
