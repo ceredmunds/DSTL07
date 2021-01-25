@@ -14,7 +14,13 @@ jsPsych.plugins["category-learning"] = (function() {
         default: null,
         description: 'URL of image to be displayed next to categories.'
       },
-      stimulus: {
+      dimension1: {
+        type: jsPsych.plugins.parameterType.HTML_STRING,
+        pretty_name: 'Stimulus',
+        default: undefined,
+        description: 'The HTML string to be displayed'
+      },
+      dimension2: {
         type: jsPsych.plugins.parameterType.HTML_STRING,
         pretty_name: 'Stimulus',
         default: undefined,
@@ -58,8 +64,11 @@ jsPsych.plugins["category-learning"] = (function() {
   plugin.trial = function(display_element, trial) {
 
     var image_html = "<div style='float: left;'><img src=" + trial.imageURL + " width='500'></img></div>"
-    var text_html = "<div style='float: right;'>" + trial.stimulus + "</div>"
-    var new_html = '<div id="jspsych-category-learning-stimulus">' + image_html + text_html + '</div>'
+    var dim1_html = "<div style='float: right;'>" +
+    "<table><tr><td>Size: </td><td>" + trial.dimension1 + "</td></tr>" + "</div>"
+    var dim2_html = "<div style='float: right;'>" +
+    "<table><tr><td>Color: </td><td>" + trial.dimension2 + "</td></tr>" + "</div>"
+    var new_html = '<div id="jspsych-category-learning-stimulus">' + image_html + dim1_html + dim2_html + '</div>'
 
     // add prompt
     if(trial.prompt !== null){

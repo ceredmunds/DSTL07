@@ -34,7 +34,8 @@ timeline.push(instructions)
 var category_learning_trial = {
   type: "category-learning",
   imageURL: "img/radar.jpg",
-  stimulus: jsPsych.timelineVariable('dimension1'),
+  dimension1: jsPsych.timelineVariable('dimension1'),
+  dimension2: jsPsych.timelineVariable('dimension2'),
   data: { test_part: "category_learning_trial" }
 }
 // "<table><tr><td>Size: </td><td>"+jsPsych.timelineVariable('dimension1')+"</td></tr>" +
