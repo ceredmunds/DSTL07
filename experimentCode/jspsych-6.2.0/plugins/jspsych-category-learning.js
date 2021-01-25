@@ -64,11 +64,12 @@ jsPsych.plugins["category-learning"] = (function() {
   plugin.trial = function(display_element, trial) {
 
     var image_html = "<div style='float: left;'><img src=" + trial.imageURL + " width='500'></img></div>"
-    var dim1_html = "<div style='float: right;'>" +
-    "<table><tr><td>Size: </td><td>" + trial.dimension1 + "</td></tr>" + "</div>"
-    var dim2_html = "<div style='float: right;'>" +
-    "<table><tr><td>Color: </td><td>" + trial.dimension2 + "</td></tr>" + "</div>"
-    var new_html = '<div id="jspsych-category-learning-stimulus">' + image_html + dim1_html + dim2_html + '</div>'
+    var table_html = '<div style="float: right;">' + '<table>' +
+    '<tr><td>Size: </td><td>' + trial.dimension1 + '</td></tr>' +
+    '<tr><td>Color: </td><td>' + trial.dimension2 + '</td></tr>' +
+    '</table>' + '</div>'
+    var new_html = '<div id="jspsych-category-learning-stimulus">' +
+    image_html + table_html + '</div>'
 
     // add prompt
     if(trial.prompt !== null){
