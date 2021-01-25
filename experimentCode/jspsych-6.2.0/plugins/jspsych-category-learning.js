@@ -63,8 +63,7 @@ jsPsych.plugins["category-learning"] = (function() {
         pretty_name: 'Response ends trial',
         default: true,
         description: 'If true, trial will end when subject makes a response.'
-      },
-
+      }
     }
   }
 
@@ -159,6 +158,7 @@ jsPsych.plugins["category-learning"] = (function() {
         end_trial();
       }, trial.trial_duration);
     }
+
   };
 
   return plugin;

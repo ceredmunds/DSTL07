@@ -17,7 +17,7 @@ var welcome = {
 timeline.push(welcome)
 
 /* define instructions trial */
-var instructions = {
+var category_learning_instructions = {
   type: "html-keyboard-response",
   stimulus: "<p>In this experiment, a circle will appear in the center " +
       "of the screen.</p><p>If the circle is <strong>blue</strong>, " +
@@ -32,9 +32,9 @@ var instructions = {
       "</div>"+
       "<p>Press any key to begin.</p>",
   post_trial_gap: 200,
-  data: { test_part: "instructions" }
+  data: { test_part: "category learning instructions" }
 }
-timeline.push(instructions)
+timeline.push(category_learning_instructions)
 
 /* category learning trial */
 var category_learning_trial = {
@@ -82,12 +82,24 @@ var category_learning_procedure = {
 timeline.push(category_learning_procedure)
 
 /* Verbal report */
+var verbal_report_instructions = {
+  type: "html-keyboard-response",
+  stimulus: "<p>In the following, we will ask you some questions about how you completed this experiment.</p>" +
+    "<p>Don't worry: there are absolutely no wrong answers!</p>" +
+    "<p>Also, your answers to these questions WILL NOT influence whether you are paid.</p>" +
+    "<p>Just try your best to explain as clearly and in as much detail as possible the answer.</p>" +
+    "<p>Press any key to begin.</p>",
+  post_trial_gap: 200,
+  data: { test_part: "category learning instructions" }
+}
+timeline.push(verbal_report_instructions)
+
 var survey_trial = {
   type: 'survey-text',
   questions: [
-    {prompt: "How old are you?", rows: 5, columns: 40},
-    {prompt: "Where were you born?", rows: 3, columns: 50}
+    { prompt: "Please describe which stimulus dimension you thought was most important:", rows: 30, columns: 60 }
   ],
+  data: { test_part: "verbal report_trial" }
 }
 timeline.push(survey_trial)
 
