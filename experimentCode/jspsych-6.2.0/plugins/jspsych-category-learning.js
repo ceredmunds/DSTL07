@@ -159,7 +159,6 @@ jsPsych.plugins["category-learning"] = (function() {
         end_trial();
       }, trial.trial_duration);
     }
-
   };
 
   return plugin;

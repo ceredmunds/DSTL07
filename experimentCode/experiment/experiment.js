@@ -1,8 +1,12 @@
 /* create timeline */
 var timeline = []
+
+/* category learning variables */
 var nDimensions = 2
 var allLabels = ['Size', 'Color']
 var dimensionLabels = jsPsych.randomization.sampleWithoutReplacement(allLabels, nDimensions)
+var feedbackDuration = 1000 // in ms
+var ITI = 500 // in ms
 
 /* define welcome message trial */
 var welcome = {
@@ -39,13 +43,38 @@ var category_learning_trial = {
   dimension1: jsPsych.timelineVariable('dimension1'),
   dimension2: jsPsych.timelineVariable('dimension2'),
   labels: dimensionLabels,
-  data: { test_part: "category_learning_trial", dimLabels: dimensionLabels}
+  choices: ['f', 'j'],
+  data: {
+    test_part: "category_learning_trial",
+    dimLabels: dimensionLabels,
+    correct_response: jsPsych.timelineVariable('category')
+  },
+  on_finish: function (data) {
+    if (data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.correct_response)) {
+      data.correct = "true"
+    } else {
+      data.correct = "false"
+    }
+  }
 }
 
-// "<table><tr><td>Size: </td><td>"+jsPsych.timelineVariable('dimension1')+"</td></tr>" +
-// "<tr><td>Color: </td><td>"+jsPsych.timelineVariable('dimension2')+"</td></tr></table>",
+var category_learning_feedback = {
+  type: 'html-keyboard-response',
+  stimulus: function () {
+    var last_trial_correct = jsPsych.data.get().last(1).values()[0].correct
+    if (last_trial_correct == "true") {
+      return "<p>Correct!</p>"
+    } else {
+      return "<p>Wrong.</p>"
+    }
+  },
+  choices: jsPsych.NO_KEYS,
+  trial_duration: feedbackDuration,
+  post_trial_gap: ITI
+}
+
 var category_learning_procedure = {
-  timeline: [category_learning_trial],
+  timeline: [category_learning_trial, category_learning_feedback],
   timeline_variables: category_learning_stimuli,
   repetitions: 1,
   randomize_order: true
