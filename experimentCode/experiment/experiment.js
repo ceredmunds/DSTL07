@@ -81,21 +81,15 @@ var category_learning_procedure = {
 }
 timeline.push(category_learning_procedure)
 
-// var test = {
-//   type: "image-keyboard-response",
-//   stimulus: jsPsych.timelineVariable('stimulus'),
-//   choices: ['f', 'j'],
-//   data: jsPsych.timelineVariable('data'),
-//   on_finish: function(data){
-//     if (data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.correct_response)) {
-//       data.correct = "true"
-//     } else {
-//       data.correct = "false"
-//     }
-//   }
-// }
-//
-
+/* Verbal report */
+var survey_trial = {
+  type: 'survey-text',
+  questions: [
+    {prompt: "How old are you?", rows: 5, columns: 40},
+    {prompt: "Where were you born?", rows: 3, columns: 50}
+  ],
+}
+timeline.push(survey_trial)
 
 /* define debrief */
 // var debrief_block = {
