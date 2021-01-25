@@ -26,6 +26,13 @@ jsPsych.plugins["category-learning"] = (function() {
         default: undefined,
         description: 'The HTML string to be displayed'
       },
+      labels: {
+        type: jsPsych.plugins.parameterType.STRING,
+        array: true,
+        pretty_name: 'Labels',
+        default: jsPsych.ALL_KEYS,
+        description: 'Name of the labels for each dimension in order.'
+      },
       choices: {
         type: jsPsych.plugins.parameterType.KEYCODE,
         array: true,
@@ -65,8 +72,8 @@ jsPsych.plugins["category-learning"] = (function() {
 
     var image_html = "<div style='float: left;'><img src=" + trial.imageURL + " width='500'></img></div>"
     var table_html = '<div style="float: right;">' + '<table>' +
-    '<tr><td>Size: </td><td>' + trial.dimension1 + '</td></tr>' +
-    '<tr><td>Color: </td><td>' + trial.dimension2 + '</td></tr>' +
+    '<tr><td>' + trial.labels[0] + ': </td><td>' + trial.dimension1 + '</td></tr>' +
+    '<tr><td>' + trial.labels[1] + ': </td><td>' + trial.dimension2 + '</td></tr>' +
     '</table>' + '</div>'
     var new_html = '<div id="jspsych-category-learning-stimulus">' +
     image_html + table_html + '</div>'

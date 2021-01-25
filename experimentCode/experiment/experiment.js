@@ -1,6 +1,8 @@
 /* create timeline */
 var timeline = []
-var images = ["img/blue.png", "img/orange.png"]
+var nDimensions = 2
+var allLabels = ['Size', 'Color']
+var dimensionLabels = jsPsych.randomization.sampleWithoutReplacement(allLabels, nDimensions)
 
 /* define welcome message trial */
 var welcome = {
@@ -36,8 +38,10 @@ var category_learning_trial = {
   imageURL: "img/radar.jpg",
   dimension1: jsPsych.timelineVariable('dimension1'),
   dimension2: jsPsych.timelineVariable('dimension2'),
-  data: { test_part: "category_learning_trial" }
+  labels: dimensionLabels,
+  data: { test_part: "category_learning_trial", dimLabels: dimensionLabels}
 }
+
 // "<table><tr><td>Size: </td><td>"+jsPsych.timelineVariable('dimension1')+"</td></tr>" +
 // "<tr><td>Color: </td><td>"+jsPsych.timelineVariable('dimension2')+"</td></tr></table>",
 var category_learning_procedure = {
@@ -107,7 +111,6 @@ function saveData() {
 /* start the experiment */
 jsPsych.init({
   timeline: timeline,
-  preload_images: images,
   on_finish: function () {
     saveData()
     jsPsych.data.displayData()
