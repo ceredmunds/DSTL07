@@ -31,23 +31,14 @@ var instructions = {
 timeline.push(instructions)
 
 /* category learning trial */
-var category_learning_stimuli = [
-  { stimulus: "<table><tr><td>Size: </td><td>40T</td></tr>" +
-  "<tr><td>Color: </td><td>Red</td></tr></table>",
-  data: { test_part: "category_learning_trial"} },
-  { stimulus: "<table><tr><td>Size: </td><td>50T</td></tr>" +
-  "<tr><td>Color: </td><td>Red</td></tr></table>",
-  data: { test_part: "category_learning_trial" }
-  }
-]
-
 var category_learning_trial = {
   type: "category-learning",
   imageURL: "img/radar.jpg",
-  stimulus: jsPsych.timelineVariable('stimulus'),
-  data: jsPsych.timelineVariable('data')
+  stimulus: jsPsych.timelineVariable('dimension1'),
+  data: { test_part: "category_learning_trial" }
 }
-
+// "<table><tr><td>Size: </td><td>"+jsPsych.timelineVariable('dimension1')+"</td></tr>" +
+// "<tr><td>Color: </td><td>"+jsPsych.timelineVariable('dimension2')+"</td></tr></table>",
 var category_learning_procedure = {
   timeline: [category_learning_trial],
   timeline_variables: category_learning_stimuli,
