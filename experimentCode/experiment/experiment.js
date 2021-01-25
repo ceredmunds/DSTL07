@@ -97,7 +97,7 @@ timeline.push(verbal_report_instructions)
 var survey_trial = {
   type: 'survey-text',
   questions: [
-    { prompt: "Please describe which stimulus dimension you thought was most important:", rows: 30, columns: 60 }
+    { prompt: "Please describe which stimulus dimension you thought was most important:", rows: 30, columns: 60, name: 'stimDimensionQ'}
   ],
   data: { test_part: "verbal report_trial" }
 }
