@@ -81,6 +81,46 @@ var category_learning_procedure = {
 }
 timeline.push(category_learning_procedure)
 
+/* category learning trial */
+var category_test_instructions = {
+  type: "html-keyboard-response",
+  stimulus: "<p>In the following, you will be asked to complete the categorisation task without feedback.</p>" +
+    "<p>Press any key to begin.</p>",
+  post_trial_gap: 200,
+  data: { test_part: "category test instructions" }
+}
+timeline.push(category_test_instructions)
+
+var category_test_trial = {
+  type: "category-learning",
+  imageURL: "img/radar.jpg",
+  dimension1: jsPsych.timelineVariable('dimension1'),
+  dimension2: jsPsych.timelineVariable('dimension2'),
+  labels: dimensionLabels,
+  choices: ['f', 'j'],
+  data: {
+    test_part: "category_test_trial",
+    dimLabels: dimensionLabels,
+    correct_response: jsPsych.timelineVariable('category')
+  },
+  on_finish: function (data) {
+    if (data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.correct_response)) {
+      data.correct = "true"
+    } else {
+      data.correct = "false"
+    }
+  },
+  post_trial_gap: ITI
+}
+
+var category_test_procedure = {
+  timeline: [category_test_trial],
+  timeline_variables: category_test_stimuli,
+  repetitions: 1,
+  randomize_order: true
+}
+timeline.push(category_test_procedure)
+
 /* Verbal report */
 var verbal_report_instructions = {
   type: "html-keyboard-response",
