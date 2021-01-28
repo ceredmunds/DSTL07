@@ -12,11 +12,11 @@ var category_test_stimuli = [
   {
     "dimension1": 1,
     "dimension2": "UNKNOWN",
-    "category": "j"
+    "category": "h"
   },
   {
     "dimension1": 0,
     "dimension2": 0,
-    "category": "j"
+    "category": "h"
   }
 ]

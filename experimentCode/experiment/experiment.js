@@ -2,11 +2,13 @@
 var timeline = []
 
 /* category learning variables */
+var nUniqueStimuli = 4
 var nDimensions = 2
 var allLabels = ['Size', 'Color']
 var dimensionLabels = jsPsych.randomization.sampleWithoutReplacement(allLabels, nDimensions)
 var feedbackDuration = 1000 // in ms
 var ITI = 500 // in ms
+var learningCriterion = 0.5 // number between 0 and 1a
 
 /* define welcome message trial */
 var welcome = {
@@ -43,7 +45,7 @@ var category_learning_trial = {
   dimension1: jsPsych.timelineVariable('dimension1'),
   dimension2: jsPsych.timelineVariable('dimension2'),
   labels: dimensionLabels,
-  choices: ['f', 'j'],
+  choices: ['f', 'h'],
   data: {
     test_part: "category_learning_trial",
     dimLabels: dimensionLabels,
@@ -76,8 +78,18 @@ var category_learning_feedback = {
 var category_learning_procedure = {
   timeline: [category_learning_trial, category_learning_feedback],
   timeline_variables: category_learning_stimuli,
-  repetitions: 1,
-  randomize_order: true
+  randomize_order: true,
+  loop_function: function () {
+    var last_n_trials = jsPsych.data.get().last(nUniqueStimuli)
+    var last_n_correct_trials = last_n_trials.filter({ correct: "true" })
+    var accuracy = Math.round(last_n_correct_trials.count() / last_n_trials.count())
+
+    if (accuracy < learningCriterion) {
+      return true // True to keep loop going
+    } else {
+      return false // False to stop loop
+    }
+  }
 }
 timeline.push(category_learning_procedure)
 
@@ -97,7 +109,7 @@ var category_test_trial = {
   dimension1: jsPsych.timelineVariable('dimension1'),
   dimension2: jsPsych.timelineVariable('dimension2'),
   labels: dimensionLabels,
-  choices: ['f', 'j'],
+  choices: ['f', 'h'],
   data: {
     test_part: "category_test_trial",
     dimLabels: dimensionLabels,
