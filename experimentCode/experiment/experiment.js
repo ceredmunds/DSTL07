@@ -17,7 +17,8 @@ var welcome = {
   "<p>Welcome to the experiment and thank you for taking part.</p>" +
   "<p>If you have any concerns or queries, please contact us via the Prolific message system.</p>" +
   "<div style='height:50px'></div>" +
-  "<p>Please press any key on your keyboard to begin.</p>",
+  "<p>Please press any key on your keyboard to begin.</p>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   data: {test_part: "welcome"}
 }
 timeline.push(welcome)
