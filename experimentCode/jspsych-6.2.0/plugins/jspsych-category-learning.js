@@ -32,6 +32,24 @@ jsPsych.plugins["category-learning"] = (function() {
         default: undefined,
         description: 'The HTML string to be displayed'
       },
+      dimension3: {
+        type: jsPsych.plugins.parameterType.HTML_STRING,
+        pretty_name: 'Stimulus',
+        default: undefined,
+        description: 'The HTML string to be displayed'
+      },
+      dimension4: {
+        type: jsPsych.plugins.parameterType.HTML_STRING,
+        pretty_name: 'Stimulus',
+        default: undefined,
+        description: 'The HTML string to be displayed'
+      },
+      dimension5: {
+        type: jsPsych.plugins.parameterType.HTML_STRING,
+        pretty_name: 'Stimulus',
+        default: undefined,
+        description: 'The HTML string to be displayed'
+      },
       labels: {
         type: jsPsych.plugins.parameterType.STRING,
         array: true,
@@ -75,12 +93,17 @@ jsPsych.plugins["category-learning"] = (function() {
 
   plugin.trial = function(display_element, trial) {
 
-    var image_html = "<div style='float: left;'><img src=" + trial.imageURL + " width='500'></img></div>"
+    var image_html = "<div style='float:left; margin-right:200px;'><img src=" + trial.imageURL + " width='500'></img></div>"
 
     if (trial.condition == 'separable') {
-      var table_html = '<div style="float: right;">' + '<table>' +
+      var table_html = '<div style="float:left;">' +
+      '<table width=150 style="margin-top: 100;">' +
+      '<tr><td>' + '</td><td>' + '</td></tr>' +
       '<tr><td>' + trial.labels[0] + ': </td><td>' + trial.dimension1 + '</td></tr>' +
       '<tr><td>' + trial.labels[1] + ': </td><td>' + trial.dimension2 + '</td></tr>' +
+      '<tr><td>' + trial.labels[2] + ': </td><td>' + trial.dimension3 + '</td></tr>' +
+      '<tr><td>' + trial.labels[3] + ': </td><td>' + trial.dimension4 + '</td></tr>' +
+      '<tr><td>' + trial.labels[4] + ': </td><td>' + trial.dimension5 + '</td></tr>' +
       '</table>' + '</div>'
       var new_html = '<div id="jspsych-category-learning-stimulus">' +
       image_html + table_html + '</div>'

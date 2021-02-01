@@ -3,8 +3,8 @@ var condition = 'separable'
 
 /* category learning variables */
 var nUniqueStimuli = 4
-var nDimensions = 2
-var allLabels = ['Size', 'Color']
+var nDimensions = 5
+var allLabels = ['Craft', 'Speed', 'Direction', 'Type', 'Status']
 var dimensionLabels = jsPsych.randomization.sampleWithoutReplacement(allLabels, nDimensions)
 var feedbackDuration = 1000 // in ms
 var ITI = 500 // in ms
@@ -92,9 +92,13 @@ timeline.push(finger_on_H)
 /* category learning trial */
 var category_learning_trial = {
   type: "category-learning",
+  condition: condition,
   imageURL: "img/radar.jpg",
   dimension1: jsPsych.timelineVariable('dimension1'),
   dimension2: jsPsych.timelineVariable('dimension2'),
+  dimension3: jsPsych.timelineVariable('dimension3'),
+  dimension4: jsPsych.timelineVariable('dimension4'),
+  dimension5: jsPsych.timelineVariable('dimension5'),
   labels: dimensionLabels,
   choices: ['f', 'h'],
   data: {
@@ -160,9 +164,13 @@ timeline.push(category_test_instructions)
 
 var category_test_trial = {
   type: "category-learning",
+  condition: condition,
   imageURL: "img/radar.jpg",
   dimension1: jsPsych.timelineVariable('dimension1'),
   dimension2: jsPsych.timelineVariable('dimension2'),
+  dimension3: jsPsych.timelineVariable('dimension3'),
+  dimension4: jsPsych.timelineVariable('dimension4'),
+  dimension5: jsPsych.timelineVariable('dimension5'),
   labels: dimensionLabels,
   choices: ['f', 'h'],
   data: {
