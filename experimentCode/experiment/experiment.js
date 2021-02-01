@@ -27,18 +27,10 @@ timeline.push(welcome)
 /* define instructions trial */
 var category_learning_instructions = {
   type: "html-keyboard-response",
-  stimulus: "<p>In this experiment, a circle will appear in the center " +
-      "of the screen.</p><p>If the circle is <strong>blue</strong>, " +
-      "press the letter F on the keyboard as fast as you can.</p>" +
-      "<p>If the circle is <strong>orange</strong>, press the letter J " +
-      "as fast as you can.</p>" +
-      "<div style='width: 700px;'>"+
-      "<div style='float: left;'><img src='img/blue.png'></img>" +
-      "<p class='small'><strong>Press the F key</strong></p></div>" +
-      "<div class='float: right;'><img src='img/orange.png'></img>" +
-      "<p class='small'><strong>Press the J key</strong></p></div>" +
-      "</div>"+
-      "<p>Press any key to begin.</p>",
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<p><b>Instructions</b></p>" +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   post_trial_gap: 200,
   data: { test_part: "category learning instructions" }
 }
