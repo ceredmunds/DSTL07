@@ -14,12 +14,13 @@ var learningCriterion = 0.5 // number between 0 and 1a
 var welcome = {
   type: "html-keyboard-response",
   stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
-  "<p>Welcome to the experiment and thank you for taking part.</p>" +
-  "<p>If you have any concerns or queries, please contact us via the Prolific message system.</p>" +
+  "<p><b>Welcome to the experiment and thank you for taking part.</b></p>" +
+  "<p>If you have any questions or concerns, please contact us via the Prolific message system.</p>" +
   "<div style='height:50px'></div>" +
-  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press any key on your keyboard to begin.</p></div>" +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
-  data: {test_part: "welcome"}
+  choices: ['space'],
+  data: { test_part: "welcome" }
 }
 timeline.push(welcome)
 
