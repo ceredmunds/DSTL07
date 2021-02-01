@@ -13,7 +13,11 @@ var learningCriterion = 0.5 // number between 0 and 1a
 /* define welcome message trial */
 var welcome = {
   type: "html-keyboard-response",
-  stimulus: "Welcome to the experiment. Press any key to begin.",
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<p>Welcome to the experiment and thank you for taking part.</p>" +
+  "<p>If you have any concerns or queries, please contact us via the Prolific message system.</p>" +
+  "<div style='height:50px'></div>" +
+  "<p>Please press any key on your keyboard to begin.</p>",
   data: {test_part: "welcome"}
 }
 timeline.push(welcome)
