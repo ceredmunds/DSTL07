@@ -14,9 +14,11 @@ var learningCriterion = 0.5 // number between 0 and 1a
 var welcome = {
   type: "html-keyboard-response",
   stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
-  "<p><b>Welcome to the experiment and thank you for taking part.</b></p>" +
+  "<div style='width:700px'>" +
+  "<p style='font-size:26px'><b>Welcome to the experiment and thank you for taking part.</b></p>" +
+  "<p>Note that this experiment is designed for resolutions of 1200px by 800px. If your screen has a lower resolution than this, please return this experiment.</p>" +
   "<p>If you have any questions or concerns, please contact us via the Prolific message system.</p>" +
-  "<div style='height:50px'></div>" +
+  "</div>" +
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
@@ -25,16 +27,38 @@ var welcome = {
 timeline.push(welcome)
 
 /* define instructions trial */
-var category_learning_instructions = {
+var category_learning_instructions1 = {
   type: "html-keyboard-response",
   stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<div style='width:700px'>" +
   "<p><b>Instructions</b></p>" +
+  "<p>In this experiment, you will fill the role of a junior seaman who must decide whether craft are friendly or hostile. " +
+  " The experiment has two phases:</p>" +
+  "<p><b>Phase 1. </b>where you learn the features of friendly and hostile craft.</p>" +
+  "<p><b>Phase 2. </b>where you apply what you have learned in a real exercise.</p>" +
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
-  post_trial_gap: 200,
+  choices: ['space'],
   data: { test_part: "category learning instructions" }
 }
-timeline.push(category_learning_instructions)
+timeline.push(category_learning_instructions1)
+
+var category_learning_instructions2 = {
+  type: "html-keyboard-response",
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<div style='width:700px'>" +
+  "<p><b>Phase 1</b></p>" +
+  "<p>In phase 1, you will learn the features of friendly and hostile craft. " +
+  " At the beginning of this phase you will have to guess, but using the feedback you should be able to work out the friendliness of each craft.</p>" +
+  "<p>If you think the craft is <b>friendly</b>, please press the <b>F</b> key.</p>" +
+  "<p>If you think the craft is <b>hostile</b>, please press the <b>H</b> key.</p>" +
+  "<p>Please note that if you do not reach sufficient accuracy by the end of this phase, you will not be allowed to continue to the second phase of the experiment.</p>" +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+  choices: ['space'],
+  data: { test_part: "category learning instructions" }
+}
+timeline.push(category_learning_instructions2)
 
 /* category learning trial */
 var category_learning_trial = {
