@@ -8,6 +8,12 @@ jsPsych.plugins["category-learning"] = (function() {
     name: 'category-learning',
     description: '',
     parameters: {
+      condition: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Condition',
+        default: null,
+        description: 'Condition: either separable or integral.'
+      },
       imageURL: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Image',
@@ -70,12 +76,15 @@ jsPsych.plugins["category-learning"] = (function() {
   plugin.trial = function(display_element, trial) {
 
     var image_html = "<div style='float: left;'><img src=" + trial.imageURL + " width='500'></img></div>"
-    var table_html = '<div style="float: right;">' + '<table>' +
-    '<tr><td>' + trial.labels[0] + ': </td><td>' + trial.dimension1 + '</td></tr>' +
-    '<tr><td>' + trial.labels[1] + ': </td><td>' + trial.dimension2 + '</td></tr>' +
-    '</table>' + '</div>'
-    var new_html = '<div id="jspsych-category-learning-stimulus">' +
-    image_html + table_html + '</div>'
+
+    if (trial.condition == 'separable') {
+      var table_html = '<div style="float: right;">' + '<table>' +
+      '<tr><td>' + trial.labels[0] + ': </td><td>' + trial.dimension1 + '</td></tr>' +
+      '<tr><td>' + trial.labels[1] + ': </td><td>' + trial.dimension2 + '</td></tr>' +
+      '</table>' + '</div>'
+      var new_html = '<div id="jspsych-category-learning-stimulus">' +
+      image_html + table_html + '</div>'
+    }
 
     // add prompt
     if(trial.prompt !== null){

@@ -1,5 +1,5 @@
-/* create timeline */
-var timeline = []
+/* participant based variables */
+var condition = 'separable'
 
 /* category learning variables */
 var nUniqueStimuli = 4
@@ -9,6 +9,9 @@ var dimensionLabels = jsPsych.randomization.sampleWithoutReplacement(allLabels, 
 var feedbackDuration = 1000 // in ms
 var ITI = 500 // in ms
 var learningCriterion = 0.5 // number between 0 and 1a
+
+/* create timeline */
+var timeline = []
 
 /* define welcome message trial */
 var welcome = {
@@ -53,12 +56,38 @@ var category_learning_instructions2 = {
   "<p>If you think the craft is <b>friendly</b>, please press the <b>F</b> key.</p>" +
   "<p>If you think the craft is <b>hostile</b>, please press the <b>H</b> key.</p>" +
   "<p>Please note that if you do not reach sufficient accuracy by the end of this phase, you will not be allowed to continue to the second phase of the experiment.</p>" +
-  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard when you are ready to start.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
   data: { test_part: "category learning instructions" }
 }
 timeline.push(category_learning_instructions2)
+
+var finger_on_F = {
+  type: "html-keyboard-response",
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<div style='width:700px'>" +
+  "<p>Please put your left index finger on the <b>F key</b>.</p>" +
+  "<p>Remember, <b>F</b> is for <b>friendly</b>." +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>F key</b> on your keyboard to continue.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+  choices: ['f'],
+  data: { test_part: "fingerF" }
+}
+timeline.push(finger_on_F)
+
+var finger_on_H = {
+  type: "html-keyboard-response",
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<div style='width:700px'>" +
+  "<p>Please put your left index finger on the <b>H key</b>.</p>" +
+  "<p>Remember, <b>H</b> is for <b>hostile</b>." +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>H key</b> on your keyboard to continue.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+  choices: ['h'],
+  data: { test_part: "fingerH" }
+}
+timeline.push(finger_on_H)
 
 /* category learning trial */
 var category_learning_trial = {
@@ -118,9 +147,13 @@ timeline.push(category_learning_procedure)
 /* category learning trial */
 var category_test_instructions = {
   type: "html-keyboard-response",
-  stimulus: "<p>In the following, you will be asked to complete the categorisation task without feedback.</p>" +
-    "<p>Press any key to begin.</p>",
-  post_trial_gap: 200,
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<div style='width:700px'>" +
+  "<p><b>Phase 2</b></p>" +
+  "</div>" +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+  choices: ['space'],
   data: { test_part: "category test instructions" }
 }
 timeline.push(category_test_instructions)
@@ -158,15 +191,22 @@ timeline.push(category_test_procedure)
 /* Verbal report */
 var verbal_report_instructions = {
   type: "html-keyboard-response",
-  stimulus: "<p>In the following, we will ask you some questions about how you completed this experiment.</p>" +
-    "<p>Don't worry: there are absolutely no wrong answers!</p>" +
-    "<p>Also, your answers to these questions WILL NOT influence whether you are paid.</p>" +
-    "<p>Just try your best to explain as clearly and in as much detail as possible the answer.</p>" +
-    "<p>Press any key to begin.</p>",
-  post_trial_gap: 200,
-  data: { test_part: "category learning instructions" }
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<div style='width:700px'>" +
+  "<p><b>Verbal report</b></p>" +
+  "<p>In the following, we will ask you some questions about how you completed this experiment.</p>" +
+  "<p>Don't worry: there are absolutely no wrong answers!</p>" +
+  "<p>Also, your answers to these questions WILL NOT influence whether you are paid.</p>" +
+  "<p>Just try your best to explain as clearly and in as much detail as possible the answer.</p>" +
+  "<p>Press any key to begin.</p>" +
+  "</div>" +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+  choices: ['space'],
+  data: { test_part: "verbal report instructions" }
 }
 timeline.push(verbal_report_instructions)
+
 
 var survey_trial = {
   type: 'survey-text',
@@ -198,8 +238,14 @@ timeline.push(survey_trial)
 
 var goodbye = {
   type: "html-keyboard-response",
-  stimulus: "<p>Thank you for taking part!</p>",
-  data: {test_part: "goodbye"}
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<div style='width:700px'>" +
+  "<p><b>Thank you for taking part!</b></p>" +
+  "</div>" +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> to return to Prolific Academic.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+  choices: ['space'],
+  data: { test_part: "goodbye" }
 }
 timeline.push(goodbye)
 
