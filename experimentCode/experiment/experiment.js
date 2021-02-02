@@ -85,7 +85,11 @@ var finger_on_H = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>H key</b> on your keyboard to continue.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['h'],
-  data: { test_part: "fingerH" }
+  data: { test_part: "fingerH" },
+  on_finish: function () {
+    document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "#0102d1"
+    document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "white"
+  }
 }
 timeline.push(finger_on_H)
 
@@ -93,12 +97,12 @@ timeline.push(finger_on_H)
 var category_learning_trial = {
   type: "category-learning",
   condition: condition,
-  imageURL: "img/radar.jpg",
   dimension1: jsPsych.timelineVariable('dimension1'),
   dimension2: jsPsych.timelineVariable('dimension2'),
   dimension3: jsPsych.timelineVariable('dimension3'),
   dimension4: jsPsych.timelineVariable('dimension4'),
   dimension5: jsPsych.timelineVariable('dimension5'),
+  nBoats: 10,
   labels: dimensionLabels,
   choices: ['f', 'h'],
   data: {
@@ -158,19 +162,27 @@ var category_test_instructions = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "category test instructions" }
+  data: { test_part: "category test instructions" },
+  on_start: function () {
+    document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "black"
+    document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "white"
+  },
+  on_finish: function () {
+    document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "#0102d1"
+    document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "white"
+  }
 }
 timeline.push(category_test_instructions)
 
 var category_test_trial = {
   type: "category-learning",
   condition: condition,
-  imageURL: "img/radar.jpg",
   dimension1: jsPsych.timelineVariable('dimension1'),
   dimension2: jsPsych.timelineVariable('dimension2'),
   dimension3: jsPsych.timelineVariable('dimension3'),
   dimension4: jsPsych.timelineVariable('dimension4'),
   dimension5: jsPsych.timelineVariable('dimension5'),
+  nBoats: 10,
   labels: dimensionLabels,
   choices: ['f', 'h'],
   data: {
@@ -211,10 +223,13 @@ var verbal_report_instructions = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "verbal report instructions" }
+  data: { test_part: "verbal report instructions" },
+  on_start: function () {
+    document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "black"
+    document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "white"
+  }
 }
 timeline.push(verbal_report_instructions)
-
 
 var survey_trial = {
   type: 'survey-text',

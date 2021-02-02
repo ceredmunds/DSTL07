@@ -2,7 +2,7 @@
 
 jsPsych.plugins["category-learning"] = (function() {
 
-  var plugin = {};
+  var plugin = {}
 
   plugin.info = {
     name: 'category-learning',
@@ -14,11 +14,11 @@ jsPsych.plugins["category-learning"] = (function() {
         default: null,
         description: 'Condition: either separable or integral.'
       },
-      imageURL: {
-        type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Image',
+      nBoats: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'NBoats',
         default: null,
-        description: 'URL of image to be displayed next to categories.'
+        description: 'Number of boats.'
       },
       dimension1: {
         type: jsPsych.plugins.parameterType.HTML_STRING,
@@ -93,7 +93,23 @@ jsPsych.plugins["category-learning"] = (function() {
 
   plugin.trial = function(display_element, trial) {
 
-    var image_html = "<div style='float:left; margin-right:200px;'><img src=" + trial.imageURL + " width='500'></img></div>"
+    // Get generic boats
+    var html_boats = ''
+    for (var i = 0; i < trial.nBoats; i++) {
+      var pos_top = Math.round(Math.random() * 475 + 5)
+      var pos_left = Math.round(Math.random() * 475 + 5)
+      html_boats += "<img width='20px' src='img/background/boat.png' style='position:absolute;top:" + pos_top + "px;left:" + pos_left + "px;'></img>"
+    }
+
+    // Add highlighted boat
+    var pos_top = Math.round(Math.random() * 250 + 125)
+    var pos_left = Math.round(Math.random() * 250 + 125)
+    html_boats += "<img width='30px' src='img/background/highlighted_boat.png' style='position:absolute;top:" + pos_top + "px;left:" + pos_left + "px;'></img>"
+
+    var image_html = "<div style='float:left; margin-right:200px; position: relative;'>" +
+    "<img src='img/background/radar.png' width='500' style='position:relative;'></img>" +
+    html_boats +
+    "</div>"
 
     if (trial.condition == 'separable') {
       var table_html = '<div style="float:left;">' +
