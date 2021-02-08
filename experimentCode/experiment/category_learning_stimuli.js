@@ -5,7 +5,7 @@ var category_learning_stimuli = [
     "dimension3": 1,
     "dimension4": 1,
     "dimension5": 1,
-    "category": "f"
+    "category": 0
   },
   {
     "dimension1": 0,
@@ -13,7 +13,7 @@ var category_learning_stimuli = [
     "dimension3": 1,
     "dimension4": 0,
     "dimension5": 0,
-    "category": "f"
+    "category": 0
   },
   {
     "dimension1": 1,
@@ -21,7 +21,7 @@ var category_learning_stimuli = [
     "dimension3": 1,
     "dimension4": 0,
     "dimension5": 1,
-    "category": "h"
+    "category": 1
   },
   {
     "dimension1": 0,
@@ -29,6 +29,6 @@ var category_learning_stimuli = [
     "dimension3": 0,
     "dimension4": 1,
     "dimension5": 0,
-    "category": "h"
+    "category": 1
   }
 ]

@@ -5,7 +5,17 @@ var condition = 'separable'
 var nUniqueStimuli = 4
 var nDimensions = 5
 var allLabels = ['Craft', 'Speed', 'Direction', 'Type', 'Status']
-var dimensionLabels = jsPsych.randomization.sampleWithoutReplacement(allLabels, nDimensions)
+const labelOrder = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3, 4], nDimensions)
+const dimensionLabels = labelOrder.map(i => allLabels[i])
+
+const displayOrder = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3, 4], nDimensions)
+
+const categoryOrder = jsPsych.randomization.sampleWithoutReplacement([0, 1], 2)
+const choices = ['f', 'h']
+const categoryLabels = categoryOrder.map(i => choices[i])
+// const fIndex = categoryLabels.indexOf('f')
+// const hIndex = categoryLabels.indexOf('h')
+
 var feedbackDuration = 1000 // in ms
 var ITI = 500 // in ms
 var learningCriterion = 0.5 // number between 0 and 1a
@@ -108,9 +118,11 @@ var category_learning_trial = {
   data: {
     test_part: "category_learning_trial",
     dimLabels: dimensionLabels,
-    correct_response: jsPsych.timelineVariable('category')
+    abstract_category: jsPsych.timelineVariable('category')
   },
   on_finish: function (data) {
+    data.correct_response = categoryLabels[data.abstract_category]
+
     if (data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.correct_response)) {
       data.correct = "true"
     } else {
@@ -188,9 +200,10 @@ var category_test_trial = {
   data: {
     test_part: "category_test_trial",
     dimLabels: dimensionLabels,
-    correct_response: jsPsych.timelineVariable('category')
+    abstract_category: jsPsych.timelineVariable('category')
   },
   on_finish: function (data) {
+    data.correct_response = categoryLabels[data.abstract_category]
     if (data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.correct_response)) {
       data.correct = "true"
     } else {
