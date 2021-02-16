@@ -112,7 +112,6 @@ var category_learning_trial = {
   dimension3: jsPsych.timelineVariable('dimension3'),
   dimension4: jsPsych.timelineVariable('dimension4'),
   dimension5: jsPsych.timelineVariable('dimension5'),
-  nBoats: 10,
   dimOrder: dimensionOrder,
   displayOrder : displayOrder,
   choices: ['f', 'h'],
@@ -195,7 +194,6 @@ var category_test_trial = {
   dimension3: jsPsych.timelineVariable('dimension3'),
   dimension4: jsPsych.timelineVariable('dimension4'),
   dimension5: jsPsych.timelineVariable('dimension5'),
-  nBoats: 10,
   labels: dimensionOrder,
   choices: ['f', 'h'],
   data: {

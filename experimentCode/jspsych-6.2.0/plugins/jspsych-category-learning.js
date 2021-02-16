@@ -14,12 +14,6 @@ jsPsych.plugins["category-learning"] = (function() {
         default: null,
         description: 'Condition: either separable or integral.'
       },
-      nBoats: {
-        type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'NBoats',
-        default: null,
-        description: 'Number of boats.'
-      },
       dimension1: {
         type: jsPsych.plugins.parameterType.HTML_STRING,
         pretty_name: 'Stimulus',
@@ -99,31 +93,12 @@ jsPsych.plugins["category-learning"] = (function() {
   }
 
   plugin.trial = function(display_element, trial) {
-
-    // Get generic boats
-    var radar_boats = ''
-    for (var i = 0; i < trial.nBoats; i++) {
-      var pos_top = Math.round(Math.random() * 475 + 5)
-      var pos_left = Math.round(Math.random() * 475 + 5)
-      radar_boats += "<img width='20px' src='img/background/boat.png' style='position:absolute;top:" + pos_top + "px;left:" + pos_left + "px;'></img>"
-    }
-
-    // Add highlighted boat
-    var pos_top = Math.round(Math.random() * 250 + 125)
-    var pos_left = Math.round(Math.random() * 250 + 125)
-    radar_boats += "<img width='30px' src='img/background/highlighted_boat.png' style='position:absolute;top:" + pos_top + "px;left:" + pos_left + "px;'></img>"
-
-    var radar_html = "<div style='float:left; margin-right:200px; position: relative;'>" +
-    "<img src='img/background/radar.png' width='500' style='position:relative;'></img>" +
-    radar_boats +
-    "</div>"
-
     // Get craft
     craft = eval("trial.dimension" + trial.dimOrder[0])
     if (craft == 0) {
       craftHtml = '<img src="img/stimuli/air.png"></img>'
       var yPos = "0px"
-    } else if (craft == 1) {
+    } else if (craft == 1) { // submarine
       craftHtml = '<img src="img/stimuli/submarine.png"></img>'
       var yPos = "-30px"
     }
@@ -170,35 +145,38 @@ jsPsych.plugins["category-learning"] = (function() {
       '<div>' + displayHtml[3] + '</div>' +
       '<div>' + displayHtml[4] + '</div>' +
       '</div>'
-      var new_html = '<div id="jspsych-category-learning-stimulus">' +
-      radar_html + table_html + '</div>'
     } else if (trial.condition == 'integrated') {
       // Get speed
       speed = eval("trial.dimension" + trial.dimOrder[3])
 
       // Get direction
       direction = eval("trial.dimension" + trial.dimOrder[4])
+      var xPos = "0px"
       if (speed==0 & direction==0) {
         speedDirectionHtml = '<img src="img/stimuli/slow_left.png"></img>'
+        if (craft == 1) {
+          xPos = "-15px"
+        }
       } else if (speed==1 & direction==0) {
         speedDirectionHtml = '<img src="img/stimuli/fast_left.png"></img>'
       } else if (speed==0 & direction==1) {
         speedDirectionHtml = '<img src="img/stimuli/slow_right.png"></img>'
+        if (craft == 1) {
+          xPos = "15px"
+        }
       } else if (speed==1 & direction==1) {
         speedDirectionHtml = '<img src="img/stimuli/fast_right.png"></img>'
       }
       displayHtml = [speedDirectionHtml, craftHtml, typeHtml, statusHtml] // don't need to randomise order in this condition
       var table_html = '<div style="float:left;position:relative;">' +
-      '<div class="layer">' + displayHtml[0] + '</div>' +
+      '<div class="layer" style="left:' + xPos + ';">' + displayHtml[0] + '</div>' +
       '<div class="layer">' + displayHtml[1] + '</div>' +
       '<div class="layer" style="top:' + yPos + ';">' + displayHtml[2] + '</div>' + // edit to shift decoy to correct place
       '<div class="layer">' + displayHtml[3] + '</div>' +
       '</div>'
-
-      var new_html = '<div id="jspsych-category-learning-stimulus">' +
-      radar_html + table_html + '</div>'
     }
-
+    var new_html = '<div id="jspsych-category-learning-stimulus">' +
+      table_html + '</div>'
     // add prompt
     if(trial.prompt !== null){
       new_html += trial.prompt;
