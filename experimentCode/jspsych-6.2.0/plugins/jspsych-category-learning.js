@@ -1,18 +1,27 @@
-/** **/
+/**
+ * jspsych-html-keyboard-response
+ * Josh de Leeuw
+ *
+ * plugin for displaying a stimulus and getting a keyboard response
+ *
+ * documentation: docs.jspsych.org
+ *
+ **/
+
 
 jsPsych.plugins["category-learning"] = (function() {
 
-  var plugin = {}
+  var plugin = {};
 
   plugin.info = {
-    name: 'category-learning',
+    name: 'html-keyboard-response',
     description: '',
     parameters: {
-      condition: {
+      displayCondition: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Condition',
         default: null,
-        description: 'Condition: either separable or integral.'
+        description: 'Condition: either separated or integrated.'
       },
       dimension1: {
         type: jsPsych.plugins.parameterType.HTML_STRING,
@@ -88,21 +97,23 @@ jsPsych.plugins["category-learning"] = (function() {
         pretty_name: 'Response ends trial',
         default: true,
         description: 'If true, trial will end when subject makes a response.'
-      }
+      },
+
     }
   }
 
   plugin.trial = function(display_element, trial) {
+    // Get stimulus to display
+    var stimulus = ''
     // Get craft
-    craft = eval("trial.dimension" + trial.dimOrder[0])
+    var craft = eval("trial.dimension" + trial.dimOrder[0])
     if (craft == 0) {
       craftHtml = '<img src="img/stimuli/air.png"></img>'
       var yPos = "0px"
     } else if (craft == 1) { // submarine
       craftHtml = '<img src="img/stimuli/submarine.png"></img>'
-      var yPos = "-30px"
+      var yPos = "-30px" // edit to shift decoy to correct place
     }
-
     // Get type
     type = eval("trial.dimension" + trial.dimOrder[1])
     if (type == 0) {
@@ -110,7 +121,6 @@ jsPsych.plugins["category-learning"] = (function() {
     } else if (type == 1) {
       typeHtml = '<img src="img/stimuli/decoy.png"></img>'
     }
-
     // Get status
     status = eval("trial.dimension" + trial.dimOrder[2])
     if (status == 0) {
@@ -118,40 +128,41 @@ jsPsych.plugins["category-learning"] = (function() {
     } else if (status == 1) {
       statusHtml = '<img src="img/stimuli/damaged.png"></img>'
     }
+    // Get speed
+    speed = eval("trial.dimension" + trial.dimOrder[3])
+    // Get direction
+    direction = eval("trial.dimension" + trial.dimOrder[4])
 
-    if (trial.condition == 'separable') {
-      // Get speed
-      speed = eval("trial.dimension" + trial.dimOrder[3])
+    if (trial.displayCondition == 'separated') {
+      // Get speed html
       if (speed == 0) {
-        speedHtml = '<img src="img/stimuli/slow.png"></img>'
+       speedHtml = '<img src="img/stimuli/slow.png"></img>'
       } else if (speed == 1) {
-        speedHtml = '<img src="img/stimuli/fast.png"></img>'
+       speedHtml = '<img src="img/stimuli/fast.png"></img>'
       }
-
-      direction = eval("trial.dimension" + trial.dimOrder[4])
-      if (direction == 0) {
-        directionHtml = '<img src="img/stimuli/left.png"></img>'
-      } else if (direction == 1) {
-        directionHtml = '<img src="img/stimuli/right.png"></img>'
-      }
-
+     // Get direction html
+     if (direction == 0) {
+       directionHtml = '<img src="img/stimuli/left.png"></img>'
+     } else if (direction == 1) {
+       directionHtml = '<img src="img/stimuli/right.png"></img>'
+     }
+      // Randomise order of presentation (per participant)
       stimulusHtml = [craftHtml, typeHtml, statusHtml, speedHtml, directionHtml]
       const displayHtml = trial.displayOrder.map(i => stimulusHtml[i])
-
-      var table_html = '<div style="float:left;">' +
-      '<div>' + displayHtml[0] + '</div>' +
-      '<div>' + displayHtml[1] + '</div>' +
-      '<div>' + displayHtml[2] + '</div>' +
-      '<div>' + displayHtml[3] + '</div>' +
-      '<div>' + displayHtml[4] + '</div>' +
+      stimulus = '<div class="row">' +
+      '<div class="column">' + displayHtml[0] + '</div>' +
+      '<div class="column">' + displayHtml[1] + '</div>' +
+      '<div class="column">' + displayHtml[2] + '</div>' +
+      '</div>' +
+      '<div class="row">' +
+      '<div class="shift">' + displayHtml[3] + '</div>' +
+      '<div class="column">' + displayHtml[4] + '</div>' +
       '</div>'
-    } else if (trial.condition == 'integrated') {
-      // Get speed
-      speed = eval("trial.dimension" + trial.dimOrder[3])
 
-      // Get direction
-      direction = eval("trial.dimension" + trial.dimOrder[4])
-      var xPos = "0px"
+      var new_html = '<div id="jspsych-category-learning-stimulus">' + stimulus + '</div>'
+    } else if (trial.displayCondition == 'integrated') {
+      var xPos = "0px" // offset for slow submarine to compensate for badly drawn stimulus
+      // Get spped and direction html
       if (speed==0 & direction==0) {
         speedDirectionHtml = '<img src="img/stimuli/slow_left.png"></img>'
         if (craft == 1) {
@@ -168,15 +179,19 @@ jsPsych.plugins["category-learning"] = (function() {
         speedDirectionHtml = '<img src="img/stimuli/fast_right.png"></img>'
       }
       displayHtml = [speedDirectionHtml, craftHtml, typeHtml, statusHtml] // don't need to randomise order in this condition
-      var table_html = '<div style="float:left;position:relative;">' +
+      stimulus = '<div class="background">' +
       '<div class="layer" style="left:' + xPos + ';">' + displayHtml[0] + '</div>' +
       '<div class="layer">' + displayHtml[1] + '</div>' +
       '<div class="layer" style="top:' + yPos + ';">' + displayHtml[2] + '</div>' + // edit to shift decoy to correct place
       '<div class="layer">' + displayHtml[3] + '</div>' +
       '</div>'
+      var new_html = '<div id="jspsych-category-learning-stimulus">' + stimulus + '</div>'
+    } else {
+      stimulus = 'WARNING: UNDEFINED CONDITION'
+      // Display stimulus
+      var new_html = '<div id="jspsych-category-learning-stimulus">' + 'WARNING: UNDEFINED CONDITION' + '</div>'
     }
-    var new_html = '<div id="jspsych-category-learning-stimulus">' +
-      table_html + '</div>'
+
     // add prompt
     if(trial.prompt !== null){
       new_html += trial.prompt;
@@ -206,7 +221,6 @@ jsPsych.plugins["category-learning"] = (function() {
       var trial_data = {
         "rt": response.rt,
         "stimulus": trial.stimulus,
-        "image": trial.imageURL,
         "key_press": response.key
       };
 
@@ -248,7 +262,7 @@ jsPsych.plugins["category-learning"] = (function() {
     // hide stimulus if stimulus_duration is set
     if (trial.stimulus_duration !== null) {
       jsPsych.pluginAPI.setTimeout(function() {
-        display_element.querySelector('#jspsych-html-keyboard-response-stimulus').style.visibility = 'hidden';
+        display_element.querySelector('#jspsych-category-learning-stimulus').style.visibility = 'hidden';
       }, trial.stimulus_duration);
     }
 
@@ -262,4 +276,4 @@ jsPsych.plugins["category-learning"] = (function() {
   };
 
   return plugin;
-})()
+})();

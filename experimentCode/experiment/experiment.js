@@ -1,5 +1,5 @@
 /* participant based variables */
-var condition = 'integrated'
+var displayCondition = 'separated' // integrated or separated
 
 /* category learning variables */
 var nUniqueStimuli = 4
@@ -104,31 +104,43 @@ var finger_on_H = {
 // timeline.push(finger_on_H)
 
 /* category learning trial */
+// var category_learning_trial = {
+//   type: "category-learning",
+//   condition: condition,
+//   dimension1: jsPsych.timelineVariable('dimension1'),
+//   dimension2: jsPsych.timelineVariable('dimension2'),
+//   dimension3: jsPsych.timelineVariable('dimension3'),
+//   dimension4: jsPsych.timelineVariable('dimension4'),
+//   dimension5: jsPsych.timelineVariable('dimension5'),
+//   dimOrder: dimensionOrder,
+//   displayOrder : displayOrder,
+//   choices: ['f', 'h'],
+//   data: {
+//     test_part: "category_learning_trial",
+//     dimLabels: dimensionOrder,
+//     abstract_category: jsPsych.timelineVariable('category')
+//   },
+//   on_finish: function (data) {
+//     data.correct_response = categoryLabels[data.abstract_category]
+//
+//     if (data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.correct_response)) {
+//       data.correct = "true"
+//     } else {
+//       data.correct = "false"
+//     }
+//   }
+// }
+
 var category_learning_trial = {
-  type: "category-learning",
-  condition: condition,
+  type: 'category-learning',
+  displayCondition: displayCondition,
   dimension1: jsPsych.timelineVariable('dimension1'),
   dimension2: jsPsych.timelineVariable('dimension2'),
   dimension3: jsPsych.timelineVariable('dimension3'),
   dimension4: jsPsych.timelineVariable('dimension4'),
   dimension5: jsPsych.timelineVariable('dimension5'),
   dimOrder: dimensionOrder,
-  displayOrder : displayOrder,
-  choices: ['f', 'h'],
-  data: {
-    test_part: "category_learning_trial",
-    dimLabels: dimensionOrder,
-    abstract_category: jsPsych.timelineVariable('category')
-  },
-  on_finish: function (data) {
-    data.correct_response = categoryLabels[data.abstract_category]
-
-    if (data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.correct_response)) {
-      data.correct = "true"
-    } else {
-      data.correct = "false"
-    }
-  }
+  displayOrder : displayOrder
 }
 
 var category_learning_feedback = {
@@ -165,92 +177,92 @@ var category_learning_procedure = {
 timeline.push(category_learning_procedure)
 
 /* category learning trial */
-var category_test_instructions = {
-  type: "html-keyboard-response",
-  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
-  "<div style='width:700px'>" +
-  "<p><b>Phase 2</b></p>" +
-  "</div>" +
-  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
-  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
-  choices: ['space'],
-  data: { test_part: "category test instructions" },
-  on_start: function () {
-    document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "black"
-    document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "white"
-  },
-  on_finish: function () {
-    document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "#0102d1"
-    document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "white"
-  }
-}
-timeline.push(category_test_instructions)
-
-var category_test_trial = {
-  type: "category-learning",
-  condition: condition,
-  dimension1: jsPsych.timelineVariable('dimension1'),
-  dimension2: jsPsych.timelineVariable('dimension2'),
-  dimension3: jsPsych.timelineVariable('dimension3'),
-  dimension4: jsPsych.timelineVariable('dimension4'),
-  dimension5: jsPsych.timelineVariable('dimension5'),
-  labels: dimensionOrder,
-  choices: ['f', 'h'],
-  data: {
-    test_part: "category_test_trial",
-    dimLabels: dimensionOrder,
-    abstract_category: jsPsych.timelineVariable('category')
-  },
-  on_finish: function (data) {
-    data.correct_response = categoryLabels[data.abstract_category]
-    if (data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.correct_response)) {
-      data.correct = "true"
-    } else {
-      data.correct = "false"
-    }
-  },
-  post_trial_gap: ITI
-}
-
-var category_test_procedure = {
-  timeline: [category_test_trial],
-  timeline_variables: category_test_stimuli,
-  repetitions: 1,
-  randomize_order: true
-}
-timeline.push(category_test_procedure)
-
-/* Verbal report */
-var verbal_report_instructions = {
-  type: "html-keyboard-response",
-  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
-  "<div style='width:700px'>" +
-  "<p><b>Verbal report</b></p>" +
-  "<p>In the following, we will ask you some questions about how you completed this experiment.</p>" +
-  "<p>Don't worry: there are absolutely no wrong answers!</p>" +
-  "<p>Also, your answers to these questions WILL NOT influence whether you are paid.</p>" +
-  "<p>Just try your best to explain as clearly and in as much detail as possible the answer.</p>" +
-  "<p>Press any key to begin.</p>" +
-  "</div>" +
-  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
-  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
-  choices: ['space'],
-  data: { test_part: "verbal report instructions" },
-  on_start: function () {
-    document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "black"
-    document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "white"
-  }
-}
-timeline.push(verbal_report_instructions)
-
-var survey_trial = {
-  type: 'survey-text',
-  questions: [
-    { prompt: "Please describe which stimulus dimension you thought was most important:", rows: 30, columns: 60, name: 'stimDimensionQ'}
-  ],
-  data: { test_part: "verbal report_trial" }
-}
-timeline.push(survey_trial)
+// var category_test_instructions = {
+//   type: "html-keyboard-response",
+//   stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+//   "<div style='width:700px'>" +
+//   "<p><b>Phase 2</b></p>" +
+//   "</div>" +
+//   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
+//   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+//   choices: ['space'],
+//   data: { test_part: "category test instructions" },
+//   on_start: function () {
+//     document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "black"
+//     document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "white"
+//   },
+//   on_finish: function () {
+//     document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "#0102d1"
+//     document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "white"
+//   }
+// }
+// timeline.push(category_test_instructions)
+//
+// var category_test_trial = {
+//   type: "category-learning",
+//   condition: condition,
+//   dimension1: jsPsych.timelineVariable('dimension1'),
+//   dimension2: jsPsych.timelineVariable('dimension2'),
+//   dimension3: jsPsych.timelineVariable('dimension3'),
+//   dimension4: jsPsych.timelineVariable('dimension4'),
+//   dimension5: jsPsych.timelineVariable('dimension5'),
+//   labels: dimensionOrder,
+//   choices: ['f', 'h'],
+//   data: {
+//     test_part: "category_test_trial",
+//     dimLabels: dimensionOrder,
+//     abstract_category: jsPsych.timelineVariable('category')
+//   },
+//   on_finish: function (data) {
+//     data.correct_response = categoryLabels[data.abstract_category]
+//     if (data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.correct_response)) {
+//       data.correct = "true"
+//     } else {
+//       data.correct = "false"
+//     }
+//   },
+//   post_trial_gap: ITI
+// }
+//
+// var category_test_procedure = {
+//   timeline: [category_test_trial],
+//   timeline_variables: category_test_stimuli,
+//   repetitions: 1,
+//   randomize_order: true
+// }
+// timeline.push(category_test_procedure)
+//
+// /* Verbal report */
+// var verbal_report_instructions = {
+//   type: "html-keyboard-response",
+//   stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+//   "<div style='width:700px'>" +
+//   "<p><b>Verbal report</b></p>" +
+//   "<p>In the following, we will ask you some questions about how you completed this experiment.</p>" +
+//   "<p>Don't worry: there are absolutely no wrong answers!</p>" +
+//   "<p>Also, your answers to these questions WILL NOT influence whether you are paid.</p>" +
+//   "<p>Just try your best to explain as clearly and in as much detail as possible the answer.</p>" +
+//   "<p>Press any key to begin.</p>" +
+//   "</div>" +
+//   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
+//   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+//   choices: ['space'],
+//   data: { test_part: "verbal report instructions" },
+//   on_start: function () {
+//     document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "black"
+//     document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "white"
+//   }
+// }
+// timeline.push(verbal_report_instructions)
+//
+// var survey_trial = {
+//   type: 'survey-text',
+//   questions: [
+//     { prompt: "Please describe which stimulus dimension you thought was most important:", rows: 30, columns: 60, name: 'stimDimensionQ'}
+//   ],
+//   data: { test_part: "verbal report_trial" }
+// }
+// timeline.push(survey_trial)
 
 /* define debrief */
 // var debrief_block = {

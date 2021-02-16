@@ -1,11 +1,30 @@
 #jspsych-category-learning-stimulus {
-  width: 1100px;
-  height: 500px;
   margin: auto;
 }
 
+.column {
+  float: left;
+  padding: 5px;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* #container {width:400px; overflow:hidden;}
+div {float:left; display:inline; margin:15px;} */
+.shift {
+  margin-left: 110px;
+  float: left;
+  padding: 5px;
+}
+
 .background {
-    position: relative;
+  position: relative;
+  width: 250px;
+  height: 200px;
 }
 
 .layer {
