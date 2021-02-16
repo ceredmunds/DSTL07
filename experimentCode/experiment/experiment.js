@@ -1,5 +1,5 @@
 /* participant based variables */
-var displayCondition = 'separated' // integrated or separated
+var displayCondition = 'integrated' // integrated or separated
 
 /* category learning variables */
 var nUniqueStimuli = 4

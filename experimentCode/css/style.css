@@ -5,6 +5,8 @@
 .column {
   float: left;
   padding: 5px;
+  border: 2px solid #555;
+  background: white;
 }
 
 .row::after {
@@ -13,18 +15,19 @@
   display: table;
 }
 
-/* #container {width:400px; overflow:hidden;}
-div {float:left; display:inline; margin:15px;} */
 .shift {
-  margin-left: 110px;
+  margin-left: 132px;
   float: left;
   padding: 5px;
+  border: 2px solid #555;
+  background: white;
 }
 
 .background {
   position: relative;
   width: 250px;
-  height: 200px;
+  height: 177px;
+  border: 2px solid #555;
 }
 
 .layer {
