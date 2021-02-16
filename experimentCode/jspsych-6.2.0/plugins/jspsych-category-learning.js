@@ -50,12 +50,19 @@ jsPsych.plugins["category-learning"] = (function() {
         default: undefined,
         description: 'The HTML string to be displayed'
       },
-      labels: {
+      dimOrder: {
         type: jsPsych.plugins.parameterType.STRING,
         array: true,
         pretty_name: 'Labels',
         default: jsPsych.ALL_KEYS,
         description: 'Name of the labels for each dimension in order.'
+      },
+      displayOrder: {
+        type: jsPsych.plugins.parameterType.STRING,
+        array: true,
+        pretty_name: 'Labels',
+        default: jsPsych.ALL_KEYS,
+        description: 'Order that dimensions should display in separable condition.'
       },
       choices: {
         type: jsPsych.plugins.parameterType.KEYCODE,
@@ -94,35 +101,102 @@ jsPsych.plugins["category-learning"] = (function() {
   plugin.trial = function(display_element, trial) {
 
     // Get generic boats
-    var html_boats = ''
+    var radar_boats = ''
     for (var i = 0; i < trial.nBoats; i++) {
       var pos_top = Math.round(Math.random() * 475 + 5)
       var pos_left = Math.round(Math.random() * 475 + 5)
-      html_boats += "<img width='20px' src='img/background/boat.png' style='position:absolute;top:" + pos_top + "px;left:" + pos_left + "px;'></img>"
+      radar_boats += "<img width='20px' src='img/background/boat.png' style='position:absolute;top:" + pos_top + "px;left:" + pos_left + "px;'></img>"
     }
 
     // Add highlighted boat
     var pos_top = Math.round(Math.random() * 250 + 125)
     var pos_left = Math.round(Math.random() * 250 + 125)
-    html_boats += "<img width='30px' src='img/background/highlighted_boat.png' style='position:absolute;top:" + pos_top + "px;left:" + pos_left + "px;'></img>"
+    radar_boats += "<img width='30px' src='img/background/highlighted_boat.png' style='position:absolute;top:" + pos_top + "px;left:" + pos_left + "px;'></img>"
 
-    var image_html = "<div style='float:left; margin-right:200px; position: relative;'>" +
+    var radar_html = "<div style='float:left; margin-right:200px; position: relative;'>" +
     "<img src='img/background/radar.png' width='500' style='position:relative;'></img>" +
-    html_boats +
+    radar_boats +
     "</div>"
 
+    // Get craft
+    craft = eval("trial.dimension" + trial.dimOrder[0])
+    if (craft == 0) {
+      craftHtml = '<img src="img/stimuli/air.png"></img>'
+      var yPos = "0px"
+    } else if (craft == 1) {
+      craftHtml = '<img src="img/stimuli/submarine.png"></img>'
+      var yPos = "-30px"
+    }
+
+    // Get type
+    type = eval("trial.dimension" + trial.dimOrder[1])
+    if (type == 0) {
+      typeHtml = '<img src="img/stimuli/autonomous.png"></img>'
+    } else if (type == 1) {
+      typeHtml = '<img src="img/stimuli/decoy.png"></img>'
+    }
+
+    // Get status
+    status = eval("trial.dimension" + trial.dimOrder[2])
+    if (status == 0) {
+      statusHtml = '<img src="img/stimuli/unharmed.png"></img>'
+    } else if (status == 1) {
+      statusHtml = '<img src="img/stimuli/damaged.png"></img>'
+    }
+
     if (trial.condition == 'separable') {
+      // Get speed
+      speed = eval("trial.dimension" + trial.dimOrder[3])
+      if (speed == 0) {
+        speedHtml = '<img src="img/stimuli/slow.png"></img>'
+      } else if (speed == 1) {
+        speedHtml = '<img src="img/stimuli/fast.png"></img>'
+      }
+
+      direction = eval("trial.dimension" + trial.dimOrder[4])
+      if (direction == 0) {
+        directionHtml = '<img src="img/stimuli/left.png"></img>'
+      } else if (direction == 1) {
+        directionHtml = '<img src="img/stimuli/right.png"></img>'
+      }
+
+      stimulusHtml = [craftHtml, typeHtml, statusHtml, speedHtml, directionHtml]
+      const displayHtml = trial.displayOrder.map(i => stimulusHtml[i])
+
       var table_html = '<div style="float:left;">' +
-      '<table width=150 style="margin-top: 100;">' +
-      '<tr><td>' + '</td><td>' + '</td></tr>' +
-      '<tr><td>' + trial.labels[0] + ': </td><td>' + trial.dimension1 + '</td></tr>' +
-      '<tr><td>' + trial.labels[1] + ': </td><td>' + trial.dimension2 + '</td></tr>' +
-      '<tr><td>' + trial.labels[2] + ': </td><td>' + trial.dimension3 + '</td></tr>' +
-      '<tr><td>' + trial.labels[3] + ': </td><td>' + trial.dimension4 + '</td></tr>' +
-      '<tr><td>' + trial.labels[4] + ': </td><td>' + trial.dimension5 + '</td></tr>' +
-      '</table>' + '</div>'
+      '<div>' + displayHtml[0] + '</div>' +
+      '<div>' + displayHtml[1] + '</div>' +
+      '<div>' + displayHtml[2] + '</div>' +
+      '<div>' + displayHtml[3] + '</div>' +
+      '<div>' + displayHtml[4] + '</div>' +
+      '</div>'
       var new_html = '<div id="jspsych-category-learning-stimulus">' +
-      image_html + table_html + '</div>'
+      radar_html + table_html + '</div>'
+    } else if (trial.condition == 'integrated') {
+      // Get speed
+      speed = eval("trial.dimension" + trial.dimOrder[3])
+
+      // Get direction
+      direction = eval("trial.dimension" + trial.dimOrder[4])
+      if (speed==0 & direction==0) {
+        speedDirectionHtml = '<img src="img/stimuli/slow_left.png"></img>'
+      } else if (speed==1 & direction==0) {
+        speedDirectionHtml = '<img src="img/stimuli/fast_left.png"></img>'
+      } else if (speed==0 & direction==1) {
+        speedDirectionHtml = '<img src="img/stimuli/slow_right.png"></img>'
+      } else if (speed==1 & direction==1) {
+        speedDirectionHtml = '<img src="img/stimuli/fast_right.png"></img>'
+      }
+      displayHtml = [speedDirectionHtml, craftHtml, typeHtml, statusHtml] // don't need to randomise order in this condition
+      var table_html = '<div style="float:left;position:relative;">' +
+      '<div class="layer">' + displayHtml[0] + '</div>' +
+      '<div class="layer">' + displayHtml[1] + '</div>' +
+      '<div class="layer" style="top:' + yPos + ';">' + displayHtml[2] + '</div>' + // edit to shift decoy to correct place
+      '<div class="layer">' + displayHtml[3] + '</div>' +
+      '</div>'
+
+      var new_html = '<div id="jspsych-category-learning-stimulus">' +
+      radar_html + table_html + '</div>'
     }
 
     // add prompt

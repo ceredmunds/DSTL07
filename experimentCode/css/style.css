@@ -4,6 +4,12 @@
   margin: auto;
 }
 
-th, td {
-  padding: 20px; /* Change padding in table cells */
+.background {
+    position: relative;
+}
+
+.layer {
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }

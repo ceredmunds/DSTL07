@@ -1,12 +1,12 @@
 /* participant based variables */
-var condition = 'separable'
+var condition = 'integrated'
 
 /* category learning variables */
 var nUniqueStimuli = 4
 var nDimensions = 5
 var allLabels = ['Craft', 'Speed', 'Direction', 'Type', 'Status']
-const labelOrder = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3, 4], nDimensions)
-const dimensionLabels = labelOrder.map(i => allLabels[i])
+const dimensionOrder = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3, 4, 5], nDimensions) // needs to match dimension names
+// const dimensionLabels = labelOrder.map(i => allLabels[i])
 
 const displayOrder = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3, 4], nDimensions)
 
@@ -37,7 +37,7 @@ var welcome = {
   choices: ['space'],
   data: { test_part: "welcome" }
 }
-timeline.push(welcome)
+// timeline.push(welcome)
 
 /* define instructions trial */
 var category_learning_instructions1 = {
@@ -54,7 +54,7 @@ var category_learning_instructions1 = {
   choices: ['space'],
   data: { test_part: "category learning instructions" }
 }
-timeline.push(category_learning_instructions1)
+// timeline.push(category_learning_instructions1)
 
 var category_learning_instructions2 = {
   type: "html-keyboard-response",
@@ -71,7 +71,7 @@ var category_learning_instructions2 = {
   choices: ['space'],
   data: { test_part: "category learning instructions" }
 }
-timeline.push(category_learning_instructions2)
+// timeline.push(category_learning_instructions2)
 
 var finger_on_F = {
   type: "html-keyboard-response",
@@ -84,7 +84,7 @@ var finger_on_F = {
   choices: ['f'],
   data: { test_part: "fingerF" }
 }
-timeline.push(finger_on_F)
+// timeline.push(finger_on_F)
 
 var finger_on_H = {
   type: "html-keyboard-response",
@@ -101,7 +101,7 @@ var finger_on_H = {
     document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "white"
   }
 }
-timeline.push(finger_on_H)
+// timeline.push(finger_on_H)
 
 /* category learning trial */
 var category_learning_trial = {
@@ -113,11 +113,12 @@ var category_learning_trial = {
   dimension4: jsPsych.timelineVariable('dimension4'),
   dimension5: jsPsych.timelineVariable('dimension5'),
   nBoats: 10,
-  labels: dimensionLabels,
+  dimOrder: dimensionOrder,
+  displayOrder : displayOrder,
   choices: ['f', 'h'],
   data: {
     test_part: "category_learning_trial",
-    dimLabels: dimensionLabels,
+    dimLabels: dimensionOrder,
     abstract_category: jsPsych.timelineVariable('category')
   },
   on_finish: function (data) {
@@ -195,11 +196,11 @@ var category_test_trial = {
   dimension4: jsPsych.timelineVariable('dimension4'),
   dimension5: jsPsych.timelineVariable('dimension5'),
   nBoats: 10,
-  labels: dimensionLabels,
+  labels: dimensionOrder,
   choices: ['f', 'h'],
   data: {
     test_part: "category_test_trial",
-    dimLabels: dimensionLabels,
+    dimLabels: dimensionOrder,
     abstract_category: jsPsych.timelineVariable('category')
   },
   on_finish: function (data) {
