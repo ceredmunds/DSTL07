@@ -2,6 +2,7 @@
 var displayCondition = 'separated' // integrated or separated
 
 /* category learning variables */
+var maxNumberCategoryLearningTrials = 2
 var nUniqueStimuli = 4
 var nDimensions = 5
 var allLabels = ['Craft', 'Speed', 'Direction', 'Type', 'Status']
@@ -217,33 +218,6 @@ var finger_on_H = {
 timeline.push(finger_on_H)
 
 /* category learning trial */
-// var category_learning_trial = {
-//   type: "category-learning",
-//   condition: condition,
-//   dimension1: jsPsych.timelineVariable('dimension1'),
-//   dimension2: jsPsych.timelineVariable('dimension2'),
-//   dimension3: jsPsych.timelineVariable('dimension3'),
-//   dimension4: jsPsych.timelineVariable('dimension4'),
-//   dimension5: jsPsych.timelineVariable('dimension5'),
-//   dimOrder: dimensionOrder,
-//   displayOrder : displayOrder,
-//   choices: ['f', 'h'],
-//   data: {
-//     test_part: "category_learning_trial",
-//     dimLabels: dimensionOrder,
-//     abstract_category: jsPsych.timelineVariable('category')
-//   },
-//   on_finish: function (data) {
-//     data.correct_response = categoryLabels[data.abstract_category]
-//
-//     if (data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.correct_response)) {
-//       data.correct = "true"
-//     } else {
-//       data.correct = "false"
-//     }
-//   }
-// }
-
 var category_learning_trial = {
   type: 'category-learning',
   displayCondition: displayCondition,
@@ -253,7 +227,21 @@ var category_learning_trial = {
   dimension4: jsPsych.timelineVariable('dimension4'),
   dimension5: jsPsych.timelineVariable('dimension5'),
   dimOrder: dimensionOrder,
-  displayOrder : displayOrder
+  displayOrder : displayOrder,
+  choices: ['f', 'h'],
+  data: {
+    test_part: 'learning',
+    abstract_category: jsPsych.timelineVariable('category')
+  },
+  on_finish: function (data) {
+    data.correct_response = categoryLabels[data.abstract_category]
+
+    if (data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.correct_response)) {
+      data.correct = "true"
+    } else {
+      data.correct = "false"
+    }
+  }
 }
 
 var category_learning_feedback = {
@@ -267,6 +255,7 @@ var category_learning_feedback = {
     }
   },
   choices: jsPsych.NO_KEYS,
+  data: { test_part: 'feedback' },
   trial_duration: feedbackDuration,
   post_trial_gap: ITI
 }
@@ -276,14 +265,19 @@ var category_learning_procedure = {
   timeline_variables: category_learning_stimuli,
   randomize_order: true,
   loop_function: function () {
+    // break loop if over trial limit
+    var nTrials = jsPsych.data.get().filter({ test_part: "learning" }).count()
+    if (nTrials >= maxNumberCategoryLearningTrials) {
+      return false
+    }
+
     var last_n_trials = jsPsych.data.get().last(nUniqueStimuli)
     var last_n_correct_trials = last_n_trials.filter({ correct: "true" })
     var accuracy = Math.round(last_n_correct_trials.count() / last_n_trials.count())
-
     if (accuracy < learningCriterion) {
       return true // True to keep loop going
     } else {
-      return false // False to stop loop
+      return false
     }
   }
 }
