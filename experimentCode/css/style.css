@@ -2,6 +2,11 @@
   margin: auto;
 }
 
+.stimulus {
+  border: 2px solid #555;
+  background: white;
+}
+
 .column {
   float: left;
   padding: 5px;

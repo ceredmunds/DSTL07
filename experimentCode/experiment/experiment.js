@@ -1,5 +1,5 @@
 /* participant based variables */
-var displayCondition = 'integrated' // integrated or separated
+var displayCondition = 'separated' // integrated or separated
 
 /* category learning variables */
 var nUniqueStimuli = 4
@@ -29,15 +29,15 @@ var welcome = {
   stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
   "<div style='width:700px'>" +
   "<p style='font-size:26px'><b>Welcome to the experiment and thank you for taking part.</b></p>" +
-  "<p>Note that this experiment is designed for resolutions of 1200px by 800px. If your screen has a lower resolution than this, please return this experiment.</p>" +
-  "<p>If you have any questions or concerns, please contact us via the Prolific message system.</p>" +
+  "<p>Note that this experiment is designed for resolutions of 1200<i>px</i> by 800<i>px</i>. If your screen has a lower resolution than this, please return this experiment.</p>" +
+  "<p>If you have any questions or concerns, remember that you can always contact us via the Prolific message system.</p>" +
   "</div>" +
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
   data: { test_part: "welcome" }
 }
-// timeline.push(welcome)
+timeline.push(welcome)
 
 /* define instructions trial */
 var category_learning_instructions1 = {
@@ -48,13 +48,130 @@ var category_learning_instructions1 = {
   "<p>In this experiment, you will fill the role of a junior seaman who must decide whether craft are friendly or hostile. " +
   " The experiment has two phases:</p>" +
   "<p><b>Phase 1. </b>where you learn the features of friendly and hostile craft.</p>" +
-  "<p><b>Phase 2. </b>where you apply what you have learned in a real exercise.</p>" +
+  "<p><b>Phase 2. </b>where you apply what you have learned in real exercises.</p>" +
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
   data: { test_part: "category learning instructions" }
 }
-// timeline.push(category_learning_instructions1)
+timeline.push(category_learning_instructions1)
+
+var craft_instructions = {
+  type: "html-keyboard-response",
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<p><b>Stimuli</b></p>" +
+  "<p>There are two types of craft:</p>" +
+  "<div style='width: 550px;'>"+
+    "<div class='stimulus' style='float: left;'><img src='img/stimuli/air.png'></img>" +
+    "<p class='small'><strong>Airplanes</strong></p></div>" +
+    "<div class='stimulus' style='float: right;'><img src='img/stimuli/submarine.png'></img>" +
+    "<p class='small'><strong>Submarines</strong></p></div>" +
+  "</div>"+
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+  choices: ['space'],
+  data: { test_part: "category learning instructions" }
+}
+timeline.push(craft_instructions)
+
+var type_instructions = {
+  type: "html-keyboard-response",
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<div style='width:550px'>" +
+  "<p><b>Stimuli</b></p>" +
+  "<p>The craft can be either autonomous or a decoy as indicated by the following symbols:</p>" +
+  "<div style='width: 550px;'>"+
+  "<div class='stimulus' style='float: left;'><img src='img/stimuli/autonomous.png'></img>" +
+  "<p class='small'><strong>Autonomous</strong></p></div>" +
+  "<div class='stimulus' style='float: right;'><img src='img/stimuli/decoy.png'></img>" +
+  "<p class='small'><strong>Decoy</strong></p></div>" +
+  "</div>"+ "</div>"+
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+  choices: ['space'],
+  data: { test_part: "category learning instructions" }
+}
+timeline.push(type_instructions)
+
+var status_instructions = {
+  type: "html-keyboard-response",
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<div style='width:550px'>" +
+  "<p><b>Stimuli</b></p>" +
+  "<p>The craft can be either undamaged or damaged as indicated by the following symbols:</p>" +
+  "<div style='width:550px;'>"+
+    "<div class='stimulus' style='float: left;'><img src='img/stimuli/unharmed.png'></img>" +
+    "<p class='small'><strong>Undamaged</strong></p></div>" +
+    "<div class='stimulus' style='float: right;'><img src='img/stimuli/damaged.png'></img>" +
+    "<p class='small'><strong>Damaged</strong></p></div>" +
+  "</div>" + "</div>" +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+  choices: ['space'],
+  data: { test_part: "category learning instructions" }
+}
+timeline.push(status_instructions)
+
+if (displayCondition == "integrated") {
+  var direction_instructions = {
+    type: "html-keyboard-response",
+    stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+    "<div style='width:550px'>" +
+    "<p><b>Stimuli</b></p>" +
+    "<p>The craft can either travel towards the left or the right.</p>" +
+    "<p>Additionally, the craft can travel either fast or slow.</p>" +
+    "<p>Speed and direction information are shown as lines.</p>" +
+    "<div style='width: 550px;'>" +
+      "<div class='stimulus' style='float: left;'><img src='img/stimuli/fast_left.png'></img>" +
+      "<p class='small'><strong>Symbol for left and fast</strong></p></div>" +
+      "<div class='stimulus' style='float: right;'><img src='img/stimuli/slow_right.png'></img>" +
+      "<p class='small'><strong>Symbol for right and slow</strong></p></div>" +
+    "</div>" + "</div>" +
+    "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
+    "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+    choices: ['space'],
+    data: { test_part: "category learning instructions" }
+  }
+  timeline.push(direction_instructions)
+} else if (displayCondition == "separated") {
+  var direction_instructions = {
+    type: "html-keyboard-response",
+    stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+    "<div style='width:550px'>" +
+    "<p><b>Stimuli</b></p>" +
+    "<p>The craft can either travel towards the left or the right:</p>" +
+    "<div style='width: 550px;'>"+
+      "<div class='stimulus' style='float: left;'><img src='img/stimuli/left.png'></img>" +
+      "<p class='small'><strong>Left</strong></p></div>" +
+      "<div class='stimulus' style='float: right;'><img src='img/stimuli/right.png'></img>" +
+      "<p class='small'><strong>Right</strong></p></div>" +
+    "</div>" + "</div>" +
+    "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
+    "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+    choices: ['space'],
+    data: { test_part: "category learning instructions" }
+  }
+  timeline.push(direction_instructions)
+
+  var direction_instructions1 = {
+    type: "html-keyboard-response",
+    stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+    "<div style='width:550px'>" +
+    "<p><b>Stimuli</b></p>" +
+    "<p>The craft can either travel fast or slow:</p>" +
+    "<div style='width: 550px;'>"+
+      "<div class='stimulus' style='float: left;'><img src='img/stimuli/fast.png'></img>" +
+      "<p class='small'><strong>Fast</strong></p></div>" +
+      "<div class='stimulus' style='float: right;'><img src='img/stimuli/slow.png'></img>" +
+      "<p class='small'><strong>Slow</strong></p></div>" +
+    "</div>" + "</div>" +
+    "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
+    "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+    choices: ['space'],
+    data: { test_part: "category learning instructions" }
+  }
+  timeline.push(direction_instructions1)
+}
 
 var category_learning_instructions2 = {
   type: "html-keyboard-response",
@@ -66,12 +183,12 @@ var category_learning_instructions2 = {
   "<p>If you think the craft is <b>friendly</b>, please press the <b>F</b> key.</p>" +
   "<p>If you think the craft is <b>hostile</b>, please press the <b>H</b> key.</p>" +
   "<p>Please note that if you do not reach sufficient accuracy by the end of this phase, you will not be allowed to continue to the second phase of the experiment.</p>" +
-  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard when you are ready to start.</p></div>" +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard when you are ready to begin the experiment.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
   data: { test_part: "category learning instructions" }
 }
-// timeline.push(category_learning_instructions2)
+timeline.push(category_learning_instructions2)
 
 var finger_on_F = {
   type: "html-keyboard-response",
@@ -84,7 +201,7 @@ var finger_on_F = {
   choices: ['f'],
   data: { test_part: "fingerF" }
 }
-// timeline.push(finger_on_F)
+timeline.push(finger_on_F)
 
 var finger_on_H = {
   type: "html-keyboard-response",
@@ -95,13 +212,9 @@ var finger_on_H = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>H key</b> on your keyboard to continue.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['h'],
-  data: { test_part: "fingerH" },
-  on_finish: function () {
-    document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "#0102d1"
-    document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "white"
-  }
+  data: { test_part: "fingerH" }
 }
-// timeline.push(finger_on_H)
+timeline.push(finger_on_H)
 
 /* category learning trial */
 // var category_learning_trial = {
