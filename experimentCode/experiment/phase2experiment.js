@@ -1,8 +1,9 @@
 var confidence_rating = {
   type: 'html-slider-response',
-  stimulus: 'How confident are you in your classification?',
-  labels: ['No idea', 'Certain'],
-  require_movement: true
+  stimulus: '<p style="font-size:20px;">How confident are you in your classification?</p>',
+  labels: ['<p style="font-size:18px;">No idea</p>', '<p style="font-size:18px;">Certain</p>'],
+  require_movement: true,
+  slider_width: 600
 }
 
 var category_test_procedure = {

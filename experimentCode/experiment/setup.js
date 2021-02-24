@@ -1,5 +1,5 @@
 /* participant based variables */
-var displayCondition = 'separated' // integrated or separated
+var displayCondition = 'integrated' // integrated or separated
 var socialCondition = 'operator' // operator or superior
 
 /* category learning variables */
@@ -8,7 +8,6 @@ var nUniqueStimuli = 4
 var nDimensions = 5
 var allLabels = ['Craft', 'Speed', 'Direction', 'Type', 'Status']
 const dimensionOrder = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3, 4, 5], nDimensions) // needs to match dimension names
-// const dimensionLabels = labelOrder.map(i => allLabels[i])
 
 const displayOrder = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3, 4], nDimensions)
 

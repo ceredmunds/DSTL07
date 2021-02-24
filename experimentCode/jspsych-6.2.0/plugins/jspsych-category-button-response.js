@@ -1,19 +1,16 @@
 /**
- * jspsych-html-button-response
- * Josh de Leeuw
+ * jspsych-category-button-response
+ * Adapted by C. E. R. Edmunds from code by Josh de Leeuw
  *
- * plugin for displaying a stimulus and getting a keyboard response
- *
- * documentation: docs.jspsych.org
+ * plugin for displaying a naval stimulus and getting a button response
  *
  **/
 
-jsPsych.plugins["category-button-response"] = (function() {
-
-  var plugin = {};
+jsPsych.plugins['category-button-response'] = (function () {
+  var plugin = {}
 
   plugin.info = {
-    name: 'html-button-response',
+    name: 'html-category-button-response',
     description: '',
     parameters: {
       displayCondition: {
@@ -65,6 +62,12 @@ jsPsych.plugins["category-button-response"] = (function() {
         pretty_name: 'Labels',
         default: jsPsych.ALL_KEYS,
         description: 'Order that dimensions should display in separable condition.'
+      },
+      removePredictiveDimension: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        pretty_name: 'Response ends trial',
+        default: true,
+        description: 'If true, then trial will end when user responds.'
       },
       choices: {
         type: jsPsych.plugins.parameterType.STRING,
@@ -120,9 +123,13 @@ jsPsych.plugins["category-button-response"] = (function() {
   }
 
   plugin.trial = function(display_element, trial) {
+    if (trial.removePredictiveDimension) {
+      var predIndex = trial.dimOrder.indexOf(1)
+    }
 
     // Get stimulus to display
     var stimulus = ''
+
     // Get craft
     var craft = eval("trial.dimension" + trial.dimOrder[0])
     if (craft == 0) {
@@ -164,8 +171,13 @@ jsPsych.plugins["category-button-response"] = (function() {
       } else if (direction == 1) {
         directionHtml = '<img src="img/stimuli/right.png"></img>'
       }
+      // get all html together
+      var stimulusHtml = [craftHtml, typeHtml, statusHtml, speedHtml, directionHtml]
+      if (trial.removePredictiveDimension) {
+        stimulusHtml[predIndex] = '<img src="img/stimuli/NA.png"></img>'
+      }
+
       // Randomise order of presentation (per participant)
-      stimulusHtml = [craftHtml, typeHtml, statusHtml, speedHtml, directionHtml]
       const displayHtml = trial.displayOrder.map(i => stimulusHtml[i])
       stimulus = '<div class="row">' +
       '<div class="column">' + displayHtml[0] + '</div>' +
@@ -196,14 +208,17 @@ jsPsych.plugins["category-button-response"] = (function() {
       } else if (speed==1 & direction==1) {
         speedDirectionHtml = '<img src="img/stimuli/fast_right.png"></img>'
       }
-      displayHtml = [speedDirectionHtml, craftHtml, typeHtml, statusHtml] // don't need to randomise order in this condition
+      var displayHtml = [speedDirectionHtml, craftHtml, typeHtml, statusHtml] // don't need to randomise order in this condition
+      if (trial.removePredictiveDimension && predIndex < 3) {
+        displayHtml[predIndex + 1] = ""
+      }
       stimulus = '<div class="background">' +
       '<div class="layer" style="left:' + xPos + ';">' + displayHtml[0] + '</div>' +
       '<div class="layer">' + displayHtml[1] + '</div>' +
       '<div class="layer" style="top:' + yPos + ';">' + displayHtml[2] + '</div>' + // edit to shift decoy to correct place
       '<div class="layer">' + displayHtml[3] + '</div>' +
       '</div>'
-      var html = '<div id="jspsych-html-button-response-stimulus">' + stimulus + '</div>'
+      var html = '<div id="jspsych-html-button-response-stimulus" style="margin-left:145px;">' + stimulus + '</div>'
     } else {
       stimulus = 'WARNING: UNDEFINED CONDITION'
       // Display stimulus
