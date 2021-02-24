@@ -2,6 +2,10 @@
   margin: auto;
 }
 
+#jspsych-html-button-response-btngroup {
+  margin: 80px 0px 0px 0px
+}
+
 .stimulus {
   border: 2px solid #555;
   background: white;
@@ -12,6 +16,7 @@
   padding: 5px;
   border: 2px solid #555;
   background: white;
+  margin: 5px;
 }
 
 .row::after {
@@ -21,7 +26,7 @@
 }
 
 .shift {
-  margin-left: 132px;
+  margin: 5px 5px 5px 145px;
   float: left;
   padding: 5px;
   border: 2px solid #555;
