@@ -16,9 +16,12 @@ var categorisation_trial = {
     abstract_category: jsPsych.timelineVariable('category')
   },
   on_finish: function (data) {
+    // Get response in terms of labels
+    data.response = ['Friendly', 'Hostile'][data.button_pressed]
+    // Get correct, randomised, answer ['Friendly', 'Hostile']
     data.correct_response = categoryLabels[data.abstract_category]
-
-    if (data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.correct_response)) {
+    // determine if response correct
+    if (data.response == data.correct_response) {
       data.correct = "true"
     } else {
       data.correct = "false"

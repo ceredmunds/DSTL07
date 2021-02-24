@@ -13,7 +13,7 @@ const dimensionOrder = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3, 
 const displayOrder = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3, 4], nDimensions)
 
 const categoryOrder = jsPsych.randomization.sampleWithoutReplacement([0, 1], 2)
-const choices = ['f', 'h']
+const choices = ['Friendly', 'Hostile']
 const categoryLabels = categoryOrder.map(i => choices[i])
 // const fIndex = categoryLabels.indexOf('f')
 // const hIndex = categoryLabels.indexOf('h')
