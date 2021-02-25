@@ -1,5 +1,5 @@
 /* participant based variables */
-var displayCondition = 'integrated' // integrated or separated
+var displayCondition = 'separated' // integrated or separated
 var socialCondition = 'operator' // operator or superior
 
 /* category learning variables */

@@ -66,7 +66,7 @@ jsPsych.plugins['category-button-response'] = (function () {
       removePredictiveDimension: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Response ends trial',
-        default: true,
+        default: false,
         description: 'If true, then trial will end when user responds.'
       },
       choices: {
@@ -155,16 +155,15 @@ jsPsych.plugins['category-button-response'] = (function () {
     }
     // Get speed
     speed = eval("trial.dimension" + trial.dimOrder[3])
+    if (speed == 0) {
+      speedHtml = '<img src="img/stimuli/slow_number.png"></img>'
+    } else if (speed == 1) {
+      speedHtml = '<img src="img/stimuli/fast_number.png"></img>'
+    }
     // Get direction
     direction = eval("trial.dimension" + trial.dimOrder[4])
 
     if (trial.displayCondition == 'separated') {
-      // Get speed html
-      if (speed == 0) {
-        speedHtml = '<img src="img/stimuli/slow.png"></img>'
-      } else if (speed == 1) {
-        speedHtml = '<img src="img/stimuli/fast.png"></img>'
-      }
       // Get direction html
       if (direction == 0) {
         directionHtml = '<img src="img/stimuli/left.png"></img>'
@@ -191,31 +190,22 @@ jsPsych.plugins['category-button-response'] = (function () {
 
       var html = '<div id="jspsych-html-button-response-stimulus">' + stimulus + '</div>'
     } else if (trial.displayCondition == 'integrated') {
-      var xPos = "0px" // offset for slow submarine to compensate for badly drawn stimulus
-      // Get spped and direction html
-      if (speed==0 & direction==0) {
-        speedDirectionHtml = '<img src="img/stimuli/slow_left.png"></img>'
-        if (craft == 1) {
-          xPos = "-15px"
-        }
-      } else if (speed==1 & direction==0) {
-        speedDirectionHtml = '<img src="img/stimuli/fast_left.png"></img>'
-      } else if (speed==0 & direction==1) {
-        speedDirectionHtml = '<img src="img/stimuli/slow_right.png"></img>'
-        if (craft == 1) {
-          xPos = "15px"
-        }
-      } else if (speed==1 & direction==1) {
-        speedDirectionHtml = '<img src="img/stimuli/fast_right.png"></img>'
+      // Get direction html
+      if (direction == 0) {
+        directionHtml = '<img src="img/stimuli/fast_left.png"></img>'
+      } else if (direction == 1) {
+        directionHtml = '<img src="img/stimuli/fast_right.png"></img>'
       }
-      var displayHtml = [speedDirectionHtml, craftHtml, typeHtml, statusHtml] // don't need to randomise order in this condition
-      if (trial.removePredictiveDimension && predIndex < 3) {
+
+      var displayHtml = [craftHtml, typeHtml, statusHtml, speedHtml, directionHtml] // don't need to randomise order in this condition
+      if (trial.removePredictiveDimension) {
         displayHtml[predIndex + 1] = ""
       }
       stimulus = '<div class="background">' +
-      '<div class="layer" style="left:' + xPos + ';">' + displayHtml[0] + '</div>' +
-      '<div class="layer">' + displayHtml[1] + '</div>' +
-      '<div class="layer" style="top:' + yPos + ';">' + displayHtml[2] + '</div>' + // edit to shift decoy to correct place
+      '<div class="layer">' + displayHtml[4] + '</div>' +
+      '<div class="layer">' + displayHtml[0] + '</div>' +
+      '<div class="layer">' + displayHtml[2] + '</div>' +
+      '<div class="layer" style="top:' + yPos + ';">' + displayHtml[1] + '</div>' + // edit to shift decoy to correct place
       '<div class="layer">' + displayHtml[3] + '</div>' +
       '</div>'
       var html = '<div id="jspsych-html-button-response-stimulus" style="margin-left:145px;">' + stimulus + '</div>'

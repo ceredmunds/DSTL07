@@ -71,65 +71,42 @@ var status_instructions = {
 }
 timeline.push(status_instructions)
 
-if (displayCondition == "integrated") {
-  var direction_instructions = {
-    type: "html-keyboard-response",
-    stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
-    "<div style='width:550px'>" +
-    "<p><b>Stimuli</b></p>" +
-    "<p>The craft can either travel towards the left or the right.</p>" +
-    "<p>Additionally, the craft can travel either fast or slow.</p>" +
-    "<p>Speed and direction information are shown as lines.</p>" +
-    "<div style='width: 550px;'>" +
-      "<div class='stimulus' style='float: left;'><img src='img/stimuli/fast_left.png'></img>" +
-      "<p class='small'><strong>Symbol for left and fast</strong></p></div>" +
-      "<div class='stimulus' style='float: right;'><img src='img/stimuli/slow_right.png'></img>" +
-      "<p class='small'><strong>Symbol for right and slow</strong></p></div>" +
-    "</div>" + "</div>" +
-    "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
-    "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
-    choices: ['space'],
-    data: { test_part: "category learning instructions" }
-  }
-  timeline.push(direction_instructions)
-} else if (displayCondition == "separated") {
-  var direction_instructions = {
-    type: "html-keyboard-response",
-    stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
-    "<div style='width:550px'>" +
-    "<p><b>Stimuli</b></p>" +
-    "<p>The craft can either travel towards the left or the right:</p>" +
-    "<div style='width: 550px;'>"+
-      "<div class='stimulus' style='float: left;'><img src='img/stimuli/left.png'></img>" +
-      "<p class='small'><strong>Left</strong></p></div>" +
-      "<div class='stimulus' style='float: right;'><img src='img/stimuli/right.png'></img>" +
-      "<p class='small'><strong>Right</strong></p></div>" +
-    "</div>" + "</div>" +
-    "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
-    "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
-    choices: ['space'],
-    data: { test_part: "category learning instructions" }
-  }
-  timeline.push(direction_instructions)
+var direction_instructions = {
+  type: "html-keyboard-response",
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<div style='width:550px'>" +
+  "<p><b>Stimuli</b></p>" +
+  "<p>The craft can either travel towards the left or the right:</p>" +
+  "<div style='width: 550px;'>"+
+    "<div class='stimulus' style='float: left;'><img src='img/stimuli/left.png'></img>" +
+    "<p class='small'><strong>Left</strong></p></div>" +
+    "<div class='stimulus' style='float: right;'><img src='img/stimuli/right.png'></img>" +
+    "<p class='small'><strong>Right</strong></p></div>" +
+  "</div>" + "</div>" +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+  choices: ['space'],
+  data: { test_part: "category learning instructions" }
+}
+timeline.push(direction_instructions)
 
-  var direction_instructions1 = {
-    type: "html-keyboard-response",
-    stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
-    "<div style='width:550px'>" +
-    "<p><b>Stimuli</b></p>" +
-    "<p>The craft can either travel fast or slow:</p>" +
-    "<div style='width: 550px;'>"+
-      "<div class='stimulus' style='float: left;'><img src='img/stimuli/fast.png'></img>" +
-      "<p class='small'><strong>Fast</strong></p></div>" +
-      "<div class='stimulus' style='float: right;'><img src='img/stimuli/slow.png'></img>" +
-      "<p class='small'><strong>Slow</strong></p></div>" +
-    "</div>" + "</div>" +
-    "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
-    "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
-    choices: ['space'],
-    data: { test_part: "category learning instructions" }
-  }
-  timeline.push(direction_instructions1)
+var direction_instructions1 = {
+  type: "html-keyboard-response",
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<div style='width:550px'>" +
+  "<p><b>Stimuli</b></p>" +
+  "<p>The craft can either travel fast or slow:</p>" +
+  "<div style='width: 550px;'>"+
+    "<div class='stimulus' style='float: left;'><img src='img/stimuli/fast_number.png'></img>" +
+    "<p class='small'><strong>Fast</strong></p></div>" +
+    "<div class='stimulus' style='float: right;'><img src='img/stimuli/slow_number.png'></img>" +
+    "<p class='small'><strong>Slow</strong></p></div>" +
+  "</div>" + "</div>" +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+  choices: ['space'],
+  data: { test_part: "category learning instructions" }
+timeline.push(direction_instructions1)
 }
 
 var category_learning_instructions2 = {

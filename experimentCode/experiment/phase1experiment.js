@@ -9,6 +9,7 @@ var categorisation_trial = {
   dimension5: jsPsych.timelineVariable('dimension5'),
   dimOrder: dimensionOrder,
   displayOrder : displayOrder,
+  removePredictiveDimension: false,
   choices: ['Friendly', 'Hostile'],
   response_ends_trial: true,
   data: {
