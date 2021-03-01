@@ -5,15 +5,14 @@ var verbal_report_instructions = {
   "<div style='width:700px'>" +
   "<p><b>Verbal report</b></p>" +
   "<p>In the following, we will ask you some questions about how you completed this experiment.</p>" +
-  "<p>Don't worry: there are absolutely no wrong answers!</p>" +
-  "<p>Also, your answers to these questions WILL NOT influence whether you are paid.</p>" +
+  "<p>Don't worry: there are no wrong answers!</p>" +
   "<p>Just try your best to explain as clearly and in as much detail as possible the answer.</p>" +
   "<p>Press any key to begin.</p>" +
   "</div>" +
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "verbal report instructions" },
+  data: { test_part: "verbal_report_instructions" },
   on_start: function () {
     document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "black"
     document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "white"
@@ -21,11 +20,34 @@ var verbal_report_instructions = {
 }
 timeline.push(verbal_report_instructions)
 
+var dimension_options = allLabels
+dimension_options.push("I don't know")
+
+var allLabels = ['Craft', 'Speed', 'Direction', 'Type', 'Status']
+
 var survey_trial = {
   type: 'survey-text',
   questions: [
-    { prompt: "Please describe which stimulus dimension you thought was most important:", rows: 30, columns: 60, name: 'stimDimensionQ'}
+    { prompt: "Craft", name: 'craft', columns:3 },
+    { prompt: "Speed", name: 'speed', columns:3 },
+    { prompt: "Direction", name: 'direction', columns:3 },
+    { prompt: "Type", name: 'type', columns:3 },
+    { prompt: "Status", name: 'status', columns:3 }
   ],
-  data: { test_part: "verbal report_trial" }
+  preamble: "<div style='width:700px'>" +
+  "First, we would like you to rate the features in terms of how important they were for classifying a craft as friendly or hostile." +
+  "</div>",
+  randomize_question_order: true,
+  autocomplete: false,
+  data: { test_part: "verbal_report_ranking"}
+}
+timeline.push(survey_trial)
+
+var survey_trial = {
+  type: 'survey-text',
+  questions: [
+    { prompt: "Please describe how exactly you decided whether a craft was friendly or hostile.", rows: 20, columns: 60, name: 'stimDimensionQ'}
+  ],
+  data: { test_part: "verbal_report_textbox" }
 }
 timeline.push(survey_trial)

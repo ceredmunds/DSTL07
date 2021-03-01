@@ -1,5 +1,6 @@
 var category_learning_stimuli = [
   {
+    "stimulusID": 1,
     "dimension1": 0,
     "dimension2": 0,
     "dimension3": 0,

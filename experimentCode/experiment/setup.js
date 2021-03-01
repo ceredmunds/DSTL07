@@ -6,7 +6,7 @@ var socialCondition = 'operator' // operator or superior
 var maxNumberCategoryLearningTrials = 2
 var nUniqueStimuli = 4
 var nDimensions = 5
-var allLabels = ['Craft', 'Speed', 'Direction', 'Type', 'Status']
+var allLabels = ['Craft', 'Type', 'Status', 'Speed', 'Direction']
 const dimensionOrder = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3, 4, 5], nDimensions) // needs to match dimension names
 
 const displayOrder = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3, 4], nDimensions)
@@ -36,6 +36,11 @@ var welcome = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "welcome" }
+  data: {
+    test_part: "welcome",
+    displayCondition: displayCondition,
+    socialCondition: socialCondition,
+    dimensionOrder: dimensionOrder.map(i => allLabels[i-1]).toString()
+  }
 }
 timeline.push(welcome)

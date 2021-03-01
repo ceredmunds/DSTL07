@@ -13,7 +13,15 @@ var categorisation_trial = {
   choices: ['Friendly', 'Hostile'],
   response_ends_trial: true,
   data: {
+    displayCondition: displayCondition,
+    socialCondition: socialCondition,
     test_part: 'learning',
+    stimulusID: jsPsych.timelineVariable('stimulusID'),
+    dimension1: jsPsych.timelineVariable('dimension1'),
+    dimension2: jsPsych.timelineVariable('dimension2'),
+    dimension3: jsPsych.timelineVariable('dimension3'),
+    dimension4: jsPsych.timelineVariable('dimension4'),
+    dimension5: jsPsych.timelineVariable('dimension5'),
     abstract_category: jsPsych.timelineVariable('category')
   },
   on_finish: function (data) {
@@ -41,7 +49,7 @@ var feedback = {
     }
   },
   choices: jsPsych.NO_KEYS,
-  data: { test_part: 'feedback' },
+  data: { test_part: 'learning_feedback' },
   trial_duration: feedbackDuration,
   post_trial_gap: ITI
 }

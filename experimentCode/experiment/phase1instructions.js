@@ -11,7 +11,7 @@ var category_learning_instructions1 = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "category learning instructions" }
+  data: { test_part: "learningInstructions" }
 }
 timeline.push(category_learning_instructions1)
 
@@ -29,7 +29,7 @@ var craft_instructions = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "category learning instructions" }
+  data: { test_part: "learningInstructions" }
 }
 timeline.push(craft_instructions)
 
@@ -48,7 +48,7 @@ var type_instructions = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "category learning instructions" }
+  data: { test_part: "learningInstructions" }
 }
 timeline.push(type_instructions)
 
@@ -67,7 +67,7 @@ var status_instructions = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "category learning instructions" }
+  data: { test_part: "learningInstructions" }
 }
 timeline.push(status_instructions)
 
@@ -86,11 +86,11 @@ var direction_instructions = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "category learning instructions" }
+  data: { test_part: "learningInstructions" }
 }
 timeline.push(direction_instructions)
 
-var direction_instructions1 = {
+var speed_instructions = {
   type: "html-keyboard-response",
   stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
   "<div style='width:550px'>" +
@@ -105,9 +105,9 @@ var direction_instructions1 = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "category learning instructions" }
-timeline.push(direction_instructions1)
+  data: { test_part: "learningInstructions" }
 }
+timeline.push(speed_instructions)
 
 var category_learning_instructions2 = {
   type: "html-keyboard-response",
@@ -122,7 +122,7 @@ var category_learning_instructions2 = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard when you are ready to begin the experiment.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "category learning instructions" },
+  data: { test_part: "learningInstructions" },
   post_trial_gap: 500
 }
 timeline.push(category_learning_instructions2)

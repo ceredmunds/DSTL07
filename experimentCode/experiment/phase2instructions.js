@@ -9,7 +9,7 @@ var category_test_instructions = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "category test instructions" }
+  data: { test_part: "category_test_instructions" }
 }
 timeline.push(category_test_instructions)
 
@@ -33,6 +33,6 @@ var category_test_instructions1 = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard when you are ready to start.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "category test instructions" }
+  data: { test_part: "category_test_instructions" }
 }
 timeline.push(category_test_instructions1)
