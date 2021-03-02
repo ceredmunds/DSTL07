@@ -1,5 +1,6 @@
 var category_test_stimuli = [
   {
+    "stimulusID": 1,
     "dimension1": 1,
     "dimension2": 1,
     "dimension3": 1,
@@ -8,6 +9,7 @@ var category_test_stimuli = [
     "category": 0
   },
   {
+    "stimulusID": 2,
     "dimension1": 0,
     "dimension2": 1,
     "dimension3": 1,
@@ -16,6 +18,7 @@ var category_test_stimuli = [
     "category": 0
   },
   {
+    "stimulusID": 3,
     "dimension1": 1,
     "dimension2": 0,
     "dimension3": 1,
@@ -24,6 +27,7 @@ var category_test_stimuli = [
     "category": 1
   },
   {
+    "stimulusID": 4,
     "dimension1": 0,
     "dimension2": 0,
     "dimension3": 0,

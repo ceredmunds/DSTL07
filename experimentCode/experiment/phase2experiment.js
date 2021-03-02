@@ -12,7 +12,15 @@ var categorisation_test_trial = {
   choices: ['Friendly', 'Hostile'],
   response_ends_trial: true,
   data: {
+    displayCondition: displayCondition,
+    socialCondition: socialCondition,
     test_part: 'test',
+    stimulusID: jsPsych.timelineVariable('stimulusID'),
+    dimension1: jsPsych.timelineVariable('dimension1'),
+    dimension2: jsPsych.timelineVariable('dimension2'),
+    dimension3: jsPsych.timelineVariable('dimension3'),
+    dimension4: jsPsych.timelineVariable('dimension4'),
+    dimension5: jsPsych.timelineVariable('dimension5'),
     abstract_category: jsPsych.timelineVariable('category')
   },
   on_finish: function (data) {
@@ -36,7 +44,16 @@ var confidence_rating = {
   require_movement: true,
   slider_width: 600,
   data: {
-    test_part: 'confidence_rating_test'
+    displayCondition: displayCondition,
+    socialCondition: socialCondition,
+    test_part: 'confidence_rating_test',
+    stimulusID: jsPsych.timelineVariable('stimulusID'),
+    dimension1: jsPsych.timelineVariable('dimension1'),
+    dimension2: jsPsych.timelineVariable('dimension2'),
+    dimension3: jsPsych.timelineVariable('dimension3'),
+    dimension4: jsPsych.timelineVariable('dimension4'),
+    dimension5: jsPsych.timelineVariable('dimension5'),
+    abstract_category: jsPsych.timelineVariable('category')
   }
 }
 

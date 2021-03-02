@@ -7,12 +7,11 @@ var verbal_report_instructions = {
   "<p>In the following, we will ask you some questions about how you completed this experiment.</p>" +
   "<p>Don't worry: there are no wrong answers!</p>" +
   "<p>Just try your best to explain as clearly and in as much detail as possible the answer.</p>" +
-  "<p>Press any key to begin.</p>" +
   "</div>" +
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "verbal_report_instructions" },
+  data: { test_part: "verbal_report_instructions_phase3" },
   on_start: function () {
     document.getElementsByClassName("jspsych-content-wrapper")[0].style.color = "black"
     document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "white"
@@ -20,12 +19,7 @@ var verbal_report_instructions = {
 }
 timeline.push(verbal_report_instructions)
 
-var dimension_options = allLabels
-dimension_options.push("I don't know")
-
-var allLabels = ['Craft', 'Speed', 'Direction', 'Type', 'Status']
-
-var survey_trial = {
+var survey_trial_partial = {
   type: 'survey-text',
   questions: [
     { prompt: "Craft", name: 'craft', columns:3 },
@@ -35,19 +29,29 @@ var survey_trial = {
     { prompt: "Status", name: 'status', columns:3 }
   ],
   preamble: "<div style='width:700px'>" +
-  "First, we would like you to rate the features in terms of how important they were for classifying a craft as friendly or hostile." +
+  "<p>First, we would like you to rate the features in terms of how important they were for classifying a craft as friendly or hostile. " +
+  "Please put the numbers 1 to 5 in the boxes below, with 1 meaning most important and 5 meaning least important. </p>" +
   "</div>",
   randomize_question_order: true,
   autocomplete: false,
-  data: { test_part: "verbal_report_ranking"}
+  data: { test_part: "verbal_report_ranking_phase3"}
 }
-timeline.push(survey_trial)
+timeline.push(survey_trial_partial)
 
-var survey_trial = {
+var survey_trial_partial = {
   type: 'survey-text',
   questions: [
-    { prompt: "Please describe how exactly you decided whether a craft was friendly or hostile.", rows: 20, columns: 60, name: 'stimDimensionQ'}
+    { prompt: "Please describe how exactly you decided whether a craft was friendly or hostile in the previous task.", rows: 20, columns: 60, name: 'stimDimensionQphase3'}
   ],
-  data: { test_part: "verbal_report_textbox" }
+  data: { test_part: "verbal_report_textbox_phase3" }
 }
-timeline.push(survey_trial)
+timeline.push(survey_trial_partial)
+
+var survey_trial_partial = {
+  type: 'survey-text',
+  questions: [
+    { prompt: "Finally, please describe how your approach changed once a piece of information was removed.", rows: 20, columns: 60, name: 'changeQphase3'}
+  ],
+  data: { test_part: "verbal_report_textbox_phase3_change" }
+}
+timeline.push(survey_trial_partial)
