@@ -17,7 +17,7 @@ var verbal_report_instructions = {
     document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "white"
   }
 }
-timeline.push(verbal_report_instructions)
+timeline2.push(verbal_report_instructions)
 
 var survey_trial_partial = {
   type: 'survey-text',
@@ -36,7 +36,7 @@ var survey_trial_partial = {
   autocomplete: false,
   data: { test_part: "verbal_report_ranking_phase3"}
 }
-timeline.push(survey_trial_partial)
+timeline2.push(survey_trial_partial)
 
 var survey_trial_partial = {
   type: 'survey-text',
@@ -45,7 +45,7 @@ var survey_trial_partial = {
   ],
   data: { test_part: "verbal_report_textbox_phase3" }
 }
-timeline.push(survey_trial_partial)
+timeline2.push(survey_trial_partial)
 
 var survey_trial_partial = {
   type: 'survey-text',
@@ -54,4 +54,4 @@ var survey_trial_partial = {
   ],
   data: { test_part: "verbal_report_textbox_phase3_change" }
 }
-timeline.push(survey_trial_partial)
+timeline2.push(survey_trial_partial)

@@ -7,6 +7,9 @@ var goodbye = {
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> to return to Prolific Academic.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "goodbye" }
+  data: { test_part: "goodbye" },
+  on_finish: function () {
+    var completedExperiment = true
+  }
 }
-timeline.push(goodbye)
+timeline2.push(goodbye)

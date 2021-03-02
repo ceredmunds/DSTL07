@@ -2,7 +2,7 @@
 
 // this path should point to your configuration file.
 require "config.php";
-$table = "test_table";
+$table = "data";
 $data_array = json_decode(file_get_contents('php://input'), true);
 
 try {

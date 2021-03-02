@@ -17,7 +17,7 @@ var verbal_report_instructions = {
     document.getElementsByClassName("jspsych-content-wrapper")[0].style.backgroundColor = "white"
   }
 }
-timeline.push(verbal_report_instructions)
+timeline2.push(verbal_report_instructions)
 
 var dimension_options = allLabels
 dimension_options.push("I don't know")
@@ -41,7 +41,7 @@ var survey_trial = {
   autocomplete: false,
   data: { test_part: "verbal_report_ranking_phase2"}
 }
-timeline.push(survey_trial)
+timeline2.push(survey_trial)
 
 var survey_trial = {
   type: 'survey-text',
@@ -50,4 +50,4 @@ var survey_trial = {
   ],
   data: { test_part: "verbal_report_textbox_phase2" }
 }
-timeline.push(survey_trial)
+timeline2.push(survey_trial)

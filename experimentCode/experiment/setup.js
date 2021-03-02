@@ -4,7 +4,7 @@ var socialCondition = 'operator' // operator or superior
 
 /* category learning variables */
 var maxNumberCategoryLearningTrials = 2
-var nUniqueStimuli = 4
+var nUniqueStimuli = 2
 var nDimensions = 5
 var allLabels = ['Craft', 'Type', 'Status', 'Speed', 'Direction']
 const dimensionOrder = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3, 4, 5], nDimensions) // needs to match dimension names
@@ -20,6 +20,46 @@ const categoryLabels = categoryOrder.map(i => choices[i])
 var feedbackDuration = 1000 // in ms
 var ITI = 500 // in ms
 var learningCriterion = 0.5 // number between 0 and 1a
+
+/* get start time */
+var startTime = new Date()
+var failedLearningCriterion = false
+var completedExperiment = false
+
+/* get participant information */
+var prolific_id = jsPsych.data.getURLVariable('PROLIFIC_PID')
+var study_id = jsPsych.data.getURLVariable('STUDY_ID')
+var session_id = jsPsych.data.getURLVariable('SESSION_ID')
+
+if (prolific_id == undefined) {
+  prolific_id = jsPsych.randomization.randomID()
+  study_id = "Not on prolific"
+  session_id = "Not on prolific"
+}
+
+jsPsych.data.addProperties({
+  displayCondition: displayCondition,
+  socialCondition: socialCondition,
+  startTime: startTime,
+  prolific_id: prolific_id,
+  study_id: study_id,
+  session_id: session_id,
+  dimensionOrder: dimensionOrder.map(i => allLabels[i-1]).toString()
+})
+
+function saveData () {
+  var xhr = new XMLHttpRequest()
+  xhr.open("POST", "php/write_data.php") // change 'write_data.php' to point to php script.
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.onload = function() {
+    if(xhr.status == 200){
+      console.log(xhr.response)
+      // var response = JSON.parse(xhr.responseText);
+      // console.log(response.success);
+    }
+  }
+  xhr.send(jsPsych.data.get().json())
+}
 
 /* create timeline */
 var timeline = []
@@ -37,10 +77,7 @@ var welcome = {
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
   data: {
-    test_part: "welcome",
-    displayCondition: displayCondition,
-    socialCondition: socialCondition,
-    dimensionOrder: dimensionOrder.map(i => allLabels[i-1]).toString()
+    test_part: "welcome"
   }
 }
 timeline.push(welcome)

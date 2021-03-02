@@ -13,8 +13,6 @@ var categorisation_trial = {
   choices: ['Friendly', 'Hostile'],
   response_ends_trial: true,
   data: {
-    displayCondition: displayCondition,
-    socialCondition: socialCondition,
     test_part: 'learning',
     stimulusID: jsPsych.timelineVariable('stimulusID'),
     dimension1: jsPsych.timelineVariable('dimension1'),
@@ -49,9 +47,25 @@ var feedback = {
     }
   },
   choices: jsPsych.NO_KEYS,
-  data: { test_part: 'learning_feedback' },
+  data: {
+    test_part: 'learning_feedback'
+  },
   trial_duration: feedbackDuration,
   post_trial_gap: ITI
+}
+
+var failedLearningCriterionPage = {
+  type: "html-keyboard-response",
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<div style='width:700px'>" +
+  "<p><b>Phase 1 Complete</b></p>" +
+  "<p>Thank you for taking part in this experiment.</p>" +
+  "<p>Unfortunately, you haven't passed the learning criterion and will not have the oportunity to complete the rest of the experiment.</p>" +
+  "</div>" +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to return to Prolific.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+  choices: ['space'],
+  data: { test_part: "category_test_instructions" }
 }
 
 var category_learning_procedure = {
@@ -62,7 +76,16 @@ var category_learning_procedure = {
     // break loop if over trial limit
     var nTrials = jsPsych.data.get().filter({ test_part: "learning" }).count()
     if (nTrials >= maxNumberCategoryLearningTrials) {
-      // data.switch = "maxNoTrials"
+      jsPsych.data.addProperties({
+        completedLearning: "false"
+      })
+
+      var new_timeline = {
+        timeline: [failedLearningCriterionPage]
+      }
+      jsPsych.addNodeToEndOfTimeline(new_timeline)
+
+      failedLearningCriterion = true
       return false
     }
 
@@ -70,10 +93,16 @@ var category_learning_procedure = {
     var last_n_correct_trials = last_n_trials.filter({ correct: "true" })
     var accuracy = Math.round(last_n_correct_trials.count() / last_n_trials.count())
     if (accuracy < learningCriterion) {
-      // data.switch = "continue"
       return true // True to keep loop going
     } else {
-      // data.switch = "greaterThanLC"
+      jsPsych.data.addProperties({
+        completedLearning: "true"
+      })
+
+      var new_timeline = {
+        timeline: timeline2
+      }
+      jsPsych.addNodeToEndOfTimeline(new_timeline)
       return false
     }
   }

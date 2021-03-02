@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<?php
-$ParticipantId = $_GET['PROLIFIC_PID'] ;
-$SessionId =  $_GET['SESSION_ID'];
-?>
 <html>
   <head>
     <title>My experiment</title>
@@ -18,43 +14,28 @@ $SessionId =  $_GET['SESSION_ID'];
     <link href="css/style.css" rel="stylesheet">
   </head>
   <body></body>
+
   <!-- Setup -->
-  <script>
-
-    function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
-
-    var prolificID = getParameterByName("PROLIFIC_PID");
-    var sessionID = getParameterByName("SESSION_ID");
-    console.log("PROLIFIC_PID: " + prolificID);
-    console.log("SESSION_ID: " + sessionID);
-  </script>
   <script src="experiment/setup.js"></script>
 
   <!-- Phase 1: Load category learning -->
-  <!-- <script src="experiment/phase1instructions.js"></script> -->
+  <script src="experiment/phase1instructions.js"></script>
   <script src="experiment/phase1experiment.js"></script>
+  <script src="experiment/experiment.js"></script>
 
   <!-- Phase 2: Load category test (All) -->
-  <!-- <script src="experiment/phase2instructions.js"></script> -->
-  <!-- <script src="experiment/phase2experiment.js"></script> -->
-  <!-- <script src="experiment/phase2verbals.js"></script> -->
+  <script src="experiment/phase2instructions.js"></script>
+  <script src="experiment/phase2experiment.js"></script>
+  <script src="experiment/phase2verbals.js"></script>
 
   <!-- Phase 3: Load category test removing most predictive dimension -->
-  <!-- <script src="experiment/phase3instructions.js"></script> -->
-  <!-- <script src="experiment/phase3experiment.js"></script> -->
-  <!-- <script src="experiment/phase3verbals.js"></script> -->
+  <script src="experiment/phase3instructions.js"></script>
+  <script src="experiment/phase3experiment.js"></script>
+  <script src="experiment/phase3verbals.js"></script>
 
   <!-- Goodbye: Load goodbye -->
   <script src="experiment/goodbye.js"></script>
 
   <!-- Run -->
-  <script src="experiment/experiment.js"></script>
+  <!-- <script src="experiment/experiment.js"></script> -->
 </html>

@@ -11,7 +11,7 @@ var category_test_partial_instructions = {
   choices: ['space'],
   data: { test_part: "category_test_partial_instructions" }
 }
-timeline.push(category_test_partial_instructions)
+timeline2.push(category_test_partial_instructions)
 
 var conditionInstruction = ""
 if (socialCondition == 'operator') {
@@ -35,4 +35,4 @@ var category_test_partial_instructions1 = {
   choices: ['space'],
   data: { test_part: "category_test_partial_instructions" }
 }
-timeline.push(category_test_partial_instructions1)
+timeline2.push(category_test_partial_instructions1)

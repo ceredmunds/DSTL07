@@ -12,8 +12,6 @@ var categorisation_test_trial_partial = {
   choices: ['Friendly', 'Hostile'],
   response_ends_trial: true,
   data: {
-    displayCondition: displayCondition,
-    socialCondition: socialCondition,
     test_part: 'test_partial',
     stimulusID: jsPsych.timelineVariable('stimulusID'),
     dimension1: jsPsych.timelineVariable('dimension1'),
@@ -44,8 +42,6 @@ var confidence_rating = {
   require_movement: true,
   slider_width: 600,
   data: {
-    displayCondition: displayCondition,
-    socialCondition: socialCondition,
     test_part: 'confidence_rating_partial',
     dimension1: jsPsych.timelineVariable('dimension1'),
     dimension2: jsPsych.timelineVariable('dimension2'),
@@ -62,4 +58,4 @@ var category_test_procedure = {
   repetitions: 1,
   randomize_order: true
 }
-timeline.push(category_test_procedure)
+timeline2.push(category_test_procedure)
