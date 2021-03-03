@@ -55,7 +55,7 @@ var confidence_rating = {
 var category_test_procedure = {
   timeline: [categorisation_test_trial_partial, confidence_rating],
   timeline_variables: category_test_stimuli,
-  repetitions: 1,
+  repetitions: nRoundsTestTrial,
   randomize_order: true
 }
 timeline2.push(category_test_procedure)

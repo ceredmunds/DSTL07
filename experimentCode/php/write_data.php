@@ -2,12 +2,14 @@
 
 // this path should point to your configuration file.
 require "config.php";
-$table = "data";
+
 $data_array = json_decode(file_get_contents('php://input'), true);
 
 try {
-  $conn = new PDO("mysql:host=$servername;port=$port;dbname=$dbname", $username, $password);
-  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $conn = new PDO($dsn, $username, $password, $options);
+
+  // $conn = new PDO("mysql:host=$servername;port=$port;dbname=$dbname", $username, $password);
+  // $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   // First stage is to get all column names from the table and store
   // them in $col_names array.
   $stmt = $conn->prepare("SHOW COLUMNS FROM `$table`");

@@ -3,8 +3,8 @@ var displayCondition = 'separated' // integrated or separated
 var socialCondition = 'operator' // operator or superior
 
 /* category learning variables */
-var maxNumberCategoryLearningTrials = 2
-var nUniqueStimuli = 2
+var maxNumberCategoryLearningTrials = 3
+var nUniqueStimuli = 20
 var nDimensions = 5
 var allLabels = ['Craft', 'Type', 'Status', 'Speed', 'Direction']
 const dimensionOrder = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3, 4, 5], nDimensions) // needs to match dimension names
@@ -19,7 +19,9 @@ const categoryLabels = categoryOrder.map(i => choices[i])
 
 var feedbackDuration = 1000 // in ms
 var ITI = 500 // in ms
-var learningCriterion = 0.5 // number between 0 and 1a
+var learningCriterion = 0.8 // number between 0 and 1a
+
+var nRoundsTestTrial = 5
 
 /* get start time */
 var startTime = new Date()
@@ -49,13 +51,16 @@ jsPsych.data.addProperties({
 
 function saveData () {
   var xhr = new XMLHttpRequest()
+  console.log(xhr)
   xhr.open("POST", "php/write_data.php") // change 'write_data.php' to point to php script.
+  console.log(xhr)
   xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.onload = function() {
-    if(xhr.status == 200){
-      console.log(xhr.response)
-      // var response = JSON.parse(xhr.responseText);
-      // console.log(response.success);
+  xhr.onload = function () {
+    if (xhr.status == 200) {
+      console.log("status 200")
+      // console.log(xhr.response)
+      var response = JSON.parse(xhr.responseText)
+      console.log(response.success)
     }
   }
   xhr.send(jsPsych.data.get().json())
@@ -78,6 +83,7 @@ var welcome = {
   choices: ['space'],
   data: {
     test_part: "welcome"
-  }
+  },
+  on_finish: saveData()
 }
 timeline.push(welcome)

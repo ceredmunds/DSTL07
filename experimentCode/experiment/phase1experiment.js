@@ -51,7 +51,24 @@ var feedback = {
     test_part: 'learning_feedback'
   },
   trial_duration: feedbackDuration,
-  post_trial_gap: ITI
+  post_trial_gap: ITI,
+  on_finish: function () {
+    var nTrials = jsPsych.data.get().filter({ test_part: "learning" }).count()
+    if (nTrials >= maxNumberCategoryLearningTrials) {
+      jsPsych.data.addProperties({
+        completedLearning: "false"
+      })
+
+      var new_timeline = {
+        timeline: [failedLearningCriterionPage]
+      }
+      jsPsych.addNodeToEndOfTimeline(new_timeline)
+
+      failedLearningCriterion = true
+      jsPsych.endCurrentTimeline()
+      return false
+    }
+  }
 }
 
 var failedLearningCriterionPage = {
@@ -74,20 +91,20 @@ var category_learning_procedure = {
   randomize_order: true,
   loop_function: function () {
     // break loop if over trial limit
-    var nTrials = jsPsych.data.get().filter({ test_part: "learning" }).count()
-    if (nTrials >= maxNumberCategoryLearningTrials) {
-      jsPsych.data.addProperties({
-        completedLearning: "false"
-      })
-
-      var new_timeline = {
-        timeline: [failedLearningCriterionPage]
-      }
-      jsPsych.addNodeToEndOfTimeline(new_timeline)
-
-      failedLearningCriterion = true
-      return false
-    }
+    // var nTrials = jsPsych.data.get().filter({ test_part: "learning" }).count()
+    // if (nTrials >= maxNumberCategoryLearningTrials) {
+    //   jsPsych.data.addProperties({
+    //     completedLearning: "false"
+    //   })
+    //
+    //   var new_timeline = {
+    //     timeline: [failedLearningCriterionPage]
+    //   }
+    //   jsPsych.addNodeToEndOfTimeline(new_timeline)
+    //
+    //   failedLearningCriterion = true
+    //   return false
+    // }
 
     var last_n_trials = jsPsych.data.get().last(nUniqueStimuli)
     var last_n_correct_trials = last_n_trials.filter({ correct: "true" })
