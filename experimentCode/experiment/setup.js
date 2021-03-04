@@ -3,7 +3,7 @@ var displayCondition = 'separated' // integrated or separated
 var socialCondition = 'operator' // operator or superior
 
 /* category learning variables */
-var maxNumberCategoryLearningTrials = 3
+var maxNumberCategoryLearningTrials = 200// 200
 var nUniqueStimuli = 20
 var nDimensions = 5
 var allLabels = ['Craft', 'Type', 'Status', 'Speed', 'Direction']
@@ -21,7 +21,7 @@ var feedbackDuration = 1000 // in ms
 var ITI = 500 // in ms
 var learningCriterion = 0.8 // number between 0 and 1a
 
-var nRoundsTestTrial = 5
+var nRoundsTestTrial = 4
 
 /* get start time */
 var startTime = new Date()

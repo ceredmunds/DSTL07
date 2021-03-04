@@ -19,7 +19,10 @@ var categorisation_test_trial_partial = {
     dimension3: jsPsych.timelineVariable('dimension3'),
     dimension4: jsPsych.timelineVariable('dimension4'),
     dimension5: jsPsych.timelineVariable('dimension5'),
-    abstract_category: jsPsych.timelineVariable('category')
+    abstract_category: jsPsych.timelineVariable('category'),
+    testN: function () {
+      return jsPsych.data.get().last(1).values()[0].testN + 1
+    }
   },
   on_finish: function (data) {
     // Get response in terms of labels
@@ -48,12 +51,24 @@ var confidence_rating = {
     dimension3: jsPsych.timelineVariable('dimension3'),
     dimension4: jsPsych.timelineVariable('dimension4'),
     dimension5: jsPsych.timelineVariable('dimension5'),
-    abstract_category: jsPsych.timelineVariable('category')
+    abstract_category: jsPsych.timelineVariable('category'),
+    testN: 1
+  }
+}
+
+var if_confidence_rating = {
+  timeline: [confidence_rating],
+  conditional_function: function () {
+    if (jsPsych.data.get().last(1).values()[0].testN % 5 - 1 === 0) {
+      return true // show confidence rating
+    } else {
+      return false // don't show confidence rating
+    }
   }
 }
 
 var category_test_procedure = {
-  timeline: [categorisation_test_trial_partial, confidence_rating],
+  timeline: [categorisation_test_trial_partial, if_confidence_rating],
   timeline_variables: category_test_stimuli,
   repetitions: nRoundsTestTrial,
   randomize_order: true
