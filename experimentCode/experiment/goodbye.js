@@ -1,3 +1,8 @@
+// exit fullscreen mode
+timeline2.push({
+  type: 'fullscreen',
+  fullscreen_mode: false
+})
 
 var goodbye = {
   type: "html-keyboard-response",

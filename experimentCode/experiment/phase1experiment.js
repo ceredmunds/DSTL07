@@ -29,11 +29,18 @@ var categorisation_trial = {
     data.correct_response = categoryLabels[data.abstract_category]
     // determine if response correct
     if (data.response == data.correct_response) {
+      console.log("correct")
       data.correct = "true"
     } else {
+      console.log("wrong")
       data.correct = "false"
     }
   }
+}
+
+var quitFullScreen = {
+  type: 'fullscreen',
+  fullscreen_mode: false
 }
 
 var feedback = {
@@ -59,10 +66,10 @@ var feedback = {
         completedLearning: "false"
       })
 
-      // var new_timeline = {
-      //   timeline: [failedLearningCriterionPage]
-      // }
-      // jsPsych.addNodeToEndOfTimeline(new_timeline)
+      var new_timeline = {
+        timeline: [quitFullScreen, failedLearningCriterionPage]
+      }
+      jsPsych.addNodeToEndOfTimeline(new_timeline)
 
       var new_timeline = {
         timeline: timeline2
@@ -71,7 +78,21 @@ var feedback = {
 
       failedLearningCriterion = true
       jsPsych.endCurrentTimeline()
-      return false
+    }
+    if (nTrials >= nUniqueStimuli) {
+      var last_n_trials = jsPsych.data.get().filter({ test_part: 'learning' }).last(nUniqueStimuli)
+      var last_n_correct_trials = last_n_trials.filter({ correct: "true" })
+      var accuracy = last_n_correct_trials.count() / last_n_trials.count()
+      if (accuracy >= learningCriterion) {
+        jsPsych.data.addProperties({
+          completedLearning: "true"
+        })
+        var new_timeline = {
+          timeline: timeline2
+        }
+        jsPsych.addNodeToEndOfTimeline(new_timeline)
+        jsPsych.endCurrentTimeline()
+      }
     }
   }
 }
@@ -93,25 +114,6 @@ var failedLearningCriterionPage = {
 var category_learning_procedure = {
   timeline: [categorisation_trial, feedback],
   timeline_variables: category_learning_stimuli,
-  randomize_order: true,
-  loop_function: function () {
-
-    var last_n_trials = jsPsych.data.get().last(nUniqueStimuli)
-    var last_n_correct_trials = last_n_trials.filter({ correct: "true" })
-    var accuracy = Math.round(last_n_correct_trials.count() / last_n_trials.count())
-    if (accuracy < learningCriterion) {
-      return true // True to keep loop going
-    } else {
-      jsPsych.data.addProperties({
-        completedLearning: "true"
-      })
-
-      var new_timeline = {
-        timeline: timeline2
-      }
-      jsPsych.addNodeToEndOfTimeline(new_timeline)
-      return false
-    }
-  }
+  randomize_order: true
 }
 timeline.push(category_learning_procedure)

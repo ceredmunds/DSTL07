@@ -3,8 +3,8 @@ var displayCondition = 'separated' // integrated or separated
 var socialCondition = 'operator' // operator or superior
 
 /* category learning variables */
-var maxNumberCategoryLearningTrials = 3// 200
-var nUniqueStimuli = 20
+var maxNumberCategoryLearningTrials = 20// 200
+var nUniqueStimuli = 5 // 20
 var nDimensions = 5
 var allLabels = ['Craft', 'Type', 'Status', 'Speed', 'Direction']
 const dimensionOrder = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3, 4, 5], nDimensions) // needs to match dimension names
@@ -91,3 +91,8 @@ var welcome = {
   on_finish: saveData()
 }
 timeline.push(welcome)
+
+timeline.push({
+  type: 'fullscreen',
+  fullscreen_mode: true
+})
