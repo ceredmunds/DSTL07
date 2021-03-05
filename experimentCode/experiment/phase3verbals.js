@@ -18,15 +18,16 @@ var verbal_report_instructions = {
   }
 }
 timeline2.push(verbal_report_instructions)
+timeline2 = timeline2.concat(reminder)
 
 var survey_trial_partial = {
   type: 'survey-text',
   questions: [
-    { prompt: "Craft", name: 'craft', columns:3 },
-    { prompt: "Speed", name: 'speed', columns:3 },
-    { prompt: "Direction", name: 'direction', columns:3 },
-    { prompt: "Type", name: 'type', columns:3 },
-    { prompt: "Status", name: 'status', columns:3 }
+    { prompt: "Craft (Airplane/Submarine)", name: 'craft', columns:3 },
+    { prompt: "Speed (Fast/Slow)", name: 'speed', columns:3 },
+    { prompt: "Direction (Left/Right)", name: 'direction', columns:3 },
+    { prompt: "Type (Autonomous/Decoy)", name: 'type', columns:3 },
+    { prompt: "Status (Undamaged/Damaged)", name: 'status', columns:3 }
   ],
   preamble: "<div style='width:700px'>" +
   "<p>First, we would like you to rate the features in terms of how important they were for classifying a craft as friendly or hostile. " +
@@ -41,7 +42,7 @@ timeline2.push(survey_trial_partial)
 var survey_trial_partial = {
   type: 'survey-text',
   questions: [
-    { prompt: "Please describe how exactly you decided whether a craft was friendly or hostile in the previous task.", rows: 20, columns: 60, name: 'stimDimensionQphase3'}
+    { prompt: "Please describe how exactly you decided whether a craft was friendly or hostile in the task you <i>just</i> completed.", rows: 20, columns: 60, name: 'stimDimensionQphase3'}
   ],
   data: { test_part: "verbal_report_textbox_phase3" }
 }
@@ -50,8 +51,11 @@ timeline2.push(survey_trial_partial)
 var survey_trial_partial = {
   type: 'survey-text',
   questions: [
-    { prompt: "Finally, please describe how your approach changed once a piece of information was removed.", rows: 20, columns: 60, name: 'changeQphase3'}
+    { prompt: "Finally, please describe how your approach changed between the two tasks (the one with missing data and the one without).", rows: 20, columns: 60, name: 'changeQphase3'}
   ],
-  data: { test_part: "verbal_report_textbox_phase3_change" }
+  data: { test_part: "verbal_report_textbox_phase3_change" },
+  on_finish: function () {
+    var completedExperiment = true
+  }
 }
 timeline2.push(survey_trial_partial)

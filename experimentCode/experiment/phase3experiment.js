@@ -59,7 +59,7 @@ var confidence_rating = {
 var if_confidence_rating = {
   timeline: [confidence_rating],
   conditional_function: function () {
-    if (jsPsych.data.get().last(1).values()[0].testN % 5 - 1 === 0) {
+    if (jsPsych.data.get().last(1).values()[0].testN % 10 - 1 === 0) {
       return true // show confidence rating
     } else {
       return false // don't show confidence rating
@@ -71,6 +71,7 @@ var category_test_procedure = {
   timeline: [categorisation_test_trial_partial, if_confidence_rating],
   timeline_variables: category_test_stimuli,
   repetitions: nRoundsTestTrial,
-  randomize_order: true
+  randomize_order: true,
+  post_trial_gap: 500
 }
 timeline2.push(category_test_procedure)

@@ -15,10 +15,24 @@ var category_learning_instructions1 = {
 }
 timeline.push(category_learning_instructions1)
 
+var remember_instruction = {
+  type: "html-keyboard-response",
+  stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
+  "<div style='width:700px'>" +
+  "<p><b>Rememeber...</b></p>" +
+  "<p>There were two <i>craft</i>, of two <i>types</i>, of two <i>statuses</i>, going in two <i>directions</i>, at two <i>speeds</i>. </p>" +
+  "<p>The following few pages will remind you of what the symbols mean.</p>" +
+  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to continue.</p></div>" +
+  "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
+  choices: ['space'],
+  data: { test_part: "learningInstructions" }
+}
+reminder.push(remember_instruction)
+
 var craft_instructions = {
   type: "html-keyboard-response",
   stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
-  "<p><b>Stimuli</b></p>" +
+  "<p><b>Craft</b></p>" +
   "<p>There are two types of craft:</p>" +
   "<div style='width: 550px;'>"+
     "<div class='stimulus' style='float: left;'><img src='img/stimuli/air.png'></img>" +
@@ -32,12 +46,13 @@ var craft_instructions = {
   data: { test_part: "learningInstructions" }
 }
 timeline.push(craft_instructions)
+reminder.push(craft_instructions)
 
 var type_instructions = {
   type: "html-keyboard-response",
   stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
   "<div style='width:550px'>" +
-  "<p><b>Stimuli</b></p>" +
+  "<p><b>Type</b></p>" +
   "<p>The craft can be either autonomous or a decoy as indicated by the following symbols:</p>" +
   "<div style='width: 550px;'>"+
   "<div class='stimulus' style='float: left;'><img src='img/stimuli/autonomous.png'></img>" +
@@ -51,12 +66,13 @@ var type_instructions = {
   data: { test_part: "learningInstructions" }
 }
 timeline.push(type_instructions)
+reminder.push(type_instructions)
 
 var status_instructions = {
   type: "html-keyboard-response",
   stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
   "<div style='width:550px'>" +
-  "<p><b>Stimuli</b></p>" +
+  "<p><b>Status</b></p>" +
   "<p>The craft can be either undamaged or damaged as indicated by the following symbols:</p>" +
   "<div style='width:550px;'>"+
     "<div class='stimulus' style='float: left;'><img src='img/stimuli/unharmed.png'></img>" +
@@ -70,12 +86,13 @@ var status_instructions = {
   data: { test_part: "learningInstructions" }
 }
 timeline.push(status_instructions)
+reminder.push(status_instructions)
 
 var direction_instructions = {
   type: "html-keyboard-response",
   stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
   "<div style='width:550px'>" +
-  "<p><b>Stimuli</b></p>" +
+  "<p><b>Direction</b></p>" +
   "<p>The craft can either travel towards the left or the right:</p>" +
   "<div style='width: 550px;'>"+
     "<div class='stimulus' style='float: left;'><img src='img/stimuli/left.png'></img>" +
@@ -89,12 +106,13 @@ var direction_instructions = {
   data: { test_part: "learningInstructions" }
 }
 timeline.push(direction_instructions)
+reminder.push(direction_instructions)
 
 var speed_instructions = {
   type: "html-keyboard-response",
   stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +
   "<div style='width:550px'>" +
-  "<p><b>Stimuli</b></p>" +
+  "<p><b>Speed</b></p>" +
   "<p>The craft can either travel fast or slow:</p>" +
   "<div style='width: 550px;'>"+
     "<div class='stimulus' style='float: left;'><img src='img/stimuli/fast_number.png'></img>" +
@@ -108,6 +126,7 @@ var speed_instructions = {
   data: { test_part: "learningInstructions" }
 }
 timeline.push(speed_instructions)
+reminder.push(speed_instructions)
 
 var category_learning_instructions2 = {
   type: "html-keyboard-response",

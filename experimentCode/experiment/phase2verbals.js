@@ -18,6 +18,7 @@ var verbal_report_instructions = {
   }
 }
 timeline2.push(verbal_report_instructions)
+timeline2 = timeline2.concat(reminder)
 
 var dimension_options = allLabels
 dimension_options.push("I don't know")
@@ -27,11 +28,11 @@ var allLabels = ['Craft', 'Speed', 'Direction', 'Type', 'Status']
 var survey_trial = {
   type: 'survey-text',
   questions: [
-    { prompt: "Craft", name: 'craft', columns:3 },
-    { prompt: "Speed", name: 'speed', columns:3 },
-    { prompt: "Direction", name: 'direction', columns:3 },
-    { prompt: "Type", name: 'type', columns:3 },
-    { prompt: "Status", name: 'status', columns:3 }
+    { prompt: "Craft (Airplane/Submarine)", name: 'craft', columns:3 },
+    { prompt: "Speed (Fast/Slow)", name: 'speed', columns:3 },
+    { prompt: "Direction (Left/Right)", name: 'direction', columns:3 },
+    { prompt: "Type (Autonomous/Decoy)", name: 'type', columns:3 },
+    { prompt: "Status (Undamaged/Damaged)", name: 'status', columns:3 }
   ],
   preamble: "<div style='width:700px'>" +
   "<p>First, we would like you to rate the features in terms of how important they were for classifying a craft as friendly or hostile. " +
