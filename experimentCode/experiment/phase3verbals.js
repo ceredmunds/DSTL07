@@ -24,13 +24,13 @@ var survey_trial_partial = {
   type: 'survey-text',
   questions: [
     { prompt: "Craft (Airplane/Submarine)", name: 'craft', columns:3 },
+    { prompt: "Role (Autonomous/Decoy)", name: 'role', columns:3 },
+    { prompt: "Status (Undamaged/Damaged)", name: 'status', columns:3 },
     { prompt: "Speed (Fast/Slow)", name: 'speed', columns:3 },
-    { prompt: "Direction (Left/Right)", name: 'direction', columns:3 },
-    { prompt: "Type (Autonomous/Decoy)", name: 'type', columns:3 },
-    { prompt: "Status (Undamaged/Damaged)", name: 'status', columns:3 }
+    { prompt: "Direction (Left/Right)", name: 'direction', columns:3 }
   ],
   preamble: "<div style='width:700px'>" +
-  "<p>First, we would like you to rate the features in terms of how important they were for classifying a craft as friendly or hostile. " +
+  "<p>First, we would like you to rank the features, from most to least important, based on how important they were for classifying a craft as friendly or hostile. " +
   "Please put the numbers 1 to 5 in the boxes below, with 1 meaning most important and 5 meaning least important. </p>" +
   "</div>",
   randomize_question_order: true,
@@ -48,14 +48,14 @@ var survey_trial_partial = {
 }
 timeline2.push(survey_trial_partial)
 
-var survey_trial_partial = {
-  type: 'survey-text',
-  questions: [
-    { prompt: "Finally, please describe how your approach changed between the two tasks (the one with missing data and the one without).", rows: 20, columns: 60, name: 'changeQphase3'}
-  ],
-  data: { test_part: "verbal_report_textbox_phase3_change" },
-  on_finish: function () {
-    var completedExperiment = true
-  }
-}
-timeline2.push(survey_trial_partial)
+// var survey_trial_partial = {
+//   type: 'survey-text',
+//   questions: [
+//     { prompt: "Finally, please describe how your approach changed between the two tasks (the one with missing data and the one without).", rows: 20, columns: 60, name: 'changeQphase3'}
+//   ],
+//   data: { test_part: "verbal_report_textbox_phase3_change" },
+//   on_finish: function () {
+//     var completedExperiment = true
+//   }
+// }
+// timeline2.push(survey_trial_partial)

@@ -60,7 +60,7 @@ var confidence_rating = {
 var if_confidence_rating = {
   timeline: [confidence_rating],
   conditional_function: function () {
-    if (jsPsych.data.get().last(1).values()[0].testN % 10 - 1 === 0) {
+    if (jsPsych.data.get().last(1).values()[0].testN % 5 - 1 === 0) {
       return true // show confidence rating
     } else {
       return false // don't show confidence rating

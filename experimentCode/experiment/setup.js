@@ -1,16 +1,16 @@
 /* participant based variables */
-var displayCondition = 'separated' // integrated or separated
+var displayCondition = 'integrated' // integrated or separated
 var socialCondition = 'operator' // operator or superior
 
 /* category learning variables */
-var maxNumberCategoryLearningTrials = 20// 200
-var nUniqueStimuli = 5 // 20
+var maxNumberCategoryLearningTrials = 200// 200
+var nUniqueStimuli = 20 // 20
 var nDimensions = 5
-var allLabels = ['Craft', 'Type', 'Status', 'Speed', 'Direction']
+var allLabels = ['Craft', 'Role', 'Status', 'Speed', 'Direction']
 const dimensionOrder = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3, 4, 5], nDimensions) // needs to match dimension names
 var predIndex = dimensionOrder.indexOf(1)
 var predictiveDimension = allLabels[predIndex]
-console.log(predictiveDimension)
+// console.log(predictiveDimension)
 
 const displayOrder = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3, 4], nDimensions)
 
@@ -24,7 +24,7 @@ var feedbackDuration = 1000 // in ms
 var ITI = 500 // in ms
 var learningCriterion = 0.8 // number between 0 and 1a
 
-var nRoundsTestTrial = 1
+var nRoundsTestTrial = 4 // 4
 
 /* get start time */
 var startTime = new Date()
@@ -49,7 +49,8 @@ jsPsych.data.addProperties({
   prolific_id: prolific_id,
   study_id: study_id,
   session_id: session_id,
-  dimensionOrder: dimensionOrder.map(i => allLabels[i-1]).toString()
+  dimensionOrder: dimensionOrder.map(i => allLabels[i-1]).toString(),
+  displayOrder: displayOrder.toString()
 })
 
 function saveData () {
@@ -80,6 +81,7 @@ var welcome = {
   "<div style='width:700px'>" +
   "<p style='font-size:26px'><b>Welcome to the experiment and thank you for taking part.</b></p>" +
   "<p>Note that this experiment is designed for resolutions of 1200<i>px</i> by 800<i>px</i>. If your screen has a lower resolution than this, please return this experiment.</p>" +
+  "<p>If the text overlaps at all, you can zoom out by pressing control and '-' on Windows or command and '-' on a Mac.</p>" +
   "<p>If you have any questions or concerns, remember that you can always contact us via the Prolific message system.</p>" +
   "</div>" +
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to begin.</p></div>" +
@@ -87,8 +89,7 @@ var welcome = {
   choices: ['space'],
   data: {
     test_part: "welcome"
-  },
-  on_finish: saveData()
+  }
 }
 timeline.push(welcome)
 

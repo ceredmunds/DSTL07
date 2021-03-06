@@ -140,11 +140,11 @@ jsPsych.plugins['category-button-response'] = (function () {
       var yPos = "-30px" // edit to shift decoy to correct place
     }
     // Get type
-    type = eval("trial.dimension" + trial.dimOrder[1])
-    if (type == 0) {
-      typeHtml = '<img src="img/stimuli/autonomous.png"></img>'
-    } else if (type == 1) {
-      typeHtml = '<img src="img/stimuli/decoy.png"></img>'
+    role = eval("trial.dimension" + trial.dimOrder[1])
+    if (role == 0) {
+      roleHtml = '<img src="img/stimuli/autonomous.png"></img>'
+    } else if (role == 1) {
+      roleHtml = '<img src="img/stimuli/decoy.png"></img>'
     }
     // Get status
     status = eval("trial.dimension" + trial.dimOrder[2])
@@ -171,7 +171,7 @@ jsPsych.plugins['category-button-response'] = (function () {
         directionHtml = '<img src="img/stimuli/right.png"></img>'
       }
       // get all html together
-      var stimulusHtml = [craftHtml, typeHtml, statusHtml, speedHtml, directionHtml]
+      var stimulusHtml = [craftHtml, roleHtml, statusHtml, speedHtml, directionHtml]
       if (trial.removePredictiveDimension) {
         stimulusHtml[predIndex] = '<img src="img/stimuli/NA.png"></img>'
       }
@@ -197,7 +197,7 @@ jsPsych.plugins['category-button-response'] = (function () {
         directionHtml = '<img src="img/stimuli/fast_right.png"></img>'
       }
 
-      var displayHtml = [craftHtml, typeHtml, statusHtml, speedHtml, directionHtml] // don't need to randomise order in this condition
+      var displayHtml = [craftHtml, roleHtml, statusHtml, speedHtml, directionHtml] // don't need to randomise order in this condition
       if (trial.removePredictiveDimension) {
         displayHtml[predIndex + 1] = ""
       }

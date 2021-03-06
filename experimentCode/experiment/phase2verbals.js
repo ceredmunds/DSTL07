@@ -29,13 +29,13 @@ var survey_trial = {
   type: 'survey-text',
   questions: [
     { prompt: "Craft (Airplane/Submarine)", name: 'craft', columns:3 },
+    { prompt: "Role (Autonomous/Decoy)", name: 'role', columns:3 },
+    { prompt: "Status (Undamaged/Damaged)", name: 'status', columns:3 },
     { prompt: "Speed (Fast/Slow)", name: 'speed', columns:3 },
-    { prompt: "Direction (Left/Right)", name: 'direction', columns:3 },
-    { prompt: "Type (Autonomous/Decoy)", name: 'type', columns:3 },
-    { prompt: "Status (Undamaged/Damaged)", name: 'status', columns:3 }
+    { prompt: "Direction (Left/Right)", name: 'direction', columns:3 }
   ],
   preamble: "<div style='width:700px'>" +
-  "<p>First, we would like you to rate the features in terms of how important they were for classifying a craft as friendly or hostile. " +
+  "<p>First, we would like you to rank the features, from most to least important, based on how important they were for classifying a craft as friendly or hostile. " +
   "Please put the numbers 1 to 5 in the boxes below, with 1 meaning most important and 5 meaning least important. </p>" +
   "</div>",
   randomize_question_order: true,
