@@ -199,7 +199,7 @@ jsPsych.plugins['category-button-response'] = (function () {
 
       var displayHtml = [craftHtml, roleHtml, statusHtml, speedHtml, directionHtml] // don't need to randomise order in this condition
       if (trial.removePredictiveDimension) {
-        displayHtml[predIndex + 1] = ""
+        displayHtml[predIndex] = ""
       }
       stimulus = '<div class="background">' +
       '<div class="layer">' + displayHtml[4] + '</div>' +
@@ -233,34 +233,10 @@ jsPsych.plugins['category-button-response'] = (function () {
       var str = buttons[i].replace(/%choice%/g, trial.choices[i]);
       html += '<div class="jspsych-html-button-response-button" style="display: inline-block; margin:'+trial.margin_vertical+' '+trial.margin_horizontal+'" id="jspsych-html-button-response-button-' + i +'" data-choice="'+i+'">'+str+'</div>';
     }
-    html += '</div>';
-
-    // show prompt if there is one
-    if (trial.prompt !== null) {
-      html += trial.prompt;
-    }
-    display_element.innerHTML = html;
-
-    // start time
-    var start_time = performance.now();
-
-    // add event listeners to buttons
-    for (var i = 0; i < trial.choices.length; i++) {
-      display_element.querySelector('#jspsych-html-button-response-button-' + i).addEventListener('click', function(e){
-        var choice = e.currentTarget.getAttribute('data-choice'); // don't use dataset for jsdom compatibility
-        after_response(choice);
-      });
-    }
-
-    // store response
-    var response = {
-      rt: null,
-      button: null
-    };
+    html += '</div>'
 
     // function to handle responses by the subject
     function after_response(choice) {
-
       // measure rt
       var end_time = performance.now();
       var rt = end_time - start_time;
@@ -284,8 +260,7 @@ jsPsych.plugins['category-button-response'] = (function () {
     };
 
     // function to end trial when it is time
-    function end_trial() {
-
+    function end_trial () {
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();
 
@@ -294,7 +269,7 @@ jsPsych.plugins['category-button-response'] = (function () {
         "rt": response.rt,
         "stimulus": trial.stimulus,
         "button_pressed": response.button
-      };
+      }
 
       // clear the display
       display_element.innerHTML = '';
@@ -303,9 +278,34 @@ jsPsych.plugins['category-button-response'] = (function () {
       jsPsych.finishTrial(trial_data);
     };
 
+    // show prompt if there is one
+    if (trial.prompt !== null) {
+      html += trial.prompt;
+    }
+    display_element.innerHTML = html;
+
+    // start time
+    var start_time = performance.now();
+
+    setTimeout(() => {
+    // add event listeners to buttons
+      for (var i = 0; i < trial.choices.length; i++) {
+        display_element.querySelector('#jspsych-html-button-response-button-' + i).addEventListener('click', function(e) {
+          var choice = e.currentTarget.getAttribute('data-choice'); // don't use dataset for jsdom compatibility
+          after_response(choice);
+        })
+      }
+    }, 1000) // Add 1000ms delay
+
+    // store response
+    var response = {
+      rt: null,
+      button: null
+    };
+
     // hide image if timing is set
     if (trial.stimulus_duration !== null) {
-      jsPsych.pluginAPI.setTimeout(function() {
+      jsPsych.pluginAPI.setTimeout(function () {
         display_element.querySelector('#jspsych-html-button-response-stimulus').style.visibility = 'hidden';
       }, trial.stimulus_duration);
     }
@@ -316,7 +316,6 @@ jsPsych.plugins['category-button-response'] = (function () {
         end_trial();
       }, trial.trial_duration);
     }
-
   };
 
   return plugin;

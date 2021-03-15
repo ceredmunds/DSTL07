@@ -1,4 +1,4 @@
-timeline2 = []
+
 var category_test_instructions = {
   type: "html-keyboard-response",
   stimulus: "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;top:0px;left:0px;'><img src='img/qmul/qm-logo-white.svg' alt='Queen Mary Header' style='width:200px;position:absolute;top:10px;left:10px;'></img></div>" +

@@ -14,7 +14,11 @@ jsPsych.init({
       window.location = "https://app.prolific.co/submissions/complete?cc=12341234"
     }
 
-    window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXXXX"
+    window.location = "https://app.prolific.co/submissions/complete?cc=23DABDAA"
     // jsPsych.data.displayData()
   }
 })
+
+// TO do
+// integrated doesn't work on 3rd phase, all five showing
+// only first data saves
