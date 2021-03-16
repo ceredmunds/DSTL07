@@ -58,11 +58,11 @@ window.jsPsych = (function() {
       if(typeof options.timeline === 'undefined'){
         console.error('No timeline declared in jsPsych.init. Cannot start experiment.')
       }
-  
+
       if(options.timeline.length == 0){
         console.error('No trials have been added to the timeline (the timeline is an empty array). Cannot start experiment.')
       }
-  
+
       // reset variables
       timeline = null;
       global_trial_index = 0;
@@ -74,7 +74,7 @@ window.jsPsych = (function() {
       loadfail = false;
       file_protocol = false;
       jsPsych.data.reset();
-  
+
       var defaults = {
         'display_element': undefined,
         'on_finish': function(data) {
@@ -159,7 +159,7 @@ window.jsPsych = (function() {
       opts.display_element.innerHTML = '<div class="jspsych-content-wrapper"><div id="jspsych-content"></div></div>';
       DOM_container = opts.display_element;
       DOM_target = document.querySelector('#jspsych-content');
-    
+
 
       // add tabIndex attribute to scope event listeners
       opts.display_element.tabIndex = 0;
@@ -218,7 +218,7 @@ window.jsPsych = (function() {
         }
       );
     };
-    
+
     // execute init() when the document is ready
     if (document.readyState === "complete") {
       init();
@@ -613,7 +613,7 @@ window.jsPsych = (function() {
           loc = loc - 1;
         }
         // now find the variable
-        return timeline_parameters.timeline[loc].timelineVariable(variable_name); 
+        return timeline_parameters.timeline[loc].timelineVariable(variable_name);
       }
     }
 
@@ -970,7 +970,7 @@ window.jsPsych = (function() {
             }
           });
         }
-      }      
+      }
       // if it's not nested, checking is much easier and do that here:
       else if(typeof trial[param] == 'undefined' || trial[param] === null){
         if(typeof jsPsych.plugins[trial.type].info.parameters[param].default == 'undefined'){
@@ -1036,7 +1036,7 @@ window.jsPsych = (function() {
     document.querySelector('.jspsych-display-element').insertAdjacentHTML('afterbegin',
       '<div id="jspsych-progressbar-container">'+
       '<span>'+
-      msg+ 
+      msg+
       '</span>'+
       '<div id="jspsych-progressbar-outer">'+
         '<div id="jspsych-progressbar-inner"></div>'+
@@ -1178,7 +1178,7 @@ jsPsych.data = (function() {
     data_collection.first = function(n){
       if (typeof n == 'undefined') { n = 1 }
       if (n < 1) {
-        throw `You must query with a positive nonzero integer. Please use a 
+        throw `You must query with a positive nonzero integer. Please use a
                different value for n.`;
       }
       if (trials.length == 0) return DataCollection([]);
@@ -1200,7 +1200,7 @@ jsPsych.data = (function() {
     data_collection.last = function(n) {
       if (typeof n == 'undefined') { n = 1 }
       if (n < 1) {
-        throw `You must query with a positive nonzero integer. Please use a 
+        throw `You must query with a positive nonzero integer. Please use a
                different value for n.`;
       }
       if (trials.length == 0) return DataCollection([]);
@@ -1900,7 +1900,7 @@ jsPsych.randomization = (function() {
     if(!Array.isArray(arr)){
       console.error("First argument to jsPsych.randomization.sampleWithoutReplacement() must be an array")
     }
-    
+
     if (size > arr.length) {
       console.error("Cannot take a sample " +
         "larger than the size of the set of items to sample.");
@@ -2612,7 +2612,7 @@ jsPsych.pluginAPI = (function() {
     } else {
       video = video.filter(function(x) { return x != false && x != null})
     }
-    
+
     var total_n = images.length + audio.length + video.length;
 
     var loaded = 0;

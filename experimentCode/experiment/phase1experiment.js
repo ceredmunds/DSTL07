@@ -38,11 +38,6 @@ var categorisation_trial = {
   }
 }
 
-var quitFullScreen = {
-  type: 'fullscreen',
-  fullscreen_mode: false
-}
-
 var feedback = {
   type: 'html-keyboard-response',
   stimulus: function () {
@@ -62,27 +57,25 @@ var feedback = {
   on_finish: function () {
     var nTrials = jsPsych.data.get().filter({ test_part: "learning" }).count()
     if (nTrials >= maxNumberCategoryLearningTrials) {
+      console.log("Failed learning criterion")
       jsPsych.data.addProperties({
         completedLearning: "false"
       })
 
       var new_timeline = {
-        timeline: [quitFullScreen, failedLearningCriterionPage]
-      }
-      jsPsych.addNodeToEndOfTimeline(new_timeline)
-
-      var new_timeline = {
-        timeline: timeline2
+        timeline: [failedLearningCriterionPage]
       }
       jsPsych.addNodeToEndOfTimeline(new_timeline)
 
       failedLearningCriterion = true
       jsPsych.endCurrentTimeline()
     }
-    if (nTrials >= nUniqueStimuli) {
+
+    if (nTrials >= nUniqueStimuli & failedLearningCriterion == false) {
       var last_n_trials = jsPsych.data.get().filter({ test_part: 'learning' }).last(nUniqueStimuli)
       var last_n_correct_trials = last_n_trials.filter({ correct: "true" })
       var accuracy = last_n_correct_trials.count() / last_n_trials.count()
+      console.log("Accuracy: " + accuracy)
       if (accuracy >= learningCriterion) {
         jsPsych.data.addProperties({
           completedLearning: "true"
@@ -104,16 +97,26 @@ var failedLearningCriterionPage = {
   "<p><b>Phase 1 Complete</b></p>" +
   "<p>Thank you for taking part in this experiment.</p>" +
   "<p>Unfortunately, you haven't passed the learning criterion and will not have the oportunity to complete the rest of the experiment.</p>" +
+  "<p><a href='https://app.prolific.co/submissions/complete?cc=12341234'>Click here to return to Prolific and complete the study</a>.</p>" +
   "</div>" +
   "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to return to Prolific.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
-  data: { test_part: "category_test_instructions" }
+  data: { test_part: "category_test_instructions" },
+  on_start: function () {
+    var finishTime = new Date()
+    console.log(finishTime)
+    jsPsych.data.addProperties({
+      finishTime: finishTime
+    })
+    saveData()
+  }
 }
 
 var category_learning_procedure = {
   timeline: [categorisation_trial, feedback],
   timeline_variables: category_learning_stimuli,
-  randomize_order: true
+  randomize_order: true,
+  repetitions: 10
 }
 timeline.push(category_learning_procedure)

@@ -295,7 +295,7 @@ jsPsych.plugins['category-button-response'] = (function () {
           after_response(choice);
         })
       }
-    }, 1000) // Add 1000ms delay
+    }, 500) // Add 1000ms delay
 
     // store response
     var response = {

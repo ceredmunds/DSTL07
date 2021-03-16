@@ -1,16 +1,16 @@
 /* participant based variables */
-var displayCondition = 'integrated' // integrated or separated
+var displayCondition = 'separated' // integrated or separated
 var socialCondition = 'operator' // operator or superior
 
 /* category learning variables */
-var maxNumberCategoryLearningTrials = 20 // 200
-var nUniqueStimuli = 4 // 20
+var maxNumberCategoryLearningTrials = 200 // 200
+var nUniqueStimuli = 20 // 20
 var nDimensions = 5
 var allLabels = ['Craft', 'Role', 'Status', 'Speed', 'Direction']
 const dimensionOrder = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3, 4, 5], nDimensions) // needs to match dimension names
 var predIndex = dimensionOrder.indexOf(1)
 var predictiveDimension = allLabels[predIndex]
-console.log(predictiveDimension)
+// console.log(predictiveDimension)
 
 const displayOrder = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3, 4], nDimensions)
 
@@ -24,7 +24,7 @@ var feedbackDuration = 1000 // in ms
 var ITI = 500 // in ms
 var learningCriterion = 0.8 // number between 0 and 1a
 
-var nRoundsTestTrial = 1 // 4
+var nRoundsTestTrial = 4 // 4
 
 /* get start time */
 var startTime = new Date()
@@ -92,8 +92,3 @@ var welcome = {
   }
 }
 timeline.push(welcome)
-
-// timeline.push({
-//   type: 'fullscreen',
-//   fullscreen_mode: true
-// })

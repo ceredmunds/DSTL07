@@ -40,7 +40,7 @@ var categorisation_test_trial_partial = {
 
 var confidence_rating = {
   type: 'html-slider-response',
-  stimulus: '<p style="font-size:20px;">How confident are you in your classification?</p>',
+  stimulus: '<p style="font-size:20px;">How confident are you in your last classification?</p>',
   labels: ['<p style="font-size:18px;">No idea</p>', '<p style="font-size:18px;">Certain</p>'],
   require_movement: true,
   slider_width: 600,

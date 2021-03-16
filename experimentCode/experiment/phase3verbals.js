@@ -47,15 +47,3 @@ var survey_trial_partial = {
   data: { test_part: "verbal_report_textbox_phase3" }
 }
 timeline2.push(survey_trial_partial)
-
-// var survey_trial_partial = {
-//   type: 'survey-text',
-//   questions: [
-//     { prompt: "Finally, please describe how your approach changed between the two tasks (the one with missing data and the one without).", rows: 20, columns: 60, name: 'changeQphase3'}
-//   ],
-//   data: { test_part: "verbal_report_textbox_phase3_change" },
-//   on_finish: function () {
-//     var completedExperiment = true
-//   }
-// }
-// timeline2.push(survey_trial_partial)
