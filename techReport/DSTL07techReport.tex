@@ -25,13 +25,19 @@
 \begin{document}
 \maketitle
 	\doublespacing
+	
+\section{Current status}
+
+integrated-superior: 10
+separated-superior: (10)
+separated-operator: (10)
+
 
 \section{Method}
 
 \subsection{Participants}
 Participants were recruited through Prolific Academic.
 We limited the sample to participants between the ages of 18 and 65 with corrected to normal vision. 
-They were paid for their participation.
 Participants were paid a flat fee of \pounds 2 for completing the learning phase.
 Those that passed the learning phase were given a bonus of \pounds 6 if they then completed the following two test phases. 
 
@@ -41,13 +47,12 @@ The projected total sample size was $N=206$.
 We rounded this up to $N=208$ so to have even numbers of participants in each experimental group. 
 
 \subsection{Category structure}
-The abstract category structure that participants will learn is shown in Table~\ref{table:abstractStructure}. 
+The abstract category structure that all participants learned is shown in Table~\ref{table:abstractStructure}. 
 The stimuli are constructed from five binary dimensions. 
 In the experiment, Category X and Y will be randomly assigned to the labels `Friendly' and `Hostile.' 
 In addition, the dimensions will be randomly assigned to the label (and therefore perceptual features) of Craft (airplane, submarine), Speed (fast, slow), Direction (left, right), Type (autonomous, decoy) and Status (fully operational, damaged). 
-Participants will be told about these stimulus dimensions in advance. 
 
-\begin{table}
+\begin{table}[t]
 	\centering
 	\caption{}
 	\label{table:abstractStructure}
@@ -71,8 +76,7 @@ Participants will be told about these stimulus dimensions in advance.
 	\end{tabular}	
 \end{table}
 
-% TODO fix figure formatting
-\begin{figure}
+\begin{figure}[b]
 	\centering
 	\includegraphics[width=0.33\textwidth]{images/integratedStimulusExample}
 	\includegraphics[width=0.33\textwidth]{images/integratedStimulusExample2}
@@ -81,38 +85,57 @@ Participants will be told about these stimulus dimensions in advance.
 \end{figure}
 
 \subsection{Design}
-The experiment has a 2 (spatial presentation: separated, integrated) x 2 () between-subjects design. 
+The experiment had a 2 (spatial presentation: separated, integrated) x 2 (social: operator, superior) between-subjects design. 
 
-Participants will either see the stimuli as spatially integrated (as in Figure~\ref{fig:integratedStimuli}) or separated (as in Figure~\ref{fig:separatedStimulus}). 
+Participants were randomly assigned to see the stimuli as either spatially integrated (as in Figure~\ref{fig:integratedStimuli}) or spatially separated (as in Figure~\ref{fig:separatedStimulus}). 
+Additionally, they were either told that their confidence ratings are to be given to their commander or to one of their fellow operators. 
 
-\begin{figure}
+\begin{figure}[t]
 	\centering	
-	\includegraphics[width=0.5\textwidth]{images/separatedStimulusExample}
+	\includegraphics[width=0.6\textwidth]{images/separatedStimulusExample}
 	\caption{An example stimulus presented as a separated set of symbols.}
 	\label{fig:separatedStimulus}	
 \end{figure}
 
-This experiment has a two by two between-subjects experimental design. 
-Participants will either see the stimulus dispersed or integrated. 
-Additionally, they will be told that their confidence ratings are to be given to their commander or to one of their fellow operators. 
-
 \subsection{Procedure}
-At the beginning of the experiment, participants are welcomed and told where to write to if they have any queries or concerns. 
-The experiment has three blocks of trials: a learning phase and two types of test phase. 
+At the beginning of the experiment, participants were welcomed and told where to write to if they had any queries or concerns. 
+The experiment had three blocks of trials: a learning phase and two types of test phase. 
 
 \subsubsection{1. Category learning} 
-Participants are told the over all structure of the experiment, and then given specific instructions for the category learning phase. 
-Additionally, they are told what each of the perceptual features of the glyph represent. 
-On each trial, they are shown a radar screen with randomly placed diamond markers representing craft available on radar. 
-One of those vessels is highlighted in red and enlarged. 
-Then, depending on condition, participants either see an integrated glyph or a diagram where each of the elements are separated. 
-They must decide whether the craft is friendly or hostile, and to respond they must press the `F' or `H' key respectively. 
-Participants in this phase are trained to a learning criterion. 
-This will likely be around 80\% but we need to check to see whether that is sensible. 
+Participants were told the overall structure of the experiment and told what each of the perceptual features of the glyph represent. 
+They were then given specific instructions for the category learning phase. 
+On each trial they were shown a stimulus (either separated or integrated depending on the condition they were assigned).
+They then had to click one of two buttons labelled `Friendly' or `Hostile' to make their response.
+Then they were shown the feedback `Correct!' or `Wrong', as appropriate, for $1000ms$.
+This was followed by a blank screen for $500ms$.
 
+The stimuli in this section were pseudo-randomised so every 20 trials the participants saw all the training stimuli in a random order. 
+Participants were trained to a learning criterion of 80\% correct in the last 20 trials. 
+Thus, the fewest number of trials a participant could see were 20 trials. 
+Participants who did not exceed the learning criterion in 200 trials were excluded from the rest of the experiment. 
 
+\subsubsection{2. Test with all dimensions}
+After a short, self-paced break, participants moved to the second phase. 
+Here, participants were tested on all 32 stimuli created from the binary levels of 5 stimulus dimensions. 
+In this phase, there were 5 rounds, where participants saw all 32 stimuli in a random order. 
+On every trial, they saw a stimulus and had to click on one of two buttons to indicate whether they thought it was friendly or hostile. 
+No feedback was provided. 
+On every 4 trials, starting from the first trial, participants were also asked to rate their confidence in the category judgment they had just given. 
+Participants rated their confidence using a slider that went from `No idea' to `Certain.'
+The data from this scale was discretised into 100 levels. 
+There was an inter-trial interval of 500ms. 
 
+Following this, there was an opportunity for participants to inform us how they completed the task. 
+We reminded them of what the levels of each stimulus dimension meant, then we asked them to rank the five stimulus dimensions based on how important they were for classification. 
+Then, we provided an open text box and asked participants to describe how exactly they decided whether a craft was friendly or hostile in the previous task.
 
+\subsubsection{3. Test removing a dimension}
+The final test phase was identical to the previous one in all but one respect: the stimuli shown to the participant only had four dimensions. 
+In this final test phase, we removed the dimension that was 90\% predictive for that participant. 
+For participants in the integrated condition, it was simply absent from the display. 
+For participants in the separated condition, the box was filled with the text ``Information not available.''
+
+\section{Results}
 
 \clearpage
 \newpage
