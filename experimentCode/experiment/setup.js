@@ -1,6 +1,6 @@
 /* participant based variables */
-var displayCondition = 'separated' // integrated or separated
-var socialCondition = 'operator' // operator or superior
+var displayCondition = 'integrated' // integrated or separated
+var socialCondition = 'superior' // operator or superior
 
 /* category learning variables */
 var maxNumberCategoryLearningTrials = 200 // 200
@@ -24,7 +24,7 @@ var feedbackDuration = 1000 // in ms
 var ITI = 500 // in ms
 var learningCriterion = 0.8 // number between 0 and 1a
 
-var nRoundsTestTrial = 4 // 4
+var nRoundsTestTrial = 5 // 5
 
 /* get start time */
 var startTime = new Date()
