@@ -1,6 +1,6 @@
 /* participant based variables */
 var displayCondition = 'integrated' // integrated or separated
-var socialCondition = 'superior' // operator or superior
+var socialCondition = 'operator' // operator or superior
 
 /* category learning variables */
 var maxNumberCategoryLearningTrials = 200 // 200

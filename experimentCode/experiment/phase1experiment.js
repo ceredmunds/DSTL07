@@ -99,7 +99,6 @@ var failedLearningCriterionPage = {
   "<p>Unfortunately, you haven't passed the learning criterion and will not have the oportunity to complete the rest of the experiment.</p>" +
   "<p><a href='https://app.prolific.co/submissions/complete?cc=12341234'>Click here to return to Prolific and complete the study</a>.</p>" +
   "</div>" +
-  "<div style='height:80px;width:100%;position:absolute;bottom:80px;left:0px;'><p>Please press the <b>space key</b> on your keyboard to return to Prolific.</p></div>" +
   "<div style='height:80px;width:100%;background-color:#0f3273;position:absolute;bottom:0px;left:0px;'></div>",
   choices: ['space'],
   data: { test_part: "category_test_instructions" },
