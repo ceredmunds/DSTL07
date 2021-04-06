@@ -24,7 +24,7 @@ ppts <- unique(data[!is.na(responses), .(prolific_id, displayCondition, socialCo
 
 # Remove participants that didn't pass the learning condition
 setkey(data, prolific_id)
-data <- data[ppts]
+data <- data[ppts$prolific_id]
 
 # Anonymising data ---------------------------------------------------------------------------------
 id <- data.table(prolific_id=unique(data$prolific_id), id=1:length(unique(data$prolific_id)))
@@ -53,6 +53,18 @@ data <- data[, stimulus:= NULL]
 data <- data[, key_press:= NULL]
 
 setnames(data, "test_part", "experiment_phase")
+
+# Get abstract category and abstract responses for all participants --------------------------------
+subset <- data[stimulusID=="1", .SD[1], by=.(participant_id)]
+subset[, flip:= ifelse(correct_response=="Friendly", 0, 1)]
+subset <- subset[, .(participant_id, flip)]
+
+data <- merge(data, subset, by="participant_id")
+data[, abstract_category_label:=correct_response]
+data[flip==1, abstract_category_label:= ifelse(correct_response=="Friendly", "Hostile", "Friendly")]
+
+data[, abstract_response_label:=response]
+data[flip==1, abstract_response_label:= ifelse(response=="Friendly", "Hostile", "Friendly")]
 
 # Finish -------------------------------------------------------------------------------------------
 # Get number of people in each condition
