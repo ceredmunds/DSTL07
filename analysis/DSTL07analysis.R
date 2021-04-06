@@ -10,7 +10,7 @@ require(car)
 
 data <- fread('../data/DSTL07longData.csv')
 
-data <- data[participant_id!=193,]
+data <- data[participant_id!=193,] # Participant with number of trials to criterion of 200
 
 # Learning graphs ----------------------------------------------------------------------------------
 lData <- data[experiment_phase=="learning",]
@@ -41,7 +41,9 @@ ggplot(lGraphData, aes(x=displayCondition, y=meanTrials, fill=socialCondition)) 
   geom_errorbar(aes(ymin=meanTrials-nTrialsError, ymax=meanTrials+nTrialsError), width=.1,
                 position=position_dodge(.9)) +
   scale_fill_viridis(discrete = T) +
+  labs(x="Display condition", fill="Social condition", y="Mean number of trials to criterion") +
   theme_bw()
+ggsave("../techReport/images/DSTL07trialsCriterion.pdf", units="in", width=5, height=3)
 
 # Summarising reaction times
 ggplot(lGraphData, aes(x=displayCondition, y=meanRT, fill=socialCondition)) + 
@@ -49,7 +51,9 @@ ggplot(lGraphData, aes(x=displayCondition, y=meanRT, fill=socialCondition)) +
   geom_errorbar(aes(ymin=meanRT-rtError, ymax=meanRT+rtError), width=.1,
                 position=position_dodge(.9)) +
   scale_fill_viridis(discrete = T) +
+  labs(x="Display condition", fill="Social condition", y="Mean reaction time (ms)") +
   theme_bw()
+ggsave("../techReport/images/DSTL07learningRT.pdf", units="in", width=5, height=3)
 
 # Learning phase: Trials to criterion --------------------------------------------------------------
 # Tag outliers
@@ -63,6 +67,7 @@ quartiles[, `:=`(upperBoundary=UQ+1.5*IQR,
 
 lSummary <- merge(lSummary, quartiles[, .(displayCondition, socialCondition, upperBoundary)])  # Lower boundary all negative so ignore
 lSummary[, nTrialsOutlier:= ifelse(trialsToCriterion>upperBoundary, 1, 0)]
+lSummary[nTrialsOutlier==1,]
 
 # NHST: to test assumptions
 ntrials.aov <- aov(trialsToCriterion ~ displayCondition*socialCondition, 
@@ -86,6 +91,7 @@ ntrials.aov <- aov(log(trialsToCriterion) ~ displayCondition*socialCondition,
 summary(ntrials.aov)
 
 # Get means
+emmeans(ntrials.aov, ~socialCondition)
 emmeans(ntrials.aov, ~displayCondition*socialCondition)
 
 # Bayesian
@@ -94,6 +100,9 @@ lSummary[, socialCondition:= as.factor(socialCondition)]
 lSummary[, logTrialsToCriterion:= log(trialsToCriterion)]
 ntrials.bf <- anovaBF(logTrialsToCriterion ~ displayCondition*socialCondition, data=lSummary[nTrialsOutlier==0,])
 summary(ntrials.bf)
+
+ntrials.bf[4]/ntrials.bf[3]
+
 
 # Learning phase: Reaction times -------------------------------------------------------------------
 # Tag outliers
@@ -107,6 +116,7 @@ quartiles[, `:=`(upperBoundaryRT=UQ+1.5*IQR,
 
 lSummary <- merge(lSummary, quartiles[, .(displayCondition, socialCondition, upperBoundaryRT)])  # Lower boundary all negative so ignore
 lSummary[, rtOutlier:= ifelse(meanRT>upperBoundaryRT, 1, 0)]
+lSummary[rtOutlier==1,]
 
 # NHST: to test assumptions
 rt.aov <- aov(meanRT ~ displayCondition*socialCondition, data=lSummary[rtOutlier==0,])

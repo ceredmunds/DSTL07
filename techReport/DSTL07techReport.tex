@@ -26,13 +26,6 @@
 \maketitle
 	\doublespacing
 	
-\section{Current status}
-
-integrated-superior: 10
-separated-superior: (10)
-separated-operator: (10)
-
-
 \section{Method}
 
 \subsection{Participants}
@@ -136,6 +129,42 @@ For participants in the integrated condition, it was simply absent from the disp
 For participants in the separated condition, the box was filled with the text ``Information not available.''
 
 \section{Results}
+
+\subsection{Learning phase}
+\subsubsection{Trials to criterion}
+Here, we analyse the number of trials it took for participants to reach the learning criterion as shown in Figure~\ref{fig:DSTL07trialsCriterion}. 
+For each condition, we removed outlying participants, i.e. those who took more trials than the upper quartile plus 1.5 times the interquartile range. 
+This resulted in removing 3 participants from the integrated-operator condition, 2 from the integrated-superior condition and 7 from the separated-operator condition. 
+
+Levene's test showed homogeneity of variance was violated, $F(3,195)=7.98$, $p<.001$.
+Similarly, a Shapiro-Wilks test showed the data violated assumptions of normality, $W=0.89$, $p<.001$. 
+Therefore, to correct for the violation of the normality assumption, we report an ANOVA based on the log transformed number of trials to criterion and its Bayesian equivalent. 
+The ANOVA found a hint of an interaction between display condition and social condition, $BF=1.39905$, $F(1, 195)=4.33$, $p=.039$. 
+There was a greater difference between the display conditions in the superior conditions, $M_\text{integrated}=3.64$, $SE=0.09$, $M_\text{separated}=3.89$, $SE=0.08$, than in the operator conditions, $M_\text{integrated}=3.51$, $SE=0.09$, $M_\text{separated}=3.40$, $SE=0.09$. 
+The interaction was moderated by a main effect of social condition, $BF=53.66$, $F(1, 195)=12.74$, $p<.001$. 
+Participants took longer to learn in the operator condition, $M=3.45$, $SE=0.06$, than in the superior condition, $M=3.76$, $SE=0.06$. 
+The effect of display condition did not reach significance, $BF=0.24$, $F(1, 195)=1.054$, $p=.306$. 
+
+\begin{figure}
+	\centering
+	\includegraphics{images/DSTL07trialsCriterion}
+	\caption{Mean number of trials to reach the criterion for participants in each condition. Error bars are difference-adjusted confidence intervals.}
+	\label{fig:DSTL07trialsCriterion}
+\end{figure}
+
+
+\subsubsection{Reaction times}
+Here, we analyse the reaction time during the learning phase of the experiment as shown in Figure~\ref{fig:DSTL07learningRT}. 
+For each participant, we removed outlying trials, i.e. those who took more time than the upper quartile plus 1.5 times the interquartile range. 
+
+
+
+\begin{figure}
+	\centering
+	\includegraphics{images/DSTL07learningRT}
+	\caption{Mean reaction time in milliseconds for participants in each condition. Error bars are difference-adjusted confidence intervals.}
+	\label{fig:DSTL07learningRT}
+\end{figure}
 
 \clearpage
 \newpage
