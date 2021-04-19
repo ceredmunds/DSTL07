@@ -155,9 +155,17 @@ The effect of display condition did not reach significance, $BF=0.24$, $F(1, 195
 
 \subsubsection{Reaction times}
 Here, we analyse the reaction time during the learning phase of the experiment as shown in Figure~\ref{fig:DSTL07learningRT}. 
-For each participant, we removed outlying trials, i.e. those who took more time than the upper quartile plus 1.5 times the interquartile range. 
+For each condition, we removed outlying participants, i.e. those who took more trials than the upper quartile plus 1.5 times the interquartile range. 
+This resulted in removing 2 participants from the integrated-operator condition, 5 from the integrated-superior condition, 3 from the separated-operator condition and 2 from the separated-superior condition. 
 
-
+Levene's test showed that the assumption of homogeneity of variance was violated, $F(3, 195)=3.80$, $p=.011$. 
+Similarly, a Shapiro-Wilks test showed that the data violated assumptions of normality, $W=0.94$, $p<.001$. 
+Therefore, to correct for the violation of nomality, we report an ANOVA based on the log transformed reaction time. 
+There was a small effect of display condition, $BF=2.98$, $F(1, 195)=12.27$, $p<.001$.
+Participants were slower to respond in the separated condition, $M=8.27$, $SE=0.05$, than in the integrated condition, $M=8.01$, $SE=0.05$. 
+There was also a slight difference in social condition, $BF=0.59$, $F(1, 195)=4.068$, $p=.045$. 
+Participants were slower to respond in the superior condition, $M=8.21$, $SE=0.05$, than in the operator condition, $M=8.06$, $SE=0.05$. 
+There was no evidence of an interaction, $BF=0.27$, $F(1, 195)=2.78$, $p=.097$. 
 
 \begin{figure}
 	\centering
@@ -165,6 +173,42 @@ For each participant, we removed outlying trials, i.e. those who took more time 
 	\caption{Mean reaction time in milliseconds for participants in each condition. Error bars are difference-adjusted confidence intervals.}
 	\label{fig:DSTL07learningRT}
 \end{figure}
+
+\subsection{Test phase}
+
+
+
+\subsection{Uncertainty test phase}
+
+
+\subsection{Confidence}
+In analysing the confidence ratings, the main question we wished to answer was whether participants' confidence was influenced by knowledge of who was using the ratings. 
+Additionally, we expected participants to be less certain when the most predictive dimension had been removed compared to when they had all the information available. 
+So, we conducted a 2 (display condition) by 2 (social condition) by 2 (test phase) ANOVA. 
+As expected there was a main effect of experiment phase, $BF=1.34 \times 10^{42}$, $F(1, 2102)=211.30$, $p<.001$. 
+Participants were more confident when all of the information was present, $M=68.2$, $SE=0.69$, than when the most predictive dimension was removed, $M=54.1$, $SE=0.69$. 
+However, none of the other main effects or interactions reached significance. 
+Please see Table~\ref{table:confidenceAnalysis}. 
+Note that the display condition almost reached significance in the ANOVA. 
+However, the Bayesian analysis still suggests a Bayes factor under a third and so little weight should be placed on this effect. 
+
+\begin{table}
+	\centering
+	\caption{Analysis of confidence ratings}
+	\label{table:confidenceAnalysis}
+	\begin{tabular}{l c c c}
+		\toprule
+		Effect & Bayes factor & F value & p value \\
+		\midrule
+		Social & 0.12 & 1.91 & 0.167 \\
+		Display & 0.25 & 3.589 & 0.058 \\
+		Experiment phase $\times$ social & 0.08 & 0.85 & 0.356 \\
+		Experiment phase $\times$ display & 0.12 & 1.80 & 0.180 \\
+		Social $\times$ display & 0.07 & 0.64 & 0.424 \\
+		Three-way interaction & 0.05 & 0.05 & 0.824 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 \clearpage
 \newpage

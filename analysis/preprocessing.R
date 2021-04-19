@@ -55,16 +55,21 @@ data <- data[, key_press:= NULL]
 setnames(data, "test_part", "experiment_phase")
 
 # Get abstract category and abstract responses for all participants --------------------------------
+data[experiment_phase!="learning", abstract_category:= ifelse(abstract_category==0, 1, 0)] # Switch abstract category
+
 subset <- data[stimulusID=="1", .SD[1], by=.(participant_id)]
-subset[, flip:= ifelse(correct_response=="Friendly", 0, 1)]
+subset[, flip:= ifelse(correct_response=="Friendly", 0, 1)] # Abstract category 0=friendly, 1=unfriendly
 subset <- subset[, .(participant_id, flip)]
 
 data <- merge(data, subset, by="participant_id")
-data[, abstract_category_label:=correct_response]
-data[flip==1, abstract_category_label:= ifelse(correct_response=="Friendly", "Hostile", "Friendly")]
+data[, abstract_category_label:= ifelse(abstract_category==0, "Friendly", "Hostile")]
 
-data[, abstract_response_label:=response]
+data[, abstract_response_label:= response]
 data[flip==1, abstract_response_label:= ifelse(response=="Friendly", "Hostile", "Friendly")]
+data[correct=="NULL", abstract_response_label:= NA]
+
+data[, correct:= ifelse(abstract_category_label==abstract_response_label, "true", "false")]
+data[is.na(abstract_response_label), correct:= NA]
 
 # Finish -------------------------------------------------------------------------------------------
 # Get number of people in each condition
@@ -75,3 +80,8 @@ data[prolific_id=="5fe1f5f751f3a9ceb57d935a",]
 
 # Save data
 fwrite(data, "../data/DSTL07longData.csv")
+
+
+# Double checking data
+
+sData <- data[participant_id==1 & stimulusID==32, ]
