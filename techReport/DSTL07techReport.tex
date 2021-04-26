@@ -69,6 +69,13 @@ In addition, the dimensions will be randomly assigned to the label (and therefor
 	\end{tabular}	
 \end{table}
 
+Thus, participants could score 100\% accuracy if they used a ``holistic'' or ``overall similarity'' judgment: stimuli with 3 or more 1's predict Category 1, and stimuli with 3 or more 0's predict Category 0. 
+Alternatively, using a single dimension rule based on the first dimension they could score 90\%, or using the second dimension 80\%. 
+A final high performing possibility is a rule-plus-exception strategy.
+Participants learn that the first dimension predicts category membership, apart from two exceptions. 
+This would again score them 100\%. 
+However, the pattern of generalisation would likely be different in the test phase where the primary dimension was removed. 
+
 \begin{figure}[b]
 	\centering
 	\includegraphics[width=0.33\textwidth]{images/integratedStimulusExample}
@@ -152,7 +159,6 @@ The effect of display condition did not reach significance, $BF=0.24$, $F(1, 195
 	\label{fig:DSTL07trialsCriterion}
 \end{figure}
 
-
 \subsubsection{Reaction times}
 Here, we analyse the reaction time during the learning phase of the experiment as shown in Figure~\ref{fig:DSTL07learningRT}. 
 For each condition, we removed outlying participants, i.e. those who took more trials than the upper quartile plus 1.5 times the interquartile range. 
@@ -174,12 +180,83 @@ There was no evidence of an interaction, $BF=0.27$, $F(1, 195)=2.78$, $p=.097$.
 	\label{fig:DSTL07learningRT}
 \end{figure}
 
-\subsection{Test phase}
+\subsection{Test phases}
+
+\subsubsection{Descriptives}
+Figures~\ref{fig:DSTL07testAccuracy} and \ref{fig:DSTL08testRT} respectively show the accuracy and reaction times of participants across the two types of test phases.
+As some novel stimuli were added in both test phases, these graphs reflect the accuracy and speed only on the trials for which the participants had been trained (i.e. that they had seen before). 
+Generally, we can see that accuracy performance drops considerably, suggesting that most participants were not able to identify the second most predictive dimension for those stimuli. 
+However, the effects of display condition and social condition did not seem to make an impact. 
+
+\begin{figure}
+	\centering
+	\includegraphics{images/DSTL07testSummaryAccuracy}
+	\caption{Mean accuracy for participants in each condition in the test phase (with all attributes) and the partial test phase (where the most predictive attribute was removed). Error bars are difference adjusted confidence intervals.}
+	\label{fig:DSTL07testAccuracy}	
+\end{figure}
+
+For reaction times, they may be a hint of a suggestion that decision making in the separated condition took longer. 
+Further, it seems as if participants were slightly slower if they believed they were reporting to a superior compared to an operator. 
+
+\begin{figure}
+	\centering
+	\includegraphics{images/DSTL07testSummaryRT.pdf}	
+	\caption{Mean reaction time in milliseconds for participants in each condition in the test phase (with all attributes) and the partial test phase (where the most predictive attribute was removed.) Error bars are difference adjusted confidence intervals.}
+	\label{fig:DSTL08testRT}
+\end{figure}
+
+\subsubsection{Analysis}
+To analyse the test phase data, we conducted a mixed ANOVA with display condition and social condition as between-subject factors and experiment phase as a within-subject factor. 
+First, we consider accuracy as the dependent variable. 
+As participants have only been trained on 20 of the 32 stimuli in the test phases, we limit our analysis to the training stimuli. 
+Here, the only effect that reached significance was the main effect of experiment phase, $BF=6.85 \times 10^{23}$, $F(1, 410)=33.64)$, $p<.001$. 
+Unsurprisingly, participants performed better in the test phase with all dimensions than the test phase where the most predictive dimension was removed. 
+
+\begin{table}
+	\centering
+	\caption{Analysis of accuracy in test phases}
+	\label{table:analyisAccuracyTest}
+	\begin{tabular}{l c c c}
+		\toprule
+		Factor & Bayes factor & F-value & p-value \\
+		\midrule
+		Display & 0.15 & 0.43 & .513 \\
+		Social & 0.15 & 0.25 & .621 \\
+		Display*Social & 0.41 & 2.98 & .085 \\
+		Display*Phase & 0.16 & 0.08 & .783 \\
+		Social*Phase & 0.16 & 0.64 & .426 \\
+		Display*Social*Phase & 0.28 & 0.93 & .335 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+We now consider reaction time as the dependent variable. 
+Again, there was a main effect of experiment phase on reaction time, $BF=6.14 \times 106{5}$, $F(1, 410)=7.47$, $p=.006$. 
+Participants were faster when all of the information was available than when the most predictive dimension was removed. 
+
+\begin{table}
+	\centering
+	\caption{Analysis of reaction time in test phases.}
+	\label{table:analyisRTTest}
+	\begin{tabular}{l c c c}
+		\toprule
+		Factor & Bayes factor & F-value & p-value \\
+		\midrule
+		Display & 0.53 & 4.82 & .029 \\
+		Social & 0.33 & 0.81 & .370 \\
+		Display*Social & 0.26 & 0.93 & .334 \\
+		Display*Phase & 0.24 & 1.11 & .293 \\
+		Social*Phase & 0.15 & 0.01 & .923\\
+		Display*Social*Phase & 0.22 & 0.10 & .748 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\subsubsection{Strategy analysis}
 
 
 
 \subsection{Uncertainty test phase}
-
 
 \subsection{Confidence}
 In analysing the confidence ratings, the main question we wished to answer was whether participants' confidence was influenced by knowledge of who was using the ratings. 
@@ -200,8 +277,8 @@ However, the Bayesian analysis still suggests a Bayes factor under a third and s
 		\toprule
 		Effect & Bayes factor & F value & p value \\
 		\midrule
-		Social & 0.12 & 1.91 & 0.167 \\
 		Display & 0.25 & 3.589 & 0.058 \\
+		Social & 0.12 & 1.91 & 0.167 \\
 		Experiment phase $\times$ social & 0.08 & 0.85 & 0.356 \\
 		Experiment phase $\times$ display & 0.12 & 1.80 & 0.180 \\
 		Social $\times$ display & 0.07 & 0.64 & 0.424 \\

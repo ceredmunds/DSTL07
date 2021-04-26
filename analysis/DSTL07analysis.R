@@ -148,99 +148,53 @@ summary(rt.bf)
 rt.bf[4]/rt.bf[3]
 
 # Test phase with all attributes -------------------------------------------------------------------
-
+require(abd)
 # Get and format data
 tData <-  data[experiment_phase=="test",]
-tData[, binary_response:= ifelse(abstract_category_label=="Friendly", 1, 0)]
-
-tData <- tData[participant_id!=3,] # Odd participant with double the amount of test trials, Maybe they did it twice?
 
 # Set up output
-tOutput <- tData[, .SD[1], by=.(participant_id)][,.(participant_id, displayCondition, socialCondition)]
-ppts <- unique(tOutput$participant_id)
+ppts <- unique(data$participant_id)
+tOutput <- data.table(expand.grid(participant_id=ppts, experiment_phase="test1", dimension=1:5, 
+                                  statistic=c("Xsquared", "pValue", "oddsRatio"), value=as.numeric(NA)))
+tOutput <- merge(tOutput, tData[, .SD[1], by=.(participant_id)][,.(participant_id, displayCondition, socialCondition)])
 
-x <- data.table(matrix(nrow=length(ppts), ncol=15))
-colnames(x) <- c("m1_intercept", "m1_coef", "m1_aic",
-                 "m2_intercept", "m2_coef", "m2_aic",
-                 "m3_intercept", "m3_coef", "m3_aic",
-                 "m4_intercept", "m4_coef", "m4_aic",
-                 "m5_intercept", "m5_coef", "m5_aic")
-x <- x[,lapply(.SD, as.numeric)]
-
-tOutput <- cbind(tOutput, x)
-rm(x)
-
-# Start participant loop
-for (i in 1:length(ppts)) {
-  ppt <- ppts[i]
+for (p in 1:length(ppts)) {
+  ppt <- ppts[p]
   pptData <- tData[participant_id==ppt, ]
-  pptData[, block:= rep(1:5, each=32)]
   
-  m1 <- glm(binary_response ~ dimension1, data=pptData, family="binomial")
-  m2 <- glm(binary_response ~ dimension2, data=pptData, family="binomial")
-  m3 <- glm(binary_response ~ dimension3, data=pptData, family="binomial")
-  m4 <- glm(binary_response ~ dimension4, data=pptData, family="binomial")
-  m5 <- glm(binary_response ~ dimension5, data=pptData, family="binomial")
-  
-  tOutput[participant_id==ppt, c("m1_intercept"):=m1$coefficients[1]]
-  
-  tOutput[participant_id==ppt, 
-          c("m1_intercept", "m1_coef", "m1_aic",
-            "m2_intercept", "m2_coef", "m2_aic",
-            "m3_intercept", "m3_coef", "m3_aic",
-            "m4_intercept", "m4_coef", "m4_aic",
-            "m5_intercept", "m5_coef", "m5_aic") := 
-          list(m1$coefficients[1], m1$coefficients[2], m1$aic,
-               m2$coefficients[1], m2$coefficients[2], m2$aic,
-               m3$coefficients[1], m3$coefficients[2], m3$aic,
-               m4$coefficients[1], m4$coefficients[2], m4$aic,
-               m5$coefficients[1], m5$coefficients[2], m5$aic)]
+  for (d in 1:5) {
+    respTable <- table(pptData[[paste("dimension", d, sep="")]], pptData$abstract_response_label)
+    chi <- chisq.test(respTable)
+    
+    tOutput[participant_id==ppt & dimension==d & statistic=="Xsquared", value:= chi$statistic]
+    tOutput[participant_id==ppt & dimension==d & statistic=="pValue", value:= chi$p.value]
+    tOutput[participant_id==ppt & dimension==d & statistic=="oddsRatio", value:= oddsRatio(respTable)]
+    
+  }
 }
 
+# Second test phase
 # Get and format data
 pData <-  data[experiment_phase=="test_partial",]
-pData[, binary_response:= ifelse(abstract_category_label=="Friendly", 1, 0)]
-
-pData <- pData[participant_id!=3,] # Odd participant with double the amount of test trials, Maybe they did it twice?
 
 # Set up output
-pOutput <- pData[, .SD[1], by=.(participant_id)][,.(participant_id, displayCondition, socialCondition)]
-ppts <- unique(pOutput$participant_id)
+ppts <- unique(data$participant_id)
+pOutput <- data.table(expand.grid(participant_id=ppts, experiment_phase="test2", dimension=1:5, 
+                                  statistic=c("Xsquared", "pValue", "oddsRatio"), value=as.numeric(NA)))
+pOutput <- merge(pOutput, pData[, .SD[1], by=.(participant_id)][,.(participant_id, displayCondition, socialCondition)])
 
-x <- data.table(matrix(nrow=length(ppts), ncol=15))
-colnames(x) <- c("m1_intercept", "m1_coef", "m1_aic",
-                 "m2_intercept", "m2_coef", "m2_aic",
-                 "m3_intercept", "m3_coef", "m3_aic",
-                 "m4_intercept", "m4_coef", "m4_aic",
-                 "m5_intercept", "m5_coef", "m5_aic")
-x <- x[,lapply(.SD, as.numeric)]
-
-pOutput <- cbind(pOutput, x)
-rm(x)
-
-# Start participant loop
-for (i in 1:length(ppts)) {
-  ppt <- ppts[i]
+for (p in 1:length(ppts)) {
+  ppt <- ppts[p]
   pptData <- pData[participant_id==ppt, ]
-  pptData[, block:= rep(1:5, each=32)]
   
-  m1 <- glm(binary_response ~ dimension1, data=pptData, family="binomial")
-  m2 <- glm(binary_response ~ dimension2, data=pptData, family="binomial")
-  m3 <- glm(binary_response ~ dimension3, data=pptData, family="binomial")
-  m4 <- glm(binary_response ~ dimension4, data=pptData, family="binomial")
-  m5 <- glm(binary_response ~ dimension5, data=pptData, family="binomial")
-  
-  pOutput[participant_id==ppt, 
-          c("m1_intercept", "m1_coef", "m1_aic",
-            "m2_intercept", "m2_coef", "m2_aic",
-            "m3_intercept", "m3_coef", "m3_aic",
-            "m4_intercept", "m4_coef", "m4_aic",
-            "m5_intercept", "m5_coef", "m5_aic") := 
-            list(m1$coefficients[1], m1$coefficients[2], m1$aic,
-                 m2$coefficients[1], m2$coefficients[2], m2$aic,
-                 m3$coefficients[1], m3$coefficients[2], m3$aic,
-                 m4$coefficients[1], m4$coefficients[2], m4$aic,
-                 m5$coefficients[1], m5$coefficients[2], m5$aic)]
+  for (d in 1:5) {
+    respTable <- table(pptData[[paste("dimension", d, sep="")]], pptData$abstract_response_label)
+    chi <- chisq.test(respTable)
+    
+    pOutput[participant_id==ppt & dimension==d & statistic=="Xsquared", value:= chi$statistic]
+    pOutput[participant_id==ppt & dimension==d & statistic=="pValue", value:= chi$p.value]
+    pOutput[participant_id==ppt & dimension==d & statistic=="oddsRatio", value:= oddsRatio(respTable)]
+  }
 }
 
 # Confidence ratings: Graph ------------------------------------------------------------------------
@@ -312,36 +266,76 @@ summary(conf.bf)
 
 # What the fuck is happening? ----------------------------------------------------------------------
 tData <-  data[experiment_phase=="test",]
-tData[, correct:= ifelse(abstract_category_label==abstract_response_label, 1, 0)]
-
-tSummary <- tData[, list(meanAccuracyTest=mean(correct), 
+tSummary <- tData[as.numeric(stimulusID)<=20, list(meanAccuracyTest=mean(accuracy), 
                          meanRTtest=mean(rt)),
                   by=.(participant_id, displayCondition, socialCondition)]
 
 
 pData <- data[experiment_phase=="test_partial",]
-pData[, correct:= ifelse(abstract_category_label==abstract_response_label, 1, 0)]
-
-pSummary <- pData[, list(meanAccuracyPartial=mean(correct), 
+pSummary <- pData[as.numeric(stimulusID)<=20, list(meanAccuracyPartial=mean(accuracy), 
                          meanRTpartial=mean(rt)), 
                   by=.(participant_id, displayCondition, socialCondition)]
 
-tSummary <- merge(tSummary, pSummary)
-tSummary[, rtDiff:= meanRTtest - meanRTpartial]
-tSummary[, meanDiff:= meanAccuracyTest - meanAccuracyPartial]
+# Combine data
+summary <- cbind(tSummary, pSummary[, .(meanAccuracyPartial, meanRTpartial)])
 
-ggplot(tSummary, aes(fill=displayCondition, y=rtDiff, x=socialCondition)) + 
-  geom_violin(position="dodge", alpha=0.5) +
-  scale_fill_viridis(discrete=T, name="") +
-  theme_bw()  +
-  xlab("") +
-  ylab("Difference in reaction time") 
+summary[, rtDiff:= meanRTtest - meanRTpartial]
+summary[, meanDiff:= meanAccuracyTest - meanAccuracyPartial]
 
-ggplot(tSummary, aes(fill=displayCondition, y=meanDiff, x=socialCondition)) + 
-  geom_violin(position="dodge", alpha=0.5) +
-  scale_fill_viridis(discrete=T, name="") +
-  theme_bw()  +
-  xlab("") +
-  ylab("Difference in accuracy") 
+test.aov <- aov(meanDiff ~ displayCondition*socialCondition, data=summary)
+summary(test.aov)
 
-pptData <- data[participant_id==1, ]
+
+# Test phase ---------------------------------------------------------------------------------------
+tData <-  data[experiment_phase=="test" | experiment_phase=="test_partial",]
+tSummary <- tData[as.numeric(stimulusID)<=20, list(meanAccuracy=mean(accuracy), 
+                         meanRT=mean(rt)),
+                  by=.(participant_id, displayCondition, socialCondition, experiment_phase)]
+tGraphData <- tSummary[, list(Accuracy=mean(meanAccuracy), 
+                              sdAccuracy=sd(meanAccuracy), 
+                              RT=mean(meanRT), 
+                              sdRT=sd(meanRT), 
+                              N=.N), 
+                       by=.(displayCondition, socialCondition, experiment_phase)]
+
+tGraphData[, `:=`(accuracyError=sqrt(2)*qnorm(0.975)*sdAccuracy/sqrt(N), 
+                  rtError=sqrt(2)*qnorm(0.975)*sdRT/sqrt(N))]
+
+ggplot(tGraphData, aes(x=displayCondition, y=Accuracy, fill=socialCondition)) +
+  geom_bar(position="dodge", stat="identity") +
+  geom_errorbar(aes(ymin=Accuracy-accuracyError, ymax=Accuracy+accuracyError), width=0.2, position=position_dodge(0.9)) +
+  facet_grid(~experiment_phase) +
+  scale_fill_viridis(discrete = T, alpha=0.8) +
+  theme_bw()
+ggsave("../techReport/images/DSTL07testSummaryAccuracy.pdf", units="in", width=6, height=4)
+
+ggplot(tGraphData, aes(x=displayCondition, y=RT, fill=socialCondition)) +
+  geom_bar(position="dodge", stat="identity") +
+  geom_errorbar(aes(ymin=RT-rtError, ymax=RT+rtError), width=0.2, position=position_dodge(0.9)) +
+  facet_grid(~experiment_phase) +
+  scale_fill_viridis(discrete = T, alpha=0.8) +
+  theme_bw()
+ggsave("../techReport/images/DSTL07testSummaryRT.pdf", units="in", width=6, height=4)
+
+# Accuracy
+test.aov <- aov(meanAccuracy ~ displayCondition*socialCondition*experiment_phase + 
+                  Error(participant_id/experiment_phase), data=tSummary)
+summary(test.aov)
+
+tSummary$experiment_phase <- factor(tSummary$experiment_phase)
+tSummary$displayCondition <- factor(tSummary$displayCondition)
+tSummary$socialCondition <- factor(tSummary$socialCondition)
+tSummary$participant_id <- factor(tSummary$participant_id)
+
+test.bf <- anovaBF(meanAccuracy ~ displayCondition*socialCondition*experiment_phase + participant_id, 
+                   data=tSummary, whichModels="bottom", whichRandom="participant_id")
+summary(test.bf)
+
+# Reaction time
+test.aov.rt <- aov(meanRT ~ displayCondition*socialCondition*experiment_phase + 
+                  Error(participant_id/experiment_phase), data=tSummary)
+summary(test.aov.rt)
+
+test.bf.rt <- anovaBF(meanRT ~ displayCondition*socialCondition*experiment_phase + participant_id,  
+                   data=tSummary, whichModels="bottom", whichRandom="participant_id")
+summary(test.bf.rt)

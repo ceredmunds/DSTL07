@@ -71,6 +71,9 @@ data[correct=="NULL", abstract_response_label:= NA]
 data[, correct:= ifelse(abstract_category_label==abstract_response_label, "true", "false")]
 data[is.na(abstract_response_label), correct:= NA]
 
+data[, accuracy:= ifelse(correct=="true", 1, 0)]
+data[is.na(abstract_response_label), accuracy:= NA]
+
 # Finish -------------------------------------------------------------------------------------------
 # Get number of people in each condition
 table(ppts$displayCondition, ppts$socialCondition) # Table of participants in each condition
