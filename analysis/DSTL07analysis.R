@@ -157,6 +157,7 @@ ppts <- unique(data$participant_id)
 tOutput <- data.table(expand.grid(participant_id=ppts, experiment_phase="test1", dimension=1:5, 
                                   statistic=c("Xsquared", "pValue", "oddsRatio"), value=as.numeric(NA)))
 tOutput <- merge(tOutput, tData[, .SD[1], by=.(participant_id)][,.(participant_id, displayCondition, socialCondition)])
+tOutput[, biased:=0]
 
 for (p in 1:length(ppts)) {
   ppt <- ppts[p]
@@ -168,8 +169,12 @@ for (p in 1:length(ppts)) {
     
     tOutput[participant_id==ppt & dimension==d & statistic=="Xsquared", value:= chi$statistic]
     tOutput[participant_id==ppt & dimension==d & statistic=="pValue", value:= chi$p.value]
-    tOutput[participant_id==ppt & dimension==d & statistic=="oddsRatio", value:= oddsRatio(respTable)]
     
+    if(dim(respTable)[1]==2 & dim(respTable)[2]==2) {
+      tOutput[participant_id==ppt & dimension==d & statistic=="oddsRatio", value:= oddsRatio(respTable)]
+    } else {
+      tOutput[participant_id==ppt & dimension==d & statistic=="oddsRatio", biased:= 1]
+    }
   }
 }
 
@@ -182,6 +187,7 @@ ppts <- unique(data$participant_id)
 pOutput <- data.table(expand.grid(participant_id=ppts, experiment_phase="test2", dimension=1:5, 
                                   statistic=c("Xsquared", "pValue", "oddsRatio"), value=as.numeric(NA)))
 pOutput <- merge(pOutput, pData[, .SD[1], by=.(participant_id)][,.(participant_id, displayCondition, socialCondition)])
+pOutput[, biased:=0]
 
 for (p in 1:length(ppts)) {
   ppt <- ppts[p]
@@ -193,9 +199,47 @@ for (p in 1:length(ppts)) {
     
     pOutput[participant_id==ppt & dimension==d & statistic=="Xsquared", value:= chi$statistic]
     pOutput[participant_id==ppt & dimension==d & statistic=="pValue", value:= chi$p.value]
-    pOutput[participant_id==ppt & dimension==d & statistic=="oddsRatio", value:= oddsRatio(respTable)]
+    
+    # Work out dimensions
+    if(dim(respTable)[1]==2 & dim(respTable)[2]==2) {
+      pOutput[participant_id==ppt & dimension==d & statistic=="oddsRatio", value:= oddsRatio(respTable)]
+    } else {
+      pOutput[participant_id==ppt & dimension==d & statistic=="Xsquared", biased:= 1]
+      pOutput[participant_id==ppt & dimension==d & statistic=="pValue", biased:= 1]
+      pOutput[participant_id==ppt & dimension==d & statistic=="oddsRatio", biased:= 1]
+    }
   }
 }
+
+output <- rbind(tOutput, pOutput)
+
+# Look at number of participants with biased responding
+output[biased==1, ] # One participant in each condition
+biasedParticipants <- output[participant_id %in% c(50, 87, 131, 172),]
+biasedParticipants[experiment_phase=="test1" & statistic=="Xsquared", .SD[which.max(value)],
+                   by=.(participant_id, experiment_phase)]
+# Looking at their verbal reports
+data[participant_id %in% c(50, 87, 131, 172) & experiment_phase == "verbal_report_textbox_phase2", ]
+data[participant_id %in% c(50, 87, 131, 172) & experiment_phase == "verbal_report_textbox_phase3", ]
+# Remove biased participants
+output <- output[biased==0, ] # Remove those participants
+
+# Determining winning dimension for every participant
+winningDimension <- output[statistic=="Xsquared",.SD[which.max(value)], by=.(participant_id, experiment_phase)]
+
+test1N <- winningDimension[experiment_phase=="test1", list(N=.N), by=.(dimension, displayCondition, socialCondition)]
+test1table <- dcast(test1N, displayCondition + socialCondition ~ dimension, value.var="N")
+xtable(test1table)
+
+test2N <- winningDimension[experiment_phase=="test2", list(N=.N), by=.(dimension, displayCondition, socialCondition)]
+test2table <- dcast(test2N, displayCondition + socialCondition ~ dimension, value.var="N")
+xtable(test2table)
+
+pptsDim2 <- winningDimension[dimension!=2 & experiment_phase=="test1", participant_id]
+test2N <- winningDimension[experiment_phase=="test2" & participant_id %in% pptsDim2, 
+                           list(N=.N), by=.(dimension, displayCondition, socialCondition)]
+test2table <- dcast(test2N, displayCondition + socialCondition ~ dimension, value.var="N")
+xtable(test2table)
 
 # Confidence ratings: Graph ------------------------------------------------------------------------
 cData <- data[experiment_phase=="confidence_rating_test"|experiment_phase=="confidence_rating_partial",]
@@ -264,7 +308,7 @@ summary(conf.bf)
 
 
 
-# What the fuck is happening? ----------------------------------------------------------------------
+#Graphs of test phase ------------------------------------------------------------------------------
 tData <-  data[experiment_phase=="test",]
 tSummary <- tData[as.numeric(stimulusID)<=20, list(meanAccuracyTest=mean(accuracy), 
                          meanRTtest=mean(rt)),
@@ -339,3 +383,104 @@ summary(test.aov.rt)
 test.bf.rt <- anovaBF(meanRT ~ displayCondition*socialCondition*experiment_phase + participant_id,  
                    data=tSummary, whichModels="bottom", whichRandom="participant_id")
 summary(test.bf.rt)
+
+# Verbal reports -----------------------------------------------------------------------------------
+vrData <- data[experiment_phase %in% c("verbal_report_ranking_phase2",
+                                       "verbal_report_ranking_phase3"),
+               .(participant_id, displayCondition, socialCondition, dimensionOrder, displayOrder,
+                 experiment_phase, responses)]
+
+
+extractRank <- function(str, rank) {
+  strVector <- strsplit(str, ",")[[1]]
+  
+  strRank <- strVector[rank]
+  strRank <- strsplit(strRank, "")[[1]]
+  response <- sum(as.numeric(strRank), na.rm=T)
+  
+  response <- ifelse(response==0, NA, response)
+  return(response)
+}
+
+vrData[, Craft:=extractRank(responses, 1), by=.(participant_id, experiment_phase)]
+vrData[, Role:=extractRank(responses, 2), by=.(participant_id, experiment_phase)]
+vrData[, Status:=extractRank(responses, 3), by=.(participant_id, experiment_phase)]
+vrData[, Speed:=extractRank(responses, 4), by=.(participant_id, experiment_phase)]
+vrData[, Direction:=extractRank(responses, 5), by=.(participant_id, experiment_phase)]
+
+vrData[, c("dimension1", "dimension2", "dimension3", "dimension4", "dimension5"):=as.numeric(NA)]
+
+for (n in 1:nrow(vrData)) {
+  d <- vrData[n,]
+  dimOrder <- d$dimensionOrder
+  dimensionOrderVector <- strsplit(dimOrder, ",")[[1]]
+  
+  for (listPlace in 1:5) {
+    dimension <- dimensionOrderVector[listPlace]
+    vrData[[paste0("dimension", listPlace)]][[n]] <- d[[dimension]] 
+  }
+}
+
+table(vrData$experiment_phase, vrData$dimension1)
+
+rankData <- melt(vrData[,.(participant_id, displayCondition, socialCondition, experiment_phase,
+                           dimension1,dimension2, dimension3, dimension4, dimension5)], 
+                 id.vars=c("participant_id", "experiment_phase", "displayCondition", "socialCondition"),
+                 measure.vars=c("dimension1", "dimension2", "dimension3", "dimension4", 
+                                "dimension5"))
+rankData$variable <- as.numeric(rankData$variable)
+rankData[,condition:=paste0(displayCondition, socialCondition)]
+
+# Phase 2
+cor <- cor.test(rankData[experiment_phase=="verbal_report_ranking_phase2",variable], 
+                rankData[experiment_phase=="verbal_report_ranking_phase2",value], method="spearman",
+                exact=FALSE)
+cor
+
+cor <- cor.test(rankData[experiment_phase=="verbal_report_ranking_phase2" & condition=="integratedoperator",variable], 
+                rankData[experiment_phase=="verbal_report_ranking_phase2" & condition=="integratedoperator",value], method="spearman",
+                exact=FALSE)
+cor
+
+cor <- cor.test(rankData[experiment_phase=="verbal_report_ranking_phase2" & condition=="integratedsuperior",variable], 
+                rankData[experiment_phase=="verbal_report_ranking_phase2" & condition=="integratedsuperior",value], method="spearman",
+                exact=FALSE)
+cor
+
+cor <- cor.test(rankData[experiment_phase=="verbal_report_ranking_phase2" & condition=="separatedoperator",variable], 
+                rankData[experiment_phase=="verbal_report_ranking_phase2" & condition=="separatedoperator",value], method="spearman",
+                exact=FALSE)
+cor
+
+cor <- cor.test(rankData[experiment_phase=="verbal_report_ranking_phase2" & condition=="separatedsuperior",variable], 
+                rankData[experiment_phase=="verbal_report_ranking_phase2" & condition=="separatedsuperior",value], method="spearman",
+                exact=FALSE)
+cor
+
+
+# Phase 3
+cor1 <- cor.test(rankData[experiment_phase=="verbal_report_ranking_phase3",variable], 
+                rankData[experiment_phase=="verbal_report_ranking_phase3",value], method="spearman",
+                exact=FALSE)
+cor1
+
+cor <- cor.test(rankData[experiment_phase=="verbal_report_ranking_phase3" & condition=="integratedoperator",variable], 
+                rankData[experiment_phase=="verbal_report_ranking_phase3" & condition=="integratedoperator",value], method="spearman",
+                exact=FALSE)
+cor
+
+cor <- cor.test(rankData[experiment_phase=="verbal_report_ranking_phase3" & condition=="integratedsuperior",variable], 
+                rankData[experiment_phase=="verbal_report_ranking_phase3" & condition=="integratedsuperior",value], method="spearman",
+                exact=FALSE)
+cor
+
+cor <- cor.test(rankData[experiment_phase=="verbal_report_ranking_phase3" & condition=="separatedoperator",variable], 
+                rankData[experiment_phase=="verbal_report_ranking_phase3" & condition=="separatedoperator",value], method="spearman",
+                exact=FALSE)
+cor
+
+cor <- cor.test(rankData[experiment_phase=="verbal_report_ranking_phase2" & condition=="separatedsuperior",variable], 
+                rankData[experiment_phase=="verbal_report_ranking_phase2" & condition=="separatedsuperior",value], method="spearman",
+                exact=FALSE)
+cor
+

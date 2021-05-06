@@ -88,3 +88,24 @@ fwrite(data, "../data/DSTL07longData.csv")
 # Double checking data
 
 sData <- data[participant_id==1 & stimulusID==32, ]
+
+
+# Extracting needed verbal report data. Might also need "flipped" in the future. 
+vtData <- data[experiment_phase %in% c("verbal_report_textbox_phase2",
+                                       "verbal_report_textbox_phase3"),
+               .(participant_id, displayCondition, socialCondition, dimensionOrder, displayOrder,
+                 experiment_phase, responses)]
+
+tidyStr <- function(str) {
+  # Function to remove excess from text box responses
+  strVector <- strsplit(str, "")
+  strVector <- strVector[[1]][-(1:34)]
+  len <- length(strVector)
+  strVector <- strVector[-((len-4):len)]
+  return(paste(strVector, collapse=""))
+}
+
+vtData[, response:= tidyStr(responses), by=.(participant_id, experiment_phase)]
+vtData[, responses:=NULL]
+
+fwrite(vtData, "../data/DSTL07verbalReports.csv")
