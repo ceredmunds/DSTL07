@@ -74,12 +74,27 @@ data[is.na(abstract_response_label), correct:= NA]
 data[, accuracy:= ifelse(correct=="true", 1, 0)]
 data[is.na(abstract_response_label), accuracy:= NA]
 
+# Get additional strategies ------------------------------------------------------------------------
+categoryInfo <- fread("../data/category_test_stimuli.csv")
+categoryInfo$stimulusID <- as.numeric(categoryInfo$stimulusID)
+data$stimulusID <- as.numeric(data$stimulusID)
+
+data <- merge(data, categoryInfo[, .(stimulusID, woDim1, wDim1)], by="stimulusID")
+
+
 # Finish -------------------------------------------------------------------------------------------
 # Get number of people in each condition
 table(ppts$displayCondition, ppts$socialCondition) # Table of participants in each condition
 
 # Check whether participants data is there
 data[prolific_id=="5fe1f5f751f3a9ceb57d935a",]
+
+# Order data to save
+data <- data[, .(participant_id, displayCondition, socialCondition, dimensionOrder, displayOrder,
+                 startTime, finishTime, trial_index, experiment_phase, trial_type, time_elapsed, rt, 
+                 stimulusID, dimension1, dimension2, dimension3, dimension4, dimension5, woDim1, wDim1,
+                 abstract_category, abstract_category_label, correct_response, abstract_response_label,
+                 response, button_pressed, correct, responses, accuracy, flip)]
 
 # Save data
 fwrite(data, "../data/DSTL07longData.csv")
@@ -98,10 +113,10 @@ vtData <- data[experiment_phase %in% c("verbal_report_textbox_phase2",
 
 tidyStr <- function(str) {
   # Function to remove excess from text box responses
-  strVector <- strsplit(str, "")
-  strVector <- strVector[[1]][-(1:34)]
+  strVector <- strsplit(str, "")[[1]]
+  strVector <- strVector[-(1:28)]
   len <- length(strVector)
-  strVector <- strVector[-((len-4):len)]
+  strVector <- strVector[-((len-2):len)]
   return(paste(strVector, collapse=""))
 }
 
