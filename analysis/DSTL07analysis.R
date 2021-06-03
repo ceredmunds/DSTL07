@@ -154,7 +154,7 @@ tData <-  data[experiment_phase=="test",]
 
 # Set up output
 ppts <- unique(data$participant_id)
-tOutput <- data.table(expand.grid(participant_id=ppts, experiment_phase="test1", dimension=1:5, 
+tOutput <- data.table(expand.grid(participant_id=ppts, experiment_phase="test1", dimension=c(1:5, "woDim1", "wDim1"), 
                                   statistic=c("Xsquared", "pValue", "oddsRatio"), value=as.numeric(NA)))
 tOutput <- merge(tOutput, tData[, .SD[1], by=.(participant_id)][,.(participant_id, displayCondition, socialCondition)])
 tOutput[, biased:=0]
@@ -176,6 +176,28 @@ for (p in 1:length(ppts)) {
       tOutput[participant_id==ppt & dimension==d & statistic=="oddsRatio", biased:= 1]
     }
   }
+  
+  respTable <- table(pptData$woDim1, pptData$abstract_response_label)
+  chi <- chisq.test(respTable)
+  tOutput[participant_id==ppt & dimension=="woDim1" & statistic=="Xsquared", value:= chi$statistic]
+  tOutput[participant_id==ppt & dimension=="woDim1" & statistic=="pValue", value:= chi$p.value]
+  
+  if(dim(respTable)[1]==2 & dim(respTable)[2]==2) {
+    tOutput[participant_id==ppt & dimension=="woDim1" & statistic=="oddsRatio", value:= oddsRatio(respTable)]
+  } else {
+    tOutput[participant_id==ppt & dimension=="woDim1" & statistic=="oddsRatio", biased:= 1]
+  }
+  
+  respTable <- table(pptData$wDim1, pptData$abstract_response_label)
+  chi <- chisq.test(respTable)
+  tOutput[participant_id==ppt & dimension=="wDim1" & statistic=="Xsquared", value:= chi$statistic]
+  tOutput[participant_id==ppt & dimension=="wDim1" & statistic=="pValue", value:= chi$p.value]
+  
+  if(dim(respTable)[1]==2 & dim(respTable)[2]==2) {
+    tOutput[participant_id==ppt & dimension=="wDim1" & statistic=="oddsRatio", value:= oddsRatio(respTable)]
+  } else {
+    tOutput[participant_id==ppt & dimension=="wDim1" & statistic=="oddsRatio", biased:= 1]
+  }
 }
 
 # Second test phase
@@ -184,7 +206,7 @@ pData <-  data[experiment_phase=="test_partial",]
 
 # Set up output
 ppts <- unique(data$participant_id)
-pOutput <- data.table(expand.grid(participant_id=ppts, experiment_phase="test2", dimension=1:5, 
+pOutput <- data.table(expand.grid(participant_id=ppts, experiment_phase="test2", dimension=c(1:5, "woDim1", "wDim1"), 
                                   statistic=c("Xsquared", "pValue", "oddsRatio"), value=as.numeric(NA)))
 pOutput <- merge(pOutput, pData[, .SD[1], by=.(participant_id)][,.(participant_id, displayCondition, socialCondition)])
 pOutput[, biased:=0]
@@ -209,6 +231,28 @@ for (p in 1:length(ppts)) {
       pOutput[participant_id==ppt & dimension==d & statistic=="oddsRatio", biased:= 1]
     }
   }
+  
+  respTable <- table(pptData$woDim1, pptData$abstract_response_label)
+  chi <- chisq.test(respTable)
+  pOutput[participant_id==ppt & dimension=="woDim1" & statistic=="Xsquared", value:= chi$statistic]
+  pOutput[participant_id==ppt & dimension=="woDim1" & statistic=="pValue", value:= chi$p.value]
+  
+  if(dim(respTable)[1]==2 & dim(respTable)[2]==2) {
+    pOutput[participant_id==ppt & dimension=="woDim1" & statistic=="oddsRatio", value:= oddsRatio(respTable)]
+  } else {
+    pOutput[participant_id==ppt & dimension=="woDim1" & statistic=="oddsRatio", biased:= 1]
+  }
+  
+  respTable <- table(pptData$wDim1, pptData$abstract_response_label)
+  chi <- chisq.test(respTable)
+  pOutput[participant_id==ppt & dimension=="wDim1" & statistic=="Xsquared", value:= chi$statistic]
+  pOutput[participant_id==ppt & dimension=="wDim1" & statistic=="pValue", value:= chi$p.value]
+  
+  if(dim(respTable)[1]==2 & dim(respTable)[2]==2) {
+    pOutput[participant_id==ppt & dimension=="wDim1" & statistic=="oddsRatio", value:= oddsRatio(respTable)]
+  } else {
+    pOutput[participant_id==ppt & dimension=="wDim1" & statistic=="oddsRatio", biased:= 1]
+  }
 }
 
 output <- rbind(tOutput, pOutput)
@@ -221,21 +265,25 @@ biasedParticipants[experiment_phase=="test1" & statistic=="Xsquared", .SD[which.
 # Looking at their verbal reports
 data[participant_id %in% c(50, 87, 131, 172) & experiment_phase == "verbal_report_textbox_phase2", ]
 data[participant_id %in% c(50, 87, 131, 172) & experiment_phase == "verbal_report_textbox_phase3", ]
+
 # Remove biased participants
-output <- output[biased==0, ] # Remove those participants
+tOutput <- tOutput[biased==0, ] # Remove those participants
+pOutput <- pOutput[biased==0, ] # Remove those participants
 
-# Determining winning dimension for every participant
-winningDimension <- output[statistic=="Xsquared",.SD[which.max(value)], by=.(participant_id, experiment_phase)]
-
-test1N <- winningDimension[experiment_phase=="test1", list(N=.N), by=.(dimension, displayCondition, socialCondition)]
+# Determining winning dimension for every participant in first test
+winningDimension <- tOutput[statistic=="Xsquared" & dimension!="woDim1",.SD[which.max(value)], by=.(participant_id, experiment_phase)]
+test1N <- winningDimension[, list(N=.N), by=.(dimension, displayCondition, socialCondition)]
 test1table <- dcast(test1N, displayCondition + socialCondition ~ dimension, value.var="N")
 xtable(test1table)
 
+winningDimension <- pOutput[statistic=="Xsquared" & dimension!="wDim1",.SD[which.max(value)], by=.(participant_id, experiment_phase)]
 test2N <- winningDimension[experiment_phase=="test2", list(N=.N), by=.(dimension, displayCondition, socialCondition)]
 test2table <- dcast(test2N, displayCondition + socialCondition ~ dimension, value.var="N")
 xtable(test2table)
 
+winningDimension <- tOutput[statistic=="Xsquared" & dimension!="woDim1",.SD[which.max(value)], by=.(participant_id, experiment_phase)]
 pptsDim2 <- winningDimension[dimension!=2 & experiment_phase=="test1", participant_id]
+winningDimension <- pOutput[statistic=="Xsquared" & dimension!="wDim1",.SD[which.max(value)], by=.(participant_id, experiment_phase)]
 test2N <- winningDimension[experiment_phase=="test2" & participant_id %in% pptsDim2, 
                            list(N=.N), by=.(dimension, displayCondition, socialCondition)]
 test2table <- dcast(test2N, displayCondition + socialCondition ~ dimension, value.var="N")
@@ -308,7 +356,7 @@ summary(conf.bf)
 
 
 
-#Graphs of test phase ------------------------------------------------------------------------------
+# Graphs of test phase ------------------------------------------------------------------------------
 tData <-  data[experiment_phase=="test",]
 tSummary <- tData[as.numeric(stimulusID)<=20, list(meanAccuracyTest=mean(accuracy), 
                          meanRTtest=mean(rt)),
@@ -389,7 +437,6 @@ vrData <- data[experiment_phase %in% c("verbal_report_ranking_phase2",
                                        "verbal_report_ranking_phase3"),
                .(participant_id, displayCondition, socialCondition, dimensionOrder, displayOrder,
                  experiment_phase, responses)]
-
 
 extractRank <- function(str, rank) {
   strVector <- strsplit(str, ",")[[1]]
@@ -484,3 +531,4 @@ cor <- cor.test(rankData[experiment_phase=="verbal_report_ranking_phase2" & cond
                 exact=FALSE)
 cor
 
+# Comparing rank data 

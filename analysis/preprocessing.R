@@ -75,12 +75,17 @@ data[, accuracy:= ifelse(correct=="true", 1, 0)]
 data[is.na(abstract_response_label), accuracy:= NA]
 
 # Get additional strategies ------------------------------------------------------------------------
+dataRank <- data[experiment_phase %in% 
+                   c("verbal_report_ranking_phase2", "verbal_report_ranking_phase3"),]
+dataRank[, woDim1:=as.numeric(NA)]
+dataRank[, wDim1:=as.numeric(NA)]
+
 categoryInfo <- fread("../data/category_test_stimuli.csv")
 categoryInfo$stimulusID <- as.numeric(categoryInfo$stimulusID)
 data$stimulusID <- as.numeric(data$stimulusID)
 
 data <- merge(data, categoryInfo[, .(stimulusID, woDim1, wDim1)], by="stimulusID")
-
+data <- rbind(data, dataRank)
 
 # Finish -------------------------------------------------------------------------------------------
 # Get number of people in each condition
@@ -99,13 +104,12 @@ data <- data[, .(participant_id, displayCondition, socialCondition, dimensionOrd
 # Save data
 fwrite(data, "../data/DSTL07longData.csv")
 
-
 # Double checking data
 
 sData <- data[participant_id==1 & stimulusID==32, ]
 
 
-# Extracting needed verbal report data. Might also need "flipped" in the future. 
+# Extracting needed verbal report data. Might also need "flipped" in the future --------------------
 vtData <- data[experiment_phase %in% c("verbal_report_textbox_phase2",
                                        "verbal_report_textbox_phase3"),
                .(participant_id, displayCondition, socialCondition, dimensionOrder, displayOrder,
@@ -122,5 +126,39 @@ tidyStr <- function(str) {
 
 vtData[, response:= tidyStr(responses), by=.(participant_id, experiment_phase)]
 vtData[, responses:=NULL]
+
+# Get ranks 
+vrData <- data[experiment_phase %in% c("verbal_report_ranking_phase2",
+                                       "verbal_report_ranking_phase3"),
+               .(participant_id, displayCondition, socialCondition, dimensionOrder, displayOrder,
+                 experiment_phase, responses)]
+
+extractRank <- function(str, rank) {
+  strVector <- strsplit(str, ",")[[1]]
+  
+  strRank <- strVector[rank]
+  strRank <- strsplit(strRank, "")[[1]]
+  response <- sum(as.numeric(strRank), na.rm=T)
+  
+  response <- ifelse(response==0, NA, response)
+  return(response)
+}
+
+vrData[, Craft:=extractRank(responses, 1), by=.(participant_id, experiment_phase)]
+vrData[, Role:=extractRank(responses, 2), by=.(participant_id, experiment_phase)]
+vrData[, Status:=extractRank(responses, 3), by=.(participant_id, experiment_phase)]
+vrData[, Speed:=extractRank(responses, 4), by=.(participant_id, experiment_phase)]
+vrData[, Direction:=extractRank(responses, 5), by=.(participant_id, experiment_phase)]
+
+vrData[, rankOrder:="NA"]
+vrData[, orderedRanks:="NA"]
+
+for (i in 1:nrow(vrData)) {
+  x <- sort(vrData[i, .(Craft, Role, Status, Speed, Direction)])
+  vrData[i, rankOrder:= paste(colnames(x), collapse=",")]
+  vrData[i, orderedRanks:= paste((x[1,]), collapse=",")]
+  
+}
+vtData <- cbind(vtData, vrData[, .(rankOrder, orderedRanks)])
 
 fwrite(vtData, "../data/DSTL07verbalReports.csv")
